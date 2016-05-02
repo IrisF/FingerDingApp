@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">HandMeasurementStudy</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_tapping">Tapping</string>
+    <string name="title_activity_swiping">Swiping</string>
+    <string name="title_activity_scrolling">Scrolling</string>
+    <string name="title_activity_zooming">Zooming</string>
+</resources>
