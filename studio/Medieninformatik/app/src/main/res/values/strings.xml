@@ -7,4 +7,14 @@
     <string name="title_activity_swiping">Swiping</string>
     <string name="title_activity_scrolling">Scrolling</string>
     <string name="title_activity_zooming">Zooming</string>
+    <string name="button_start">Start</string>
+    <string name="button_export_db">Export Database</string>
+    <string name="label_trial_mode">Trial:</string>
+    <string name="label_session_index">Session:</string>
+    <string name="label_name">Name:</string>
+    <string name="label_userID">ID:</string>
+    <string name="title_activity_trial">Tapping</string>
+    <string name="name_text_hint">participant</string>
+    <string name="userID_text_hint">defines task order</string>
+    <string name="session_index_hint">[1]st or [2]nd session</string>
 </resources>
