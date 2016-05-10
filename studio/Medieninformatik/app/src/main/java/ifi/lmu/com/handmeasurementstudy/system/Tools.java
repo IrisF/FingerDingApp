@@ -1,6 +1,6 @@
 package ifi.lmu.com.handmeasurementstudy.system;
 
-import de.tapstest.MainActivity;
+import ifi.lmu.com.handmeasurementstudy.MainActivity;
 
 public class Tools {
 

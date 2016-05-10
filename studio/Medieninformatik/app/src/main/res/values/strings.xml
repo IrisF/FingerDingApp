@@ -10,7 +10,10 @@
     <string name="button_start">Start</string>
     <string name="button_export_db">Export Database</string>
     <string name="label_trial_mode">Trial:</string>
-    <string name="label_session_index">Session:</string>
+    <string name="label_session_index">Modus:</string>
+    <string name="label_age">Alter:</string>
+    <string name="label_hand_width">Handbreite:</string>
+    <string name="label_hand_length">Handlänge:</string>
     <string name="label_name">Name:</string>
     <string name="label_userID">ID:</string>
     <string name="title_activity_trial">Tapping</string>

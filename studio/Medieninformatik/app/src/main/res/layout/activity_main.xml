@@ -25,11 +25,10 @@
         android:id="@+id/session_index_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/userID_label"
-        android:layout_marginTop="16dp"
         android:text="@string/label_session_index"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/trial_mode_label"
@@ -47,53 +46,123 @@
         android:layout_alignTop="@+id/trial_mode_label"
         android:layout_toRightOf="@+id/trial_mode_label" />
 
-    <EditText
-        android:id="@+id/name_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/session_index_spinner"
-        android:ems="10"
-        android:hint="@string/name_text_hint" >
-    </EditText>
-
     <Button
         android:id="@+id/button_test"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_export_DB"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="56dp"
         android:onClick="onClickStartButton"
-        android:text="@string/button_start" />
-
-    <TextView
-        android:id="@+id/name_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/name_text"
-        android:layout_alignBottom="@+id/name_text"
-        android:text="@string/label_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="@string/button_start"
+        android:layout_above="@+id/button_export_DB"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/userID_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/name_text"
         android:text="@string/label_userID"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/userID_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/name_text"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/userID_label"
         android:ems="10"
-        android:hint="@string/userID_text_hint"
-        android:inputType="number" />
+        android:inputType="number"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/session_index_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/label_age"
+        android:id="@+id/textView"
+        android:layout_below="@+id/userID_text"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/user_age"
+        android:layout_below="@+id/userID_text"
+        android:layout_alignStart="@+id/userID_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/label_hand_length"
+        android:id="@+id/textViewX"
+        android:layout_below="@+id/user_age"
+        android:layout_alignParentStart="true"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/label_hand_width"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/hand_height"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/hand_height"
+        android:layout_below="@+id/user_age"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/hand_width"
+        android:maxWidth="0.5dp"
+        android:layout_below="@+id/hand_height"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debug_mode"
+        android:layout_below="@+id/trial_spinner"
+        android:layout_alignStart="@+id/trial_spinner"
+        android:visibility="invisible" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/debug_mode"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/hand_height"
+        android:layout_below="@+id/userID_label">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="w"
+            android:id="@+id/radioButton_w"
+            android:checked="false"
+            android:layout_above="@+id/hand_height"
+            android:layout_alignEnd="@+id/hand_height" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="m"
+            android:id="@+id/radioButton_m"
+            android:checked="false"
+            android:layout_below="@+id/userID_label"
+            android:layout_toEndOf="@+id/userID_text" />
+    </RadioGroup>
 
 
 </RelativeLayout>

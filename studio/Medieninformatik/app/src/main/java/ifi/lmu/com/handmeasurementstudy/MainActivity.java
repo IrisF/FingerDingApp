@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
@@ -29,10 +30,14 @@ public class MainActivity extends Activity {
     public static final String EXTRA_SUBJECT_NAME = "de.tapstest.SUBJECT_NAME";
     public static final int TRIAL_NUM_AUTO = 5;
 
+    public static final boolean b_IS_DEBUG = true;
+
     public static float DISPLAY_XDPI = -1;
     public static float DISPLAY_YDPI = -1;
 
     public static TaskScheduler taskScheduler = null;
+
+    private Spinner debugSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,32 +57,62 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
+        // fill debug test options list
+        List<String> debugArray = new ArrayList<>();
+        debugArray.add("Tapping");
+        debugArray.add("Zooming");
+        debugArray.add("Scrolling");
+        debugArray.add("Swiping");
+
+        ArrayAdapter<String> debugAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, debugArray);
+        debugAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //final Spinner
+                debugSpinner = (Spinner) findViewById(R.id.debug_mode);
+        debugSpinner.setAdapter(debugAdapter);
+
+
         // fill session spinner:
-        List<String> spinnerArray = new ArrayList<String>();
+        List<String> spinnerArray = new ArrayList<>();
         spinnerArray.add("1st session");
         spinnerArray.add("2nd session");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
         spinner.setAdapter(adapter);
 
         // fill trial spinner:
-        List<String> spinnerArray2 = new ArrayList<String>();
-        spinnerArray2.add("0: debug");
-        spinnerArray2.add("1: sitting, thumb");
-        spinnerArray2.add("2: sitting, index");
-        spinnerArray2.add("3: walking, thumb");
-        spinnerArray2.add("4: walking, index");
-        spinnerArray2.add("auto");
+        List<String> spinnerArray2 = new ArrayList<>();
+        spinnerArray2.add("0: Test");
+        spinnerArray2.add("1: DEBUG");
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, spinnerArray2);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
         spinner2.setAdapter(adapter2);
-        spinner2.setSelection(TRIAL_NUM_AUTO);
+        //spinner2.setSelection(TRIAL_NUM_AUTO);
+
+
+        // check for debug mode selected in spinner2 to show debug mode spinner
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 1) // 1 == DEBUG
+                {
+                    debugSpinner.setVisibility(View.VISIBLE);
+                } else {
+                    debugSpinner.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
@@ -95,26 +130,82 @@ public class MainActivity extends Activity {
      */
     public void onClickStartButton(View view) {
 
-        Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
-        int sessionIndex = spinner.getSelectedItemPosition();
+        boolean bIsDebug = debugSpinner.getVisibility() == View.VISIBLE;
 
-        Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
-        int selectedTrialID = spinner2.getSelectedItemPosition();
+            // check if debug mode is on
+        if(bIsDebug){
+            int debugMode = debugSpinner.getSelectedItemPosition();
+            Intent intent;
+            switch(debugMode)
+            {
+                case 0: //Tapping
+                    intent = new Intent(this, Tapping.class);
+                    break;
+                case 1: // Zooming
+                    intent = new Intent(this, Zooming.class);
+                    break;
+                case 2: //Scrolling
+                    intent = new Intent(this, Scrolling.class);
+                    break;
+                case 3: // Swiping
+                    intent = new Intent(this, Swiping.class);
+                    break;
+                default:
+                    intent = new Intent(this, Tapping.class);
+            }
+            startActivity(intent);
+        }
+        else {
 
-        EditText name_edit = (EditText) findViewById(R.id.name_text);
-        String name = name_edit.getText().toString();
+            Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
+            int sessionIndex = spinner.getSelectedItemPosition();
 
-        EditText userID_edit = (EditText) findViewById(R.id.userID_text);
-        int userID = Integer.valueOf(userID_edit.getText().toString());
-        MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
+            //Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
+            // int selectedTrialID = spinner2.getSelectedItemPosition();
+
+            EditText userID_edit = (EditText) findViewById(R.id.userID_text);
+            int userID = Integer.valueOf(userID_edit.getText().toString());
+            MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
+
+            // TODO save user data to DB
+
+            Intent intent = new Intent(this, Tapping.class);
+            //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
+            // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);
+            // intent.putExtra(MainActivity.EXTRA_SUBJECT_NAME, name);
+
+            startActivity(intent);
+        }
 
 
-        Intent intent = new Intent(this, Tapping.class);
-        intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
-        intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);
-        intent.putExtra(MainActivity.EXTRA_SUBJECT_NAME, name);
 
-        startActivity(intent);
+    }
+
+    private boolean checkForInputsCorrect() {
+
+        RadioButton m = (RadioButton) findViewById(R.id.radioButton_m);
+        RadioButton w = (RadioButton) findViewById(R.id.radioButton_w);
+        EditText id = (EditText) findViewById(R.id.userID_text);
+        EditText age = (EditText) findViewById(R.id.user_age);
+        EditText handLength = (EditText) findViewById(R.id.hand_height);
+        EditText handWidth = (EditText) findViewById(R.id.hand_width);
+
+
+        if (m.isChecked() == w.isChecked())
+        {
+            Toast.makeText(getApplicationContext(), "Please select gender.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (id.getText().toString().equals("")
+                || handLength.getText().toString().equals("")
+                || handWidth.getText().toString().equals("")
+                || age.getText().toString().equals(""))
+        {
+            Toast.makeText(getApplicationContext(), "Bitte fill out all fields.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     public void onClickExportDBButton(View view) {
