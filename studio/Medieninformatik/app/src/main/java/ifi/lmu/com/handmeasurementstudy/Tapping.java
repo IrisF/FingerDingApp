@@ -36,21 +36,21 @@ public class Tapping extends Activity implements View.OnTouchListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tapping);
+        //setContentView(R.layout.activity_tapping);// TODO out for testing
         // Remove title bar:
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
-        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_container);
+        //RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_container); // TODO out for testing
 
         // Get/create db handler:
         //this.dbHandler = DBHandler.getInstance(this);
 
 
         drawing = new Drawing(this, this);
-        mainLayout.addView(drawing);
+        //mainLayout.addView(drawing); // TODO out for testing
 
-        //setContentView(drawing);
+        setContentView(drawing);
         fViewWidth = drawing.getViewWidth();
         fViewHeight = drawing.getViewHeight();
 
@@ -132,6 +132,13 @@ public class Tapping extends Activity implements View.OnTouchListener {
 */
         onShowNextTap();
 
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent (MotionEvent event) {
+        Log.d("Tapping", "onTouchEvent");
+        onShowNextTap();
         return false;
     }
 

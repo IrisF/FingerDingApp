@@ -17,7 +17,7 @@ import ifi.lmu.com.handmeasurementstudy.system.Tools;
 /**
  * Created by Jonny on 10.05.2016.
  */
-public class Drawing extends AbstractDrawingPanel { //View {
+public class Drawing extends AbstractDrawingPanel implements View.OnTouchListener { //View {
 
     private Tapping parent;
 
@@ -114,5 +114,11 @@ public class Drawing extends AbstractDrawingPanel { //View {
     public void surfaceDestroyed(SurfaceHolder holder) {
 
     }
-    
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.d("Drawing", "onTouch");
+        parent.onTouch(v, event);
+        return false;
+    }
 }
