@@ -13,6 +13,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.util.Log;
+
+import ifi.lmu.com.handmeasurementstudy.system.Scroll;
+import ifi.lmu.com.handmeasurementstudy.system.Swipe;
+import ifi.lmu.com.handmeasurementstudy.system.Zoom;
 import ifi.lmu.com.handmeasurementstudy.system.Tap;
 import ifi.lmu.com.handmeasurementstudy.system.TrialSettings;
 
@@ -49,6 +53,36 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TAPS_COL_MAJOR_UP = "majorUp";
 	private static final String TAPS_COL_TRIAL_ID = "trialID";
 
+    //Table Scrolling
+    private static final String TABLE_SCROLLING = "scrolling";
+    private static final String SCROLLING_COL_ID = "id";
+    private static final String SCROLLING_COL_X = "x";
+    private static final String SCROLLING_COL_Y = "y";
+
+    //Table Swiping
+    private static final String TABLE_SWIPING = "swiping";
+    private static final String SWIPING_COL_ID = "id";
+    private static final String SWIPING_COL_X = "x";
+    private static final String SWIPING_COL_Y = "y";
+    private static final String SWIPING_COL_TOOL_TYPE = "toolType";
+    private static final String SWIPING_COL_EVENT_TIME = "eventTime";
+    private static final String SWIPING_COL_DOWN_TIME = "downTime";
+
+    //Table Zooming
+    private static final String TABLE_ZOOMING = "zooming";
+    private static final String ZOOMING_COL_ID = "id";
+    private static final String ZOOMING_COL_CURRENT_SPAN = "currentSpan";
+    private static final String ZOOMING_COL_CURRENT_X = "currentX";
+    private static final String ZOOMING_COL_CURRENT_Y = "currentY";
+    private static final String ZOOMING_COL_FOCUS_X = "focusX";
+    private static final String ZOOMING_COL_FOCUS_Y = "focusY";
+    private static final String ZOOMING_COL_SCALE_FACTOR = "scaleFactor";
+    private static final String ZOOMING_COL_TIME_DELTA = "timeDelta";
+    private static final String ZOOMING_COL_EVENT_TIME = "eventTime";
+    private static final String ZOOMING_COL_TRIAL_ID = "trialID";
+
+
+//TODO do we need this? maybe put participant's demographic data in here
 	// Table trials:
 	private static final String TABLE_TRIALS = "trials";
 	private static final String TRIALS_COL_ID = "id";
@@ -210,6 +244,57 @@ public class DBHandler extends SQLiteOpenHelper {
 
 		int id = (int) db.insert(TABLE_TAPS, null, values);
 		Log.d("DEBUG", "inserted tap with id: " + id);
+
+		db.close();
+	}
+
+	public void insertZoom(Zoom zoom) {
+
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(ZOOMING_COL_CURRENT_SPAN, zoom.currentSpan);
+		values.put(ZOOMING_COL_CURRENT_X, zoom.currentX);
+		values.put(ZOOMING_COL_CURRENT_Y, zoom.currentY);
+		values.put(ZOOMING_COL_FOCUS_X, zoom.focusX);
+		values.put(ZOOMING_COL_FOCUS_X, zoom.focusY);
+		values.put(ZOOMING_COL_SCALE_FACTOR, zoom.scaleFactor);
+		values.put(ZOOMING_COL_TIME_DELTA, zoom.timeDelta);
+		values.put(ZOOMING_COL_EVENT_TIME, zoom.eventTime);
+
+		int id = (int) db.insert(TABLE_ZOOMING, null, values);
+		Log.d("DEBUG", "inserted zoom with id: " + id);
+
+		db.close();
+	}
+
+	public void insertScroll(Scroll scroll) {
+
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(SCROLLING_COL_X, scroll.x);
+		values.put(SCROLLING_COL_Y, scroll.x);
+
+		int id = (int) db.insert(TABLE_SCROLLING, null, values);
+		Log.d("DEBUG", "inserted scroll with id: " + id);
+
+		db.close();
+	}
+
+	public void insertSwipe(Swipe swipe) {
+
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(SWIPING_COL_X, swipe.x);
+		values.put(SWIPING_COL_Y, swipe.y);
+		values.put(SWIPING_COL_TOOL_TYPE, swipe.toolType);
+		values.put(SWIPING_COL_DOWN_TIME, swipe.downTime);
+		values.put(SWIPING_COL_EVENT_TIME, swipe.eventTime);
+
+		int id = (int) db.insert(TABLE_SWIPING, null, values);
+		Log.d("DEBUG", "inserted swipe with id: " + id);
 
 		db.close();
 	}
