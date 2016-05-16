@@ -31,29 +31,30 @@ public class SensorHelper implements SensorEventListener {
 
         switch(mySensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
-                Log.i("Sensor", "Accelerometer: " + event.values);
+                Log.i("Sensor", "Accelerometer: " + event.values.toString());
                 break;
             case Sensor.TYPE_GRAVITY:
-                Log.i("Sensor", "Gravity: " + event.values);
+                Log.i("Sensor", "Gravity: " + event.values.toString());
                 break;
             case Sensor.TYPE_GYROSCOPE:
-                Log.i("Sensor", "Gyroscope: " + event.values);
+                Log.i("Sensor", "Gyroscope: " + event.values.toString());
                 break;
             case Sensor.TYPE_GYROSCOPE_UNCALIBRATED:
-                Log.i("Sensor", "Gyroscope uncalibrated: " + event.values);
+                Log.i("Sensor", "Gyroscope uncalibrated: " + event.values.toString());
                 break;
             case Sensor.TYPE_PRESSURE:
-                Log.i("Sensor", "Pressure: " + event.values);
+                Log.i("Sensor", "Pressure: " + event.values.toString());
                 break;
             case Sensor.TYPE_PROXIMITY:
-                Log.i("Sensor", "Proximity: " + event.values);
+                Log.i("Sensor", "Proximity: " + event.values.toString());
                 break;
             case Sensor.TYPE_ORIENTATION:
+                Log.i("Sensor", "Orientation " + event.values.toString());
             case Sensor.TYPE_ROTATION_VECTOR:
-                Log.i("Sensor", "Rotation Vector: " + event.values);
+                Log.i("Sensor", "Rotation Vector: " + event.values.toString());
                 break;
             case Sensor.TYPE_SIGNIFICANT_MOTION:
-                Log.i("Sensor", "Significant Motion: " + event.values);
+                Log.i("Sensor", "Significant Motion: " + event.values.toString());
                 break;
 
     //TODO are these necessary for us?
@@ -72,7 +73,7 @@ public class SensorHelper implements SensorEventListener {
 
             //for testing purpose: which other Sensor events occur
             default:
-                Log.i("Sensor", "Other: " + event.values);
+                Log.i("Sensor", "Other: " + event.values.toString());
                 break;
         }
     }

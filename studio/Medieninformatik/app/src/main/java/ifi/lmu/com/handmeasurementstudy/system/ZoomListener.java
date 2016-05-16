@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.Image;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
 
