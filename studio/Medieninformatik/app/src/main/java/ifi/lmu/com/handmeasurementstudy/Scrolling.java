@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class Scrolling extends ActionBarActivity implements SensorEventListener {
@@ -29,11 +31,26 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
     private float gyrY;
     private float gyrZ;
     private ListView listView;
+    private TextView textView;
+    private Button button;
+    private long secondsAtStart;
+    private long timeNeeded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
+        textView = (TextView) findViewById(R.id.scrollingDescr);
+        button = (Button) findViewById(R.id.startButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.INVISIBLE);
+                button.setVisibility(View.INVISIBLE);
+                secondsAtStart = System.currentTimeMillis();
+            }
+        });
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -44,7 +61,15 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
                     case MotionEvent.ACTION_MOVE:
                         int x = (int) event.getX();
                         int y = (int) event.getY();
-                        System.out.println("x: " + x + " y: " + y);
+                        //System.out.println("x: " + x + " y: " + y);
+                        if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() -1 &&
+                                listView.getChildAt(listView.getChildCount() - 1).getBottom() <= listView.getHeight())
+                        {
+                            timeNeeded = System.currentTimeMillis()-secondsAtStart;
+                            listView.setVisibility(View.INVISIBLE);
+                            System.out.println("Time: " + timeNeeded);
+
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
                         break;
@@ -77,7 +102,7 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
             case MotionEvent.ACTION_MOVE:
                 int x = (int) event.getX();
                 int y = (int) event.getY();
-                System.out.println("x: " + x + " y: " + y);
+                //System.out.println("x: " + x + " y: " + y);
             case MotionEvent.ACTION_UP:return true;
         }
         return false;
@@ -101,9 +126,9 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
             gyrZ = event.values[2];
         }
 
-        System.out.println("Acceleration: x= " + accX + " y= " + accY + " z= " + accZ);
-        System.out.println("Gravity: x= " + graX + " y= " + graY + " z= " + graZ);
-        System.out.println("Rotation: x= " + gyrX + " y= " + gyrY + " z= " + gyrZ);
+        //System.out.println("Acceleration: x= " + accX + " y= " + accY + " z= " + accZ);
+        //System.out.println("Gravity: x= " + graX + " y= " + graY + " z= " + graZ);
+        //System.out.println("Rotation: x= " + gyrX + " y= " + gyrY + " z= " + gyrZ);
     }
 
     @Override
