@@ -18,31 +18,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+
+import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
+import ifi.lmu.com.handmeasurementstudy.system.Zoom;
+import ifi.lmu.com.handmeasurementstudy.system.ZoomListener;
+
 
 public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     private ScaleGestureDetector scaleGestureDetector;
-    private ImageView image;
+    private ArrayList<Zoom> zoomData;
+    private ZoomListener zoomListener;
 
-    private ZoomingView zoomingView;
-    private Paint rectanglePaint;
+    //private Paint rectanglePaint;
 
+    private SensorHelper sensorHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //rectangle view
-        //zoomingView = new ZoomingView(this);
-        //setContentView(zoomingView);
-
         setContentView(R.layout.activity_zooming);
-        rectanglePaint = new Paint();
 
-        image = (ImageView) findViewById(R.id.imageToZoom);
-        Log.e("e", "hier das image" + image);
+        //rectanglePaint = new Paint();
 
-        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
+        zoomListener = new ZoomListener(this);
+        scaleGestureDetector = new ScaleGestureDetector(this, zoomListener);
+        zoomData = new ArrayList<Zoom>();
+
+        sensorHelper = new SensorHelper(this);
     }
 
     @Override
@@ -68,12 +73,14 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     }
 
 
+//TODO this does not fire?!
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         Log.e("Touch", "########## Touch Event ###########");
         Log.e("Touch", event.toString());
         return true;
     }
+
 
     @Override
     public boolean onTouchEvent (MotionEvent event) {
@@ -87,6 +94,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     }
 
+//TODO eventually do sth on draw
+    /*
     public void onDraw(Canvas canvas) {
         //int viewWidth = this.getWidth();
         //int viewHeight = this.getHeight();
@@ -97,46 +106,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
         canvas.drawRect(10, 10, 120-10, 120-10, rectanglePaint);
 
-    }
+    }*/
 
-    /**
-     * @class manages the scaling gesture
-     */
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-            Log.e("e", "On Scale");
-            return false;
-        }
 
-        @Override
-        public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
-            Log.e("Scale", "############################### new Scaling Event #####################################");
-            Log.e("Scale", "Current Span " + Float.toString(scaleGestureDetector.getCurrentSpan()));
-            Log.e("Scale", "Current Coord X " + Float.toString(scaleGestureDetector.getCurrentSpanX()));
-            Log.e("Scale", "Current Coord Y " + Float.toString(scaleGestureDetector.getCurrentSpanY()));
-            Log.e("Scale", "Focus X " + Float.toString(scaleGestureDetector.getFocusX()));
-            Log.e("Scale", "Focus Y " + Float.toString(scaleGestureDetector.getFocusY()));
-            Log.e("Scale", "Scale Factor " + Float.toString(scaleGestureDetector.getScaleFactor()));
-
-            image.getLayoutParams().width += 20;
-            image.getLayoutParams().height += 20;
-            image.requestLayout();
-
-            //if width >= rectWidth || height >= rectWidth
-            //stop scaling, give success message
-
-            Log.e("Scale", "Time Delta " + Float.toString(scaleGestureDetector.getTimeDelta()));
-            Log.e("Scale", "Event Time " + Long.toString(scaleGestureDetector.getEventTime()));
-
-            return false;
-        }
-
-        @Override
-        public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
-            Log.e("e", "On Scale End");
-        }
-
-    }
 
 }
