@@ -35,8 +35,7 @@ public class Drawing extends AbstractDrawingPanel { //View {
         super(context);
         this.parent = parent;
         getHolder().addCallback(this);
-        nBackgroundW = this.getWidth();
-        nBackgroundH = this.getHeight();
+
         // Background paint:
         this.paintBackground = new Paint();
         this.paintBackground.setStrokeWidth(1);
@@ -55,7 +54,11 @@ public class Drawing extends AbstractDrawingPanel { //View {
         Log.d("Drawing","onDraw");
 
 
-        calculateAbsoluteTarget();
+        if(targetX == 0) {
+            setNewRelativeTargetLocation(0,0);
+            calculateAbsoluteTarget();
+        }
+        //calculateAbsoluteTarget();
 
         // draw bg:
         canvas.drawRect(this.rectBackground, this.paintBackground);
@@ -73,8 +76,8 @@ public class Drawing extends AbstractDrawingPanel { //View {
     }
 
     private void calculateAbsoluteTarget() {
-        targetX = (nBackgroundW / Tapping.nSideLength) * (fRelativeTargetX +1);
-        targetY = (nBackgroundH / Tapping.nSideLength) * (fRelativeTargetY +1);
+        targetX = (nBackgroundW / Tapping.nSideLength) * (fRelativeTargetX + 0.5f);
+        targetY = (nBackgroundH / Tapping.nSideLength) * (fRelativeTargetY + 0.5f);
     }
 
     public void setNewTargetLocation(float x, float y) {
@@ -90,11 +93,11 @@ public class Drawing extends AbstractDrawingPanel { //View {
     }
 
 
-    public float getViewWidth () {
+    public int getViewWidth () {
         return nBackgroundW;
     }
 
-    public float getViewHeight () {
+    public int getViewHeight () {
         return nBackgroundH;
     }
 
@@ -103,6 +106,7 @@ public class Drawing extends AbstractDrawingPanel { //View {
         Log.d("Drawing","surfaceCreated");
         nBackgroundW = this.getWidth();
         nBackgroundH = this.getHeight();
+        parent.setBackgroundSize(nBackgroundW, nBackgroundH);
         paintTarget.setColor(Color.BLACK);
         paintTarget.setStrokeWidth(1);
         paintTarget.setStyle(Paint.Style.FILL);

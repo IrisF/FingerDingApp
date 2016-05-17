@@ -14,7 +14,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+
 import ifi.lmu.com.handmeasurementstudy.gui.Drawing;
+import ifi.lmu.com.handmeasurementstudy.system.Tap;
 
 
 public class Tapping extends Activity {
@@ -30,8 +33,12 @@ public class Tapping extends Activity {
     public static int nSideLength = latinSquare.length;
     private int nTargetCounter = 0;
     private Drawing drawing;
-    private float fViewWidth;
-    private float fViewHeight;
+    private int nViewWidth;
+    private int nViewHeight;
+    private float fTargetX;
+    private float fTargetY;
+
+    private ArrayList<Tap> loggedTaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +52,14 @@ public class Tapping extends Activity {
 
         // Get/create db handler:
         //this.dbHandler = DBHandler.getInstance(this);
+        loggedTaps = new ArrayList<Tap>();
 
 
         drawing = new Drawing(this, this);
         drawing.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.d("Tapping","onTouch (Listener)");
+                Log.d("Tapping", "onTouch: " + event.getAction());
                 onUserTouch(v, event);
                 return false;
             }
@@ -59,10 +67,14 @@ public class Tapping extends Activity {
         //mainLayout.addView(drawing); // TODO out for testing
 
         setContentView(drawing);
-        fViewWidth = drawing.getViewWidth();
-        fViewHeight = drawing.getViewHeight();
+        //nViewWidth = drawing.getViewWidth();
+        //nViewHeight = drawing.getViewHeight();
 
         startTappingTest();
+    }
+
+    public void setNewCrosshairPosition (int i_nX, int i_nY) {
+
     }
 
     private void startTappingTest () {
@@ -80,9 +92,9 @@ public class Tapping extends Activity {
 
     private void showCrosshair (int i_nCrosshairIndex) {
         int[] anLatinIndex =  getLatinIndexByCrosshairCount(i_nCrosshairIndex);
-        //int[] anNewTargetLocation = getAbsoluteTargetLocation(anLatinIndex[0], anLatinIndex[1]);
-        //drawing.setNewTargetLocation(anNewTargetLocation[0], anNewTargetLocation[1]);
-        drawing.setNewRelativeTargetLocation(anLatinIndex[0], anLatinIndex[1]);
+        float[] anNewTargetLocation = getAbsoluteTargetLocation(anLatinIndex[0], anLatinIndex[1]);
+        drawing.setNewTargetLocation(anNewTargetLocation[0], anNewTargetLocation[1]);
+        //drawing.setNewRelativeTargetLocation(anLatinIndex[0], anLatinIndex[1]);
 
 
         drawing.setBackgroundColor(Color.WHITE);
@@ -99,33 +111,73 @@ public class Tapping extends Activity {
         return anLatinIndex;
     }
 
-    private int[] getAbsoluteTargetLocation (int i_nNumX, int i_nNumY){
+    private float[] getAbsoluteTargetLocation (int i_nNumX, int i_nNumY){
 
-        int nX = ((int) fViewWidth / latinSquare.length) * (i_nNumX + 1);
-        int nY = ((int) fViewHeight / latinSquare.length) * (i_nNumY + 1);
+        if(nViewWidth == 0
+                || nViewHeight == 0){
+            Log.e("Tapping", "No canvas size set yet!");
+        }
 
-        int[] anAbsoluteLocation = {nX, nY};
+        fTargetX = (nViewWidth / latinSquare.length) * (i_nNumX + 0.5f);
+        fTargetY = (nViewHeight / latinSquare.length) * (i_nNumY + 0.5f);
+
+        float[] anAbsoluteLocation = {fTargetX, fTargetY};
         return anAbsoluteLocation;
     }
 
 
     public boolean onUserTouch(View v, MotionEvent event) {
 
-        float x = event.getX();
-        float y = event.getY();
+
+        saveTouch(v, event);
+        onShowNextTap();
+
+        return false;
+    }
+
+    private void saveTouch(View v, MotionEvent event) {
+/*
         float rawX = event.getRawX();
         float rawY = event.getRawY();
 
         float globalX = v.getLeft() + rawX;
         float globalY = v.getTop() + rawY;
 
+
+
+
+
         // down on panel:
-        /*
-        if (v == this.drawingPanel
-                && event.getAction() == MotionEvent.ACTION_DOWN
-                && !this.trialFinished && this.trialStarted) {
-            Log.d("DEBUG", "touch down panel at: " + x + ", " + y
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            Log.d("Tapping", "touch down panel at: " + x + ", " + y
                     + " (global: " + globalX + ", " + globalY + ")");
+
+            Tap oCurrentTouch = new Tap(event.getX(),
+                    event.getY(),
+                    ,
+                    ,
+                    fTargetX,
+                    fTargetY,);
+
+            public float downX;
+            public float downY;
+            public float upX;
+            public float upY;
+            public float targetX;
+            public float targetY;
+            public int hit;
+            public long timeDown;
+            public long timeUp;
+            public float pressureDown;
+            public float pressureUp;
+            public float sizeDown;
+            public float sizeUp;
+            public float minorDown;
+            public float minorUp;
+            public float majorDown;
+            public float majorUp;
+
             this.lastDownX = x;// globalX;
             this.lastDownY = y;// globalY;
             this.lastDownPressure = event.getPressure();
@@ -135,11 +187,8 @@ public class Tapping extends Activity {
             this.lastTimeDown = System.currentTimeMillis()
                     - this.trialStartTime;
         }
+        */
 
-*/
-        onShowNextTap();
-
-        return false;
     }
 
     @Override
@@ -164,4 +213,9 @@ public class Tapping extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void setBackgroundSize(int i_nBackgroundW, int i_nBackgroundH) {
+        Log.d("Tapping", "setBackgroundSize: " + i_nBackgroundW + " x " + i_nBackgroundH);
+        nViewWidth = i_nBackgroundW;
+        nViewHeight = i_nBackgroundH;
+    }
 }
