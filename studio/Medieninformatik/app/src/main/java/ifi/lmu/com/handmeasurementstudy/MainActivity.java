@@ -157,24 +157,30 @@ public class MainActivity extends Activity {
         }
         else {
 
-            Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
-            int sessionIndex = spinner.getSelectedItemPosition();
+            if(checkForInputsCorrect()) {
 
-            //Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
-            // int selectedTrialID = spinner2.getSelectedItemPosition();
+                Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
+                int sessionIndex = spinner.getSelectedItemPosition();
 
-            EditText userID_edit = (EditText) findViewById(R.id.userID_text);
-            int userID = Integer.valueOf(userID_edit.getText().toString());
-            MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
+                //Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
+                // int selectedTrialID = spinner2.getSelectedItemPosition();
 
-            // TODO save user data to DB
+                EditText userID_edit = (EditText) findViewById(R.id.userID_text);
+                String strUserID = userID_edit.getText().toString();
+                if (!strUserID.equals("")) {
+                    int userID = Integer.parseInt(strUserID);
+                    MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
+                }
 
-            Intent intent = new Intent(this, Tapping.class);
-            //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
-            // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);
-            // intent.putExtra(MainActivity.EXTRA_SUBJECT_NAME, name);
+                // TODO save user data to DB
 
-            startActivity(intent);
+                Intent intent = new Intent(this, Tapping.class);
+                //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
+                // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);
+                // intent.putExtra(MainActivity.EXTRA_SUBJECT_NAME, name);
+
+                startActivity(intent);
+            }
         }
 
 
