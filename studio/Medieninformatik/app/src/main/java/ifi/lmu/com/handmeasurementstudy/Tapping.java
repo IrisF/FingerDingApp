@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import ifi.lmu.com.handmeasurementstudy.gui.Drawing;
 
 
-public class Tapping extends Activity implements View.OnTouchListener {
+public class Tapping extends Activity {
 
     private static final int[][] latinSquare = {
             {6, 1, 3, 2, 4, 6},
@@ -48,6 +48,14 @@ public class Tapping extends Activity implements View.OnTouchListener {
 
 
         drawing = new Drawing(this, this);
+        drawing.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d("Tapping","onTouch (Listener)");
+                onUserTouch(v, event);
+                return false;
+            }
+        });
         //mainLayout.addView(drawing); // TODO out for testing
 
         setContentView(drawing);
@@ -66,6 +74,7 @@ public class Tapping extends Activity implements View.OnTouchListener {
 
     private void onShowNextTap () {
         nTargetCounter++;
+        drawing.invalidate();
         showCrosshair(nTargetCounter);
     }
 
@@ -99,10 +108,8 @@ public class Tapping extends Activity implements View.OnTouchListener {
         return anAbsoluteLocation;
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
 
-        Log.d("Tapping","onTouch");
+    public boolean onUserTouch(View v, MotionEvent event) {
 
         float x = event.getX();
         float y = event.getY();
@@ -132,13 +139,6 @@ public class Tapping extends Activity implements View.OnTouchListener {
 */
         onShowNextTap();
 
-        return false;
-    }
-
-    @Override
-    public boolean onTouchEvent (MotionEvent event) {
-        Log.d("Tapping", "onTouchEvent");
-        onShowNextTap();
         return false;
     }
 
