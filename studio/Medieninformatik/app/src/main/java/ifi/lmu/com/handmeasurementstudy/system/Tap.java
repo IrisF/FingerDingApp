@@ -43,4 +43,26 @@ public class Tap {
         this.majorUp = majorUp;
 	}
 
+	@Override
+	public String toString() {
+		return "Tap{" +
+				"downX=" + downX +
+				", downY=" + downY +
+				", upX=" + upX +
+				", upY=" + upY +
+				", targetX=" + targetX +
+				", targetY=" + targetY +
+				", hit=" + hit +
+				", timeDown=" + timeDown +
+				", timeUp=" + timeUp +
+				", pressureDown=" + pressureDown +
+				", pressureUp=" + pressureUp +
+				", sizeDown=" + sizeDown +
+				", sizeUp=" + sizeUp +
+				", minorDown=" + minorDown +
+				", minorUp=" + minorUp +
+				", majorDown=" + majorDown +
+				", majorUp=" + majorUp +
+				'}';
+	}
 }
