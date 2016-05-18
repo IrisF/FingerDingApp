@@ -5,11 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Debug;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.View;
 
 import ifi.lmu.com.handmeasurementstudy.Tapping;
 import ifi.lmu.com.handmeasurementstudy.system.Tools;
@@ -17,7 +14,7 @@ import ifi.lmu.com.handmeasurementstudy.system.Tools;
 /**
  * Created by Jonny on 10.05.2016.
  */
-public class Drawing extends AbstractDrawingPanel implements View.OnTouchListener { //View {
+public class Drawing extends AbstractDrawingPanel { //View {
 
     private Tapping parent;
 
@@ -31,14 +28,23 @@ public class Drawing extends AbstractDrawingPanel implements View.OnTouchListene
 
     private Paint paintTarget = new Paint();
     private Paint paintBackground = new Paint();
+    private Rect rectBackground;
 
 
     public Drawing(Context context, Tapping parent) {
         super(context);
         this.parent = parent;
         getHolder().addCallback(this);
-        nBackgroundW = this.getWidth();
-        nBackgroundH = this.getHeight();
+
+        // Background paint:
+        this.paintBackground = new Paint();
+        this.paintBackground.setStrokeWidth(1);
+        this.paintBackground.setStyle(Paint.Style.FILL);
+        this.paintBackground.setColor(Color.rgb(255, 255, 255));
+
+        this.rectBackground = new Rect(0, 0, this.nBackgroundW,
+                this.nBackgroundH);
+
     }
 
 
@@ -48,7 +54,14 @@ public class Drawing extends AbstractDrawingPanel implements View.OnTouchListene
         Log.d("Drawing","onDraw");
 
 
-        calculateAbsoluteTarget();
+        if(targetX == 0) {
+            setNewRelativeTargetLocation(0,0);
+            calculateAbsoluteTarget();
+        }
+        //calculateAbsoluteTarget();
+
+        // draw bg:
+        canvas.drawRect(this.rectBackground, this.paintBackground);
 
 
         paintTarget.setStrokeWidth(5);
@@ -63,8 +76,8 @@ public class Drawing extends AbstractDrawingPanel implements View.OnTouchListene
     }
 
     private void calculateAbsoluteTarget() {
-        targetX = (nBackgroundW / Tapping.nSideLength) * (fRelativeTargetX +1);
-        targetY = (nBackgroundH / Tapping.nSideLength) * (fRelativeTargetY +1);
+        targetX = (nBackgroundW / Tapping.nSideLength) * (fRelativeTargetX + 0.5f);
+        targetY = (nBackgroundH / Tapping.nSideLength) * (fRelativeTargetY + 0.5f);
     }
 
     public void setNewTargetLocation(float x, float y) {
@@ -80,11 +93,11 @@ public class Drawing extends AbstractDrawingPanel implements View.OnTouchListene
     }
 
 
-    public float getViewWidth () {
+    public int getViewWidth () {
         return nBackgroundW;
     }
 
-    public float getViewHeight () {
+    public int getViewHeight () {
         return nBackgroundH;
     }
 
@@ -93,6 +106,7 @@ public class Drawing extends AbstractDrawingPanel implements View.OnTouchListene
         Log.d("Drawing","surfaceCreated");
         nBackgroundW = this.getWidth();
         nBackgroundH = this.getHeight();
+        parent.setBackgroundSize(nBackgroundW, nBackgroundH);
         paintTarget.setColor(Color.BLACK);
         paintTarget.setStrokeWidth(1);
         paintTarget.setStyle(Paint.Style.FILL);
@@ -113,12 +127,5 @@ public class Drawing extends AbstractDrawingPanel implements View.OnTouchListene
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        Log.d("Drawing", "onTouch");
-        parent.onTouch(v, event);
-        return false;
     }
 }
