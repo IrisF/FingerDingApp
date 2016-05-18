@@ -18,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+//TODO after next meeting: delete this or grap elements if needed!!
+
 /**
  * Created by Sarah on 09.05.2016.
- */
+ *
 public class ZoomingView extends View implements View.OnTouchListener{
 
     private Paint rectanglePaint;
@@ -71,3 +73,4 @@ public class ZoomingView extends View implements View.OnTouchListener{
         return false;
     }
 }
+*/
