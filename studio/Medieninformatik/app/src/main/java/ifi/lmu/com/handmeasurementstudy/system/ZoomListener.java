@@ -16,9 +16,10 @@ import ifi.lmu.com.handmeasurementstudy.R;
  */
 public class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
     private ImageView image;
+    private Zoom zoom;
 
     public ZoomListener(Context context) {
-        this.image = (ImageView) ((Activity)context).findViewById(R.id.imageToZoom);;
+        this.image = (ImageView) ((Activity)context).findViewById(R.id.imageToZoom);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListe
 
     @Override
     public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
-        Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime());
+        zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime());
         Log.i("Scale", zoom.toString());
 
         image.getLayoutParams().width += 20;
@@ -47,4 +48,7 @@ public class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListe
         Log.e("e", "On Scale End");
     }
 
+    public Zoom getZoom() {
+        return zoom;
+    }
 }
