@@ -89,30 +89,15 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     @Override
     public boolean onTouchEvent (MotionEvent event) {
-//TODO eventually log some data here
-        Log.e("TouchEvent", event.toString());
-
         //scale
         scaleGestureDetector.onTouchEvent(event);
+        if(zoomListener.getZoom() != null) {
+            zoomData.add(zoomListener.getZoom());
+        }
+
+        Log.e("ZoomData", zoomData.toString());
 
         return true;
 
     }
-
-//TODO eventually do sth on draw
-    /*
-    public void onDraw(Canvas canvas) {
-        //int viewWidth = this.getWidth();
-        //int viewHeight = this.getHeight();
-
-        rectanglePaint.setStyle(Paint.Style.STROKE);
-        rectanglePaint.setAntiAlias(true);
-        rectanglePaint.setColor(Color.RED);
-
-        canvas.drawRect(10, 10, 120-10, 120-10, rectanglePaint);
-
-    }*/
-
-
-
 }
