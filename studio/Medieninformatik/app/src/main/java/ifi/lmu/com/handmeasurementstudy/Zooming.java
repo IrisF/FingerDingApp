@@ -31,22 +31,27 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     private ArrayList<Zoom> zoomData;
     private ZoomListener zoomListener;
 
-    //private Paint rectanglePaint;
+    private ZoomingRectangles zoomingRectangles;
+    private RelativeLayout zoomingLayout;
 
     private SensorHelper sensorHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_zooming);
 
-        //rectanglePaint = new Paint();
+        // add custom View to draw rectangles
+        zoomingRectangles = new ZoomingRectangles(this);
+        zoomingLayout = (RelativeLayout) findViewById(R.id.zoomLayout);
+        zoomingLayout.addView(zoomingRectangles);
 
+        //custom gesture listener to grap zooming gesture
         zoomListener = new ZoomListener(this);
         scaleGestureDetector = new ScaleGestureDetector(this, zoomListener);
         zoomData = new ArrayList<Zoom>();
 
+        //grap other sensor events
         sensorHelper = new SensorHelper(this);
     }
 
