@@ -33,8 +33,8 @@ public class Tapping extends Activity {
             {3, 2, 5, 4, 1, 6}
     };
     */
-    public static final int n_TARGET_WIDTH = 18;
-    public static final int n_TARGET_HEIGHT = 32;
+    public static final int n_TARGET_WIDTH = 14;
+    public static final int n_TARGET_HEIGHT = 24;
   //  public static int nSideLength = latinSquare.length;
     //private int nTargetCounter = 0;
     private Drawing drawing;
@@ -135,6 +135,7 @@ public class Tapping extends Activity {
         else {
             // TODO save all to database
             // TODO switch to next activity
+            finish();
         }
     }
 
@@ -148,6 +149,9 @@ public class Tapping extends Activity {
     private int[] getLatinIndexByCrosshairCount(int i_nCrosshairIndex) {
         int[] anLatinIndex = new int[2];
         int nIndex = anAllCrosshairs.get(i_nCrosshairIndex);
+
+        Log.d("Crosshairs left: ", String.valueOf(anAllCrosshairs.size()));
+
         anAllCrosshairs.remove(i_nCrosshairIndex);
         anLatinIndex[0] = nIndex / n_TARGET_HEIGHT;
         anLatinIndex[1] = nIndex % n_TARGET_HEIGHT;
@@ -172,9 +176,11 @@ public class Tapping extends Activity {
 
     public boolean onUserTouch(MotionEvent event) {
 
-
         saveTouch(event);
-        onShowNextTap();
+
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            onShowNextTap();
+        }
 
         return false;
     }
@@ -187,6 +193,7 @@ public class Tapping extends Activity {
                 fTouchDownX = event.getX();
                 fTouchDownY = event.getY();
                 nStartTime = System.currentTimeMillis();
+                fSizeDown = event.getSize();
                 fPressureDown = event.getPressure();
                 break;
 
@@ -203,9 +210,10 @@ public class Tapping extends Activity {
                 float fSizeUp = event.getSize();
                 float fTargetX = drawing.getTargetWidth();
                 float fTargetY = drawing.getTargetHeight();
+                Coords[] aoMoveArray = aMoveCoords.toArray(new Coords[aMoveCoords.size()]);
 
                 Tap oTap = new Tap(fTouchDownX, fTouchDownY, fTouchUpX, fTouchUpY, fTargetX, fTargetY,
-                        nDuration, fPressureDown, fPressureUp, fSizeDown, fSizeUp, (Coords[]) aMoveCoords.toArray());
+                        nDuration, fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
                 loggedTaps.add(oTap);
 
                 aMoveCoords.clear();

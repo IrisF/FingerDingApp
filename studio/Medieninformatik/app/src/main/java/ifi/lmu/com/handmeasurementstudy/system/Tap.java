@@ -2,24 +2,24 @@ package ifi.lmu.com.handmeasurementstudy.system;
 
 public class Tap {
 
-	private float downX;
-	private float downY;
-	private float upX;
-	private float upY;
-	private float targetX;
-	private float targetY;
+	public float downX;
+    public float downY;
+    public float upX;
+    public float upY;
+    public float targetX;
+    public float targetY;
 	//public int hit;
-	private long timeDown;
+    public long timeDown;
 	//public long timeUp;
-	private float pressureDown;
-	private float pressureUp;
-	private float sizeDown;
-	private float sizeUp;
+    public float pressureDown;
+    public float pressureUp;
+    public float sizeDown;
+    public float sizeUp;
    // public float minorDown;
    // public float minorUp;
    // public float majorDown;
    // public float majorUp;
-    private Coords[] moveCoords;
+   public Coords[] moveCoords;
 
 	public Tap(float downX, float downY, float upX, float upY, float targetX,
 			float targetY, long timeDown, float pressureDown, float pressureUp,
@@ -42,7 +42,7 @@ public class Tap {
         //this.majorDown = majorDown;
         //this.majorUp = majorUp;
 	}
-
+/*
 	public float getDownX() {
 		return downX;
 	}
@@ -90,5 +90,6 @@ public class Tap {
     public Coords[] getMoveCoords() {
         return moveCoords;
     }
+    */
 }
 
