@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.view.Window;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
+import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.TaskScheduler;
 import ifi.lmu.com.handmeasurementstudy.system.Tools;
 
@@ -38,6 +40,8 @@ public class MainActivity extends Activity {
     public static TaskScheduler taskScheduler = null;
 
     private Spinner debugSpinner;
+
+    private int nCurrentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +99,8 @@ public class MainActivity extends Activity {
         spinner2.setAdapter(adapter2);
         //spinner2.setSelection(TRIAL_NUM_AUTO);
 
+        setUserId();
+
 
         // check for debug mode selected in spinner2 to show debug mode spinner
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -114,6 +120,13 @@ public class MainActivity extends Activity {
             }
         });
 
+    }
+
+    private void setUserId() {
+        TextView idView = (TextView) findViewById(R.id.userId);
+        int nId = 1; // TODO get user id through DB connection
+        idView.setText(String.valueOf(nId));
+        nCurrentId = nId;
     }
 
     @Override
@@ -177,12 +190,13 @@ public class MainActivity extends Activity {
 
                 // TODO save user data to DB
 
-                Intent intent = new Intent(this, Tapping.class);
+                new ActivityManager(this, nCurrentId).Start();
+                //Intent intent = new Intent(this, Tapping.class);
                 //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
                 // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);
                 // intent.putExtra(MainActivity.EXTRA_SUBJECT_NAME, name);
 
-                startActivity(intent);
+                //startActivity(intent);
             }
         }
 
