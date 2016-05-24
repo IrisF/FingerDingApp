@@ -165,12 +165,15 @@ public class MainActivity extends Activity {
                 //Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
                 // int selectedTrialID = spinner2.getSelectedItemPosition();
 
+                /*
                 EditText userID_edit = (EditText) findViewById(R.id.userID_text);
                 String strUserID = userID_edit.getText().toString();
                 if (!strUserID.equals("")) {
                     int userID = Integer.parseInt(strUserID);
                     MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
                 }
+
+                */
 
                 // TODO save user data to DB
 
@@ -191,7 +194,7 @@ public class MainActivity extends Activity {
 
         RadioButton m = (RadioButton) findViewById(R.id.radioButton_m);
         RadioButton w = (RadioButton) findViewById(R.id.radioButton_w);
-        EditText id = (EditText) findViewById(R.id.userID_text);
+        //EditText id = (EditText) findViewById(R.id.userID_text);
         EditText age = (EditText) findViewById(R.id.user_age);
         EditText handLength = (EditText) findViewById(R.id.hand_height);
         EditText handWidth = (EditText) findViewById(R.id.hand_width);
@@ -202,8 +205,8 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(), "Please select gender.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (id.getText().toString().equals("")
-                || handLength.getText().toString().equals("")
+        if (//id.getText().toString().equals("")
+                handLength.getText().toString().equals("")
                 || handWidth.getText().toString().equals("")
                 || age.getText().toString().equals(""))
         {

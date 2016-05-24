@@ -62,16 +62,7 @@
         android:text="@string/label_userID"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:id="@+id/userID_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/session_index_label" />
+        android:layout_alignEnd="@+id/textView3" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,8 +70,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/label_age"
         android:id="@+id/textView"
-        android:layout_below="@+id/userID_text"
-        android:layout_alignParentStart="true" />
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toStartOf="@+id/editText" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -88,8 +79,8 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/user_age"
-        android:layout_below="@+id/userID_text"
-        android:layout_alignStart="@+id/userID_text" />
+        android:layout_below="@+id/textView4"
+        android:layout_toEndOf="@+id/textView2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,9 +88,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/label_hand_length"
         android:id="@+id/textViewX"
-        android:layout_below="@+id/user_age"
-        android:layout_alignParentStart="true"
-        android:textIsSelectable="false" />
+        android:textIsSelectable="false"
+        android:layout_alignBottom="@+id/hand_width"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,7 +98,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/label_hand_width"
         android:id="@+id/textView2"
-        android:layout_below="@+id/hand_height"
+        android:layout_alignBottom="@+id/hand_height"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -116,8 +107,8 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/hand_height"
-        android:layout_below="@+id/user_age"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_below="@+id/textView3"
+        android:layout_toEndOf="@+id/textViewX" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -126,7 +117,7 @@
         android:ems="10"
         android:id="@+id/hand_width"
         android:maxWidth="0.5dp"
-        android:layout_below="@+id/hand_height"
+        android:layout_below="@+id/textView2"
         android:layout_toEndOf="@+id/textView2" />
 
     <Spinner
@@ -170,8 +161,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Spanne"
         android:id="@+id/textView3"
-        android:layout_below="@+id/hand_width"
-        android:layout_alignParentStart="true" />
+        android:layout_alignBottom="@+id/user_age"
+        android:layout_alignEnd="@+id/textView" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -179,8 +170,17 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/editText"
-        android:layout_above="@+id/session_index_spinner"
-        android:layout_toEndOf="@+id/session_index_label" />
+        android:layout_below="@+id/textViewX"
+        android:layout_toEndOf="@+id/textViewX" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView4"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/textView3" />
 
 
 </RelativeLayout>
