@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ifi.lmu.com.handmeasurementstudy.Swiping;
+import ifi.lmu.com.handmeasurementstudy.Tablet;
 import ifi.lmu.com.handmeasurementstudy.ZoomingView;
 import ifi.lmu.com.handmeasurementstudy.Tapping;
 import ifi.lmu.com.handmeasurementstudy.Zooming;
@@ -31,18 +32,23 @@ public class ActivityManager extends Activity { // extends Activity to call star
             Zooming.class,
             Scrolling.class,
             ZoomingView.class,
-            Slider.class
+            Tablet.class
     };
 
     private Class[] aoOrder;
 
     private int nCurrentActivity;
-    Context oContext;
+    private int nUserId;
+    private Context oContext;
 
     public ActivityManager (Context context, int i_nUserId) {
 
+        // TODO DBHelper anlegen
+        // TODO onActivityFinished (Datentyp incht festgelegt --> Objekt?)
+
         nCurrentActivity = 0;
         oContext = context;
+        nUserId = i_nUserId;
 
         // get current latin row
         int[] anLatinRow = latinSquare[ i_nUserId % latinSquare.length ];
@@ -68,6 +74,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
         if(nCurrentActivity < aoOrder.length) {
 
             Intent i = new Intent(oContext, aoOrder[nCurrentActivity]);
+            i.putExtra("id", nUserId);
             startActivity(i);
 
             nCurrentActivity++;
@@ -77,5 +84,9 @@ public class ActivityManager extends Activity { // extends Activity to call star
             
         }
 
+    }
+
+    public void SaveEntries (Object[] aoLoggingArray){
+        // TODO distinguish and save accordingly
     }
 }

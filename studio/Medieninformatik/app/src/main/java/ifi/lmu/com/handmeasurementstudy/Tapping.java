@@ -33,8 +33,8 @@ public class Tapping extends Activity {
             {3, 2, 5, 4, 1, 6}
     };
     */
-    public static final int n_TARGET_WIDTH = 14;
-    public static final int n_TARGET_HEIGHT = 24;
+    public static final int n_TARGET_WIDTH = 9;//14;
+    public static final int n_TARGET_HEIGHT = 16;//24;
   //  public static int nSideLength = latinSquare.length;
     //private int nTargetCounter = 0;
     private Drawing drawing;
@@ -53,11 +53,16 @@ public class Tapping extends Activity {
 
     private ArrayList<Tap> loggedTaps;
     private ArrayList<Integer> anAllCrosshairs;
+
+    private long nStartTime2;
     //private Array
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        nStartTime2 = System.currentTimeMillis();
         //setContentView(R.layout.activity_tapping);// TODO out for testing
         // Remove title bar:
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -135,6 +140,8 @@ public class Tapping extends Activity {
         else {
             // TODO save all to database
             // TODO switch to next activity
+            float fTime = (float)(System.currentTimeMillis() - nStartTime2);
+            Log.e("TIME FOR THIS TASK: ", String.valueOf(fTime/1000) + " seconds");
             finish();
         }
     }
