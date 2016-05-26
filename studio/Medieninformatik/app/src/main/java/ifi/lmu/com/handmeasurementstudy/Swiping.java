@@ -37,8 +37,6 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     private SeekBar seekBar;
     private ArrayList<String> posList = new ArrayList();
 
-    private static final int[] latinSquare = {1,2,3,4};
-    public static int nSideLength = latinSquare.length;
     private int nTargetCounter = 0;
 
     private TextView textView;
@@ -51,6 +49,14 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     private long timeTask3;
     private long timeTask4;
     private long timeAllTasks;
+    private boolean taskStarted =false;
+
+    private static final int[][] latinSquare = {
+            {1, 2, 3, 4},
+            {2, 1, 4, 3},
+            {3, 4, 1, 2},
+            {4, 3, 2, 1}
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,21 +98,24 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if(seekBar.getProgress()==100){
+                if(taskStarted){
                     seekBar.setProgress(0);
                     nTargetCounter++;
                     showSlider(nTargetCounter);
+                    taskStarted=false;
                 }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-
+                if(progress > 10) {
+                    taskStarted = true;
+                }
             }
         });
     }

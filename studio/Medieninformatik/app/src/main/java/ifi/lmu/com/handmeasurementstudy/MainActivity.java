@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.view.Window;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
+import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.TaskScheduler;
 import ifi.lmu.com.handmeasurementstudy.system.Tools;
 
@@ -38,6 +40,8 @@ public class MainActivity extends Activity {
     public static TaskScheduler taskScheduler = null;
 
     private Spinner debugSpinner;
+
+    private int nCurrentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +99,8 @@ public class MainActivity extends Activity {
         spinner2.setAdapter(adapter2);
         //spinner2.setSelection(TRIAL_NUM_AUTO);
 
+        setUserId();
+
 
         // check for debug mode selected in spinner2 to show debug mode spinner
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -114,6 +120,13 @@ public class MainActivity extends Activity {
             }
         });
 
+    }
+
+    private void setUserId() {
+        TextView idView = (TextView) findViewById(R.id.userId);
+        int nId = 1; // TODO get user id through DB connection
+        idView.setText(String.valueOf(nId));
+        nCurrentId = nId;
     }
 
     @Override
@@ -165,6 +178,7 @@ public class MainActivity extends Activity {
                 //Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
                 // int selectedTrialID = spinner2.getSelectedItemPosition();
 
+                /*
                 EditText userID_edit = (EditText) findViewById(R.id.userID_text);
                 String strUserID = userID_edit.getText().toString();
                 if (!strUserID.equals("")) {
@@ -172,14 +186,17 @@ public class MainActivity extends Activity {
                     MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
                 }
 
+                */
+
                 // TODO save user data to DB
 
-                Intent intent = new Intent(this, Tapping.class);
+                new ActivityManager(this, nCurrentId).Start();
+                //Intent intent = new Intent(this, Tapping.class);
                 //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
                 // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);
                 // intent.putExtra(MainActivity.EXTRA_SUBJECT_NAME, name);
 
-                startActivity(intent);
+                //startActivity(intent);
             }
         }
 
@@ -191,7 +208,7 @@ public class MainActivity extends Activity {
 
         RadioButton m = (RadioButton) findViewById(R.id.radioButton_m);
         RadioButton w = (RadioButton) findViewById(R.id.radioButton_w);
-        EditText id = (EditText) findViewById(R.id.userID_text);
+        //EditText id = (EditText) findViewById(R.id.userID_text);
         EditText age = (EditText) findViewById(R.id.user_age);
         EditText handLength = (EditText) findViewById(R.id.hand_height);
         EditText handWidth = (EditText) findViewById(R.id.hand_width);
@@ -202,8 +219,8 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(), "Please select gender.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (id.getText().toString().equals("")
-                || handLength.getText().toString().equals("")
+        if (//id.getText().toString().equals("")
+                handLength.getText().toString().equals("")
                 || handWidth.getText().toString().equals("")
                 || age.getText().toString().equals(""))
         {

@@ -76,8 +76,8 @@ public class Drawing extends AbstractDrawingPanel { //View {
     }
 
     private void calculateAbsoluteTarget() {
-        targetX = (nBackgroundW / Tapping.nSideLength) * (fRelativeTargetX + 0.5f);
-        targetY = (nBackgroundH / Tapping.nSideLength) * (fRelativeTargetY + 0.5f);
+        targetX = (nBackgroundW / Tapping.n_TARGET_WIDTH) * (fRelativeTargetX + 0.5f);
+        targetY = (nBackgroundH / Tapping.n_TARGET_HEIGHT) * (fRelativeTargetY + 0.5f);
     }
 
     public void setNewTargetLocation(float x, float y) {
@@ -99,6 +99,12 @@ public class Drawing extends AbstractDrawingPanel { //View {
 
     public int getViewHeight () {
         return nBackgroundH;
+    }
+
+    public float getTargetWidth () { return targetX; }
+
+    public float getTargetHeight () {
+        return targetY;
     }
 
     @Override

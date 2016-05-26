@@ -229,17 +229,17 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(TAPS_COL_TOUCH_UP_X, tap.upX);
 		values.put(TAPS_COL_TOUCH_UP_Y, tap.upY);
 		values.put(TAPS_COL_TOUCH_UP_Y, tap.upY);
-		values.put(TAPS_COL_HIT, tap.hit);
+		//values.put(TAPS_COL_HIT, tap.hit);
 		values.put(TAPS_COL_TIME_DOWN, tap.timeDown);
-		values.put(TAPS_COL_TIME_UP, tap.timeUp);
+		//values.put(TAPS_COL_TIME_UP, tap.timeUp);
         values.put(TAPS_COL_PRESSURE_DOWN, tap.pressureDown);
         values.put(TAPS_COL_PRESSURE_UP, tap.pressureUp);
         values.put(TAPS_COL_SIZE_DOWN, tap.sizeDown);
         values.put(TAPS_COL_SIZE_UP, tap.sizeUp);
-        values.put(TAPS_COL_MINOR_DOWN, tap.minorDown);
-        values.put(TAPS_COL_MINOR_UP, tap.minorUp);
-        values.put(TAPS_COL_MAJOR_DOWN, tap.majorDown);
-        values.put(TAPS_COL_MAJOR_UP, tap.majorUp);
+        //values.put(TAPS_COL_MINOR_DOWN, tap.minorDown);
+        //values.put(TAPS_COL_MINOR_UP, tap.minorUp);
+       // values.put(TAPS_COL_MAJOR_DOWN, tap.majorDown);
+        //values.put(TAPS_COL_MAJOR_UP, tap.majorUp);
 		values.put(TAPS_COL_TRIAL_ID, trialDBID);
 
 		int id = (int) db.insert(TABLE_TAPS, null, values);
