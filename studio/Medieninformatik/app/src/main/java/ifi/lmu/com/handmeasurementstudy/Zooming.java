@@ -34,6 +34,10 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     private ZoomingRectangles zoomingRectangles;
     private RelativeLayout zoomingLayout;
 
+    private ImageView imageView;
+
+    private int rectangleIndex;
+
     private SensorHelper sensorHelper;
 
     @Override
@@ -41,15 +45,53 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zooming);
 
+        imageView = (ImageView) findViewById(R.id.imageToZoom);
+
         // add custom View to draw rectangles
-        zoomingRectangles = new ZoomingRectangles(this);
+        rectangleIndex = 1;
+        zoomingRectangles = new ZoomingRectangles(this, this);
         zoomingLayout = (RelativeLayout) findViewById(R.id.zoomLayout);
         zoomingLayout.addView(zoomingRectangles);
+        zoomingRectangles.nextRectangle(rectangleIndex);
 
         //custom gesture listener to grap zooming gesture
-        zoomListener = new ZoomListener(this);
-        scaleGestureDetector = new ScaleGestureDetector(this, zoomListener);
+        //zoomListener = new ZoomListener(this);
         zoomData = new ArrayList<Zoom>();
+        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
+            @Override
+            public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+                Log.e("scale", "on scale");
+                return false;
+            }
+
+            @Override
+            public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+                Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime());
+                zoomData.add(zoom);
+                Log.i("Scale", zoom.toString());
+
+                Log.e("image", "image view " + imageView);
+
+                //TODO fix this prototype!!
+                if (imageView.getLayoutParams().width == 482 || imageView.getLayoutParams().height == 782) {
+                    //stop scaling, give success message
+                    Log.i("Scale", "Scaling was successful");
+                    rectangleIndex++;
+                    zoomingRectangles.nextRectangle(rectangleIndex);
+
+                } else {
+                    imageView.getLayoutParams().width += 20;
+                    imageView.getLayoutParams().height += 20;
+                    imageView.requestLayout();
+                }
+                return false;
+            }
+
+            @Override
+            public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
+                Log.e("scale", "on scale end");
+            }
+        });
 
         //grap other sensor events
         sensorHelper = new SensorHelper(this);
@@ -89,13 +131,21 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     @Override
     public boolean onTouchEvent (MotionEvent event) {
-        //scale
-        scaleGestureDetector.onTouchEvent(event);
-        if(zoomListener.getZoom() != null) {
-            zoomData.add(zoomListener.getZoom());
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //TODO maybe log start points of zooming
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //scale
+                scaleGestureDetector.onTouchEvent(event);
+                Log.e("ZoomData", zoomData.toString());
+                break;
+            case MotionEvent.ACTION_UP:
+                //TODO maybe log endpoints for max zooming gesture
+                break;
         }
 
-        Log.e("ZoomData", zoomData.toString());
+
 
         return true;
 

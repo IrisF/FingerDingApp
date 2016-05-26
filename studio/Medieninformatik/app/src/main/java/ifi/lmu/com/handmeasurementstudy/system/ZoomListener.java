@@ -33,12 +33,9 @@ public class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListe
         zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime());
         Log.i("Scale", zoom.toString());
 
-        image.getLayoutParams().width += 20;
-        image.getLayoutParams().height += 20;
-        image.requestLayout();
 
-        //if width >= rectWidth || height >= rectWidth
-        //stop scaling, give success message
+
+
 
         return false;
     }

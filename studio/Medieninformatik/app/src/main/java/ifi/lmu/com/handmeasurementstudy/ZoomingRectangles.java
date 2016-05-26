@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import ifi.lmu.com.handmeasurementstudy.system.Zoom;
+
 /**
  * Created by Sarah on 09.05.2016.
  * @class draw rectangles for zooming task
@@ -27,6 +29,8 @@ public class ZoomingRectangles extends View {
     private Paint rectanglePaint;
     private ImageView image;
     private LinearLayout layout;
+
+    private Zooming zoomingActivity;
 
     private int heightSmall, widthSmall;
     private int heightMedium, widthMedium;
@@ -42,8 +46,13 @@ public class ZoomingRectangles extends View {
             {3, 2, 4, 1}
     };
 
-    public ZoomingRectangles(Context context) {
+    private int rectangleIndex;
+
+    public ZoomingRectangles(Context context, Zooming parentActivity) {
         super(context);
+
+        this.zoomingActivity = parentActivity;
+
 
         rectanglePaint = new Paint();
 
@@ -59,22 +68,30 @@ public class ZoomingRectangles extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int squareIndex = 1;
+        //int squareIndex = 1;
+
         //default is biggest rectangle
         int width =  this.getWidth() - 10;
         int height = this.getHeight() - 10;
-        switch(squareIndex) {
+        switch(rectangleIndex) {
             case 1:
                 width = this.getWidth() - 10;
                 height = this.getHeight() - 10;
                 break;
             case 2:
+                width = (this.getWidth() - 10)/2;
+                height = (this.getHeight() - 10)/2;
                 break;
             case 3:
+                width = (this.getWidth() - 10)/4;
+                height = (this.getHeight() - 10)/4;
                 break;
             case 4:
+                //TODO no rectangle
                 break;
         }
+
+        Log.e("rect", "######################## w " + width + "######################### h " + height);
 
         //TODO draw three different rectangles, latin square?!
         rectanglePaint.setStyle(Paint.Style.STROKE);
@@ -90,5 +107,12 @@ public class ZoomingRectangles extends View {
         int width = View.MeasureSpec.getSize(widthMeasureSpec);
         int height = View.MeasureSpec.getSize(heightMeasureSpec);
         setMeasuredDimension(width, height);
+    }
+
+    public void nextRectangle(int index) {
+        this.rectangleIndex = index;
+
+        Log.i("index", "hallo " + this.rectangleIndex);
+        this.invalidate();
     }
 }
