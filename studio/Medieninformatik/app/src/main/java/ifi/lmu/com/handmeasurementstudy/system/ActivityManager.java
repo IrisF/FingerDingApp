@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import ifi.lmu.com.handmeasurementstudy.Swiping;
 import ifi.lmu.com.handmeasurementstudy.Tablet;
-import ifi.lmu.com.handmeasurementstudy.ZoomingView;
+import ifi.lmu.com.handmeasurementstudy.ZoomingRectangles;
 import ifi.lmu.com.handmeasurementstudy.Tapping;
 import ifi.lmu.com.handmeasurementstudy.Zooming;
 import ifi.lmu.com.handmeasurementstudy.Scrolling;
@@ -31,7 +31,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
             Swiping.class,
             Zooming.class,
             Scrolling.class,
-            ZoomingView.class,
+            ZoomingRectangles.class,
             Tablet.class
     };
 
