@@ -1,11 +1,6 @@
 package ifi.lmu.com.handmeasurementstudy;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.support.v7.app.ActionBar;
+import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,29 +9,44 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
 import ifi.lmu.com.handmeasurementstudy.system.Zoom;
-import ifi.lmu.com.handmeasurementstudy.system.ZoomListener;
 
 
 public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     private ScaleGestureDetector scaleGestureDetector;
     private ArrayList<Zoom> zoomData;
-    private ZoomListener zoomListener;
 
     private ZoomingRectangles zoomingRectangles;
     private RelativeLayout zoomingLayout;
 
-    private ImageView imageView;
+    //case 1
+    public int heightBig, widthBig;
+    //case 2
+    public int heightMedium, widthMedium;
+    //case 3
+    public int heightSmall, widthSmall;
 
-    private int rectangleIndex;
+    private static final int[][] latinSquare = {
+            {1, 2, 3, 4},
+            {2, 1, 4, 3},
+            {3, 4, 1, 2},
+            {4, 3, 2, 1}
+    };
+
+    private ImageView imageView;
+    private Button startButton;
+
+    public int rectangleIndex;
 
     private SensorHelper sensorHelper;
 
@@ -45,17 +55,44 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zooming);
 
-        imageView = (ImageView) findViewById(R.id.imageToZoom);
-
         // add custom View to draw rectangles
-        rectangleIndex = 1;
         zoomingRectangles = new ZoomingRectangles(this, this);
         zoomingLayout = (RelativeLayout) findViewById(R.id.zoomLayout);
         zoomingLayout.addView(zoomingRectangles);
-        zoomingRectangles.nextRectangle(rectangleIndex);
+
+        imageView = (ImageView) findViewById(R.id.imageToZoom);
+
+        startButton = (Button) findViewById(R.id.startZoomingTask);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView text = (TextView) findViewById(R.id.zoomingDescr);
+                text.setVisibility(View.INVISIBLE);
+                startButton.setVisibility(View.INVISIBLE);
+
+                imageView.setVisibility(View.VISIBLE);
+
+                widthBig = zoomingRectangles.getMeasuredWidth();
+                heightBig = zoomingRectangles.getMeasuredHeight();
+
+                Log.e("sizes", "here zooming Rectangle size w " + widthBig + " h " + heightBig);
+
+                widthMedium = zoomingRectangles.getMeasuredWidth() / 2;
+                heightMedium = zoomingRectangles.getMeasuredHeight() / 2;
+
+                widthSmall = zoomingRectangles.getMeasuredWidth() / 4;
+                heightSmall = zoomingRectangles.getMeasuredHeight() / 4;
+
+//TODO latin square this index!
+                rectangleIndex = 1;
+
+
+                initImageDimensions();
+                zoomingRectangles.invalidate();
+            }
+        });
 
         //custom gesture listener to grap zooming gesture
-        //zoomListener = new ZoomListener(this);
         zoomData = new ArrayList<Zoom>();
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
             @Override
@@ -70,14 +107,37 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());
 
-                Log.e("image", "image view " + imageView);
+                int imageViewWidth = imageView.getLayoutParams().width;
+                int imageViewHeight = imageView.getLayoutParams().height;
 
-                //TODO fix this prototype!!
-                if (imageView.getLayoutParams().width == 482 || imageView.getLayoutParams().height == 782) {
+                //check which rectangle is currently on screen
+                int rectangleWidth, rectangleHeight;
+                switch (rectangleIndex) {
+                    case 1:
+                        rectangleWidth = widthBig;
+                        rectangleHeight = heightBig;
+                        break;
+                    case 2:
+                        rectangleWidth = widthMedium;
+                        rectangleHeight = heightMedium;
+                        break;
+                    case 3:
+                        rectangleWidth = widthSmall;
+                        rectangleHeight = heightSmall;
+                        break;
+                    default:
+                        rectangleHeight = 0;
+                        rectangleWidth = 0;
+                        break;
+                }
+
+                if (imageViewHeight >= rectangleHeight || imageViewWidth >= rectangleWidth) {
                     //stop scaling, give success message
-                    Log.i("Scale", "Scaling was successful");
                     rectangleIndex++;
-                    zoomingRectangles.nextRectangle(rectangleIndex);
+                    Log.i("Scale", "Scaling was successful, index is now " + rectangleIndex);
+
+                    initImageDimensions();
+                    zoomingRectangles.invalidate();
 
                 } else {
                     imageView.getLayoutParams().width += 20;
@@ -133,7 +193,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     public boolean onTouchEvent (MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                //TODO maybe log start points of zooming
+                //log start points
+                Log.i("Scale", "Start Points x " + event.getX() + " y " + event.getY());
                 break;
             case MotionEvent.ACTION_MOVE:
                 //scale
@@ -141,13 +202,47 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 Log.e("ZoomData", zoomData.toString());
                 break;
             case MotionEvent.ACTION_UP:
-                //TODO maybe log endpoints for max zooming gesture
+                //end here for maximum zooming gesture
+                if(rectangleIndex == 4) {
+                    Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY());
+                }
                 break;
         }
-
-
-
         return true;
+    }
+
+    //initialize imageView with the help of device orientation and aspect ratio
+    private void initImageDimensions() {
+        //this is the smartphone test application, so orientation is portrait and width < height
+        imageView.getLayoutParams().height = heightBig/8;
+        imageView.getLayoutParams().width = widthBig/8 * (9/16);
+
+
+        /*
+        double aspectRatio;
+        switch (getResources().getConfiguration().orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE:
+                aspectRatio = widthBig / heightBig;
+                Log.i("ratio", Double.toString(aspectRatio));
+                //width is biggest size
+                imageView.getLayoutParams().width = widthBig / 8;
+                imageView.getLayoutParams().height = (int) Math.round(imageView.getLayoutParams().width / (16/9));
+                break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                aspectRatio = zoomingRectangles.getMeasuredWidth() / zoomingRectangles.getMeasuredHeight();
+                Log.i("ratio", Double.toString(aspectRatio));
+                //height is biggest size
+                imageView.getLayoutParams().height = zoomingRectangles.getMeasuredHeight() / 8;
+                imageView.getLayoutParams().width = (int) Math.round((zoomingRectangles.getMeasuredHeight() / 8) * (9/16));
+                break;
+            case Configuration.ORIENTATION_UNDEFINED:
+                //assume that it's portrait on smartphone
+                aspectRatio = zoomingRectangles.getMeasuredWidth() / zoomingRectangles.getMeasuredHeight();
+                Log.i("ratio", Double.toString(aspectRatio));
+                imageView.getLayoutParams().height = zoomingRectangles.getMeasuredHeight() / 8;
+                imageView.getLayoutParams().width = (int) Math.round((zoomingRectangles.getMeasuredHeight() / 8) * (9/16));
+                break;
+        }*/
 
     }
 }

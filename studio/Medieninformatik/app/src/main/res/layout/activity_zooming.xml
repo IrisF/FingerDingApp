@@ -9,15 +9,30 @@
     android:id="@+id/zoomLayout"
     tools:context="ifi.lmu.com.handmeasurementstudy.Zooming">
 
+    <TextView
+        android:id="@+id/zoomingDescr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zooming_description"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/startZoomingTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_below="@+id/zoomingDescr"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:layout_weight="1"
         android:id="@+id/imageToZoom"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/hand"/>
+        android:src="@drawable/image_to_zoom_portrait"
+        android:visibility="invisible"
+        android:layout_height="16dp"
+        android:layout_width="9dp" />
 
 
 </RelativeLayout>

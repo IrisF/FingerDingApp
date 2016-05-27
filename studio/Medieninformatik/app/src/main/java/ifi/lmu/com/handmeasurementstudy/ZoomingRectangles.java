@@ -32,35 +32,19 @@ public class ZoomingRectangles extends View {
 
     private Zooming zoomingActivity;
 
-    private int heightSmall, widthSmall;
-    private int heightMedium, widthMedium;
-    private int heightBig, widthBig;
-
-    //TODO ist das richtig?!
-    private static final int[][] latinSquare = {
-            {1, 3, 2, 4},
-            {2, 4, 1, 3},
-            {4, 3, 2, 1},
-            {1, 3, 2, 4},
-            {4, 1, 3, 2},
-            {3, 2, 4, 1}
-    };
-
-    private int rectangleIndex;
-
     public ZoomingRectangles(Context context, Zooming parentActivity) {
         super(context);
 
         this.zoomingActivity = parentActivity;
 
-
         rectanglePaint = new Paint();
 
+        /*
         layout = new LinearLayout(context);
 
         image = new ImageView(context);
         image.setImageResource(R.drawable.hand);
-        layout.addView(image);
+        layout.addView(image);*/
 
     }
 
@@ -68,26 +52,21 @@ public class ZoomingRectangles extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        //int squareIndex = 1;
-
         //default is biggest rectangle
-        int width =  this.getWidth() - 10;
-        int height = this.getHeight() - 10;
-        switch(rectangleIndex) {
+        int width =  0;
+        int height = 0;
+        switch(zoomingActivity.rectangleIndex) {
             case 1:
-                width = this.getWidth() - 10;
-                height = this.getHeight() - 10;
+                width = zoomingActivity.widthBig;
+                height = zoomingActivity.heightBig;
                 break;
             case 2:
-                width = (this.getWidth() - 10)/2;
-                height = (this.getHeight() - 10)/2;
+                width = zoomingActivity.widthMedium;
+                height = zoomingActivity.heightMedium;
                 break;
             case 3:
-                width = (this.getWidth() - 10)/4;
-                height = (this.getHeight() - 10)/4;
-                break;
-            case 4:
-                //TODO no rectangle
+                width = zoomingActivity.widthSmall;
+                height = zoomingActivity.heightSmall;
                 break;
         }
 
@@ -98,8 +77,14 @@ public class ZoomingRectangles extends View {
         rectanglePaint.setAntiAlias(true);
         rectanglePaint.setColor(Color.RED);
 
-        canvas.drawRect(10, 10, width, height, rectanglePaint);
-        canvas.save();
+        //coordinates of top left corner in such a way the rectangle is drawn in center
+        int x = this.getWidth()/2 - width/2;
+        int y = this.getHeight()/2 - height/2;
+
+        if(width != 0 && height != 0) {
+            canvas.drawRect(x, y, width, height, rectanglePaint);
+            canvas.save();
+        }
     }
 
     @Override
@@ -107,12 +92,5 @@ public class ZoomingRectangles extends View {
         int width = View.MeasureSpec.getSize(widthMeasureSpec);
         int height = View.MeasureSpec.getSize(heightMeasureSpec);
         setMeasuredDimension(width, height);
-    }
-
-    public void nextRectangle(int index) {
-        this.rectangleIndex = index;
-
-        Log.i("index", "hallo " + this.rectangleIndex);
-        this.invalidate();
     }
 }
