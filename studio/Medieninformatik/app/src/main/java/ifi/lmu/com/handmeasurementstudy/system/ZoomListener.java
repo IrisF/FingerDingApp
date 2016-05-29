@@ -34,9 +34,6 @@ public class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListe
         Log.i("Scale", zoom.toString());
 
 
-
-
-
         return false;
     }
 

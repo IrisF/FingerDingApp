@@ -1,5 +1,6 @@
 package ifi.lmu.com.handmeasurementstudy;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -36,16 +36,19 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     //case 3
     public int heightSmall, widthSmall;
 
+    private int userID;
     private static final int[][] latinSquare = {
-            {1, 2, 3, 4},
-            {2, 1, 4, 3},
-            {3, 4, 1, 2},
-            {4, 3, 2, 1}
+            {1, 2, 3},
+            {3, 1, 2},
+            {2, 3, 1},
     };
+
+    private int[] zoomLatinRow;
 
     private ImageView imageView;
     private Button startButton;
 
+    private int counter;
     public int rectangleIndex;
 
     private SensorHelper sensorHelper;
@@ -54,6 +57,14 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zooming);
+
+        //get User ID from Intent
+        Intent mIntent = getIntent();
+        userID = mIntent.getIntExtra("id", 0);
+        //userID = 5;
+
+        // get current latin row
+        zoomLatinRow = latinSquare[ userID % latinSquare.length ];
 
         // add custom View to draw rectangles
         zoomingRectangles = new ZoomingRectangles(this, this);
@@ -80,12 +91,11 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 widthMedium = zoomingRectangles.getMeasuredWidth() / 2;
                 heightMedium = zoomingRectangles.getMeasuredHeight() / 2;
 
-                widthSmall = zoomingRectangles.getMeasuredWidth() / 4;
-                heightSmall = zoomingRectangles.getMeasuredHeight() / 4;
+                widthSmall = zoomingRectangles.getMeasuredWidth() / 3;
+                heightSmall = zoomingRectangles.getMeasuredHeight() / 3;
 
-//TODO latin square this index!
-                rectangleIndex = 1;
-
+                counter = 0;
+                rectangleIndex = zoomLatinRow[counter];
 
                 initImageDimensions();
                 zoomingRectangles.invalidate();
@@ -133,11 +143,17 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
                 if (imageViewHeight >= rectangleHeight || imageViewWidth >= rectangleWidth) {
                     //stop scaling, give success message
-                    rectangleIndex++;
-                    Log.i("Scale", "Scaling was successful, index is now " + rectangleIndex);
+                    counter++;
+                    if(counter >= zoomLatinRow.length) {
+                        Log.i("End", "zooming is over !!!!!!!!!!!!");
+                        //TODO activity end
+                    } else {
+                        rectangleIndex = zoomLatinRow[counter];
+                        Log.i("Scale", "Scaling was successful, index is now " + rectangleIndex);
 
-                    initImageDimensions();
-                    zoomingRectangles.invalidate();
+                        initImageDimensions();
+                        zoomingRectangles.invalidate();
+                    }
 
                 } else {
                     imageView.getLayoutParams().width += 20;
@@ -189,6 +205,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     }
 
 
+    //TODO stop time and log start & end points
     @Override
     public boolean onTouchEvent (MotionEvent event) {
         switch (event.getAction()) {
