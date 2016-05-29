@@ -61,10 +61,10 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
         //get User ID from Intent
         Intent mIntent = getIntent();
         userID = mIntent.getIntExtra("id", 0);
-        //userID = 5;
 
         // get current latin row
-        zoomLatinRow = latinSquare[ userID % latinSquare.length ];
+        //zoomLatinRow = latinSquare[ userID % latinSquare.length ];
+        zoomLatinRow = latinSquare[ 2 ];
 
         // add custom View to draw rectangles
         zoomingRectangles = new ZoomingRectangles(this, this);

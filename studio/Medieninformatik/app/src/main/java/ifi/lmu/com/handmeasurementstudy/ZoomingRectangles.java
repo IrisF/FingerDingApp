@@ -27,8 +27,6 @@ import ifi.lmu.com.handmeasurementstudy.system.Zoom;
 public class ZoomingRectangles extends View {
 
     private Paint rectanglePaint;
-    private ImageView image;
-    private LinearLayout layout;
 
     private Zooming zoomingActivity;
 
@@ -38,21 +36,12 @@ public class ZoomingRectangles extends View {
         this.zoomingActivity = parentActivity;
 
         rectanglePaint = new Paint();
-
-        /*
-        layout = new LinearLayout(context);
-
-        image = new ImageView(context);
-        image.setImageResource(R.drawable.hand);
-        layout.addView(image);*/
-
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        //default is biggest rectangle
         int width =  0;
         int height = 0;
         switch(zoomingActivity.rectangleIndex) {
@@ -70,16 +59,13 @@ public class ZoomingRectangles extends View {
                 break;
         }
 
-        Log.e("rect", "######################## w " + width + "######################### h " + height);
-
-        //TODO draw three different rectangles, latin square?!
         rectanglePaint.setStyle(Paint.Style.STROKE);
         rectanglePaint.setAntiAlias(true);
         rectanglePaint.setColor(Color.RED);
 
         //coordinates of top left corner in such a way the rectangle is drawn in center
-        int x = this.getWidth()/2 - width/2;
-        int y = this.getHeight()/2 - height/2;
+        int x = (this.getMeasuredWidth() - width) / 2 ;
+        int y = (this.getMeasuredHeight() - height) / 2;
 
         if(width != 0 && height != 0) {
             canvas.drawRect(x, y, width, height, rectanglePaint);
