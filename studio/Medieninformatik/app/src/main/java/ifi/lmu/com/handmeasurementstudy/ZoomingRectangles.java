@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
@@ -64,11 +65,11 @@ public class ZoomingRectangles extends View {
         rectanglePaint.setColor(Color.RED);
 
         //coordinates of top left corner in such a way the rectangle is drawn in center
-        int x = (this.getMeasuredWidth() - width) / 2 ;
-        int y = (this.getMeasuredHeight() - height) / 2;
+        int x = ((this.getMeasuredWidth() - width) / 2);
+        int y = ((this.getMeasuredHeight() - height) / 2);
 
         if(width != 0 && height != 0) {
-            canvas.drawRect(x, y, width, height, rectanglePaint);
+            canvas.drawRect(x, y, x+width, y+height, rectanglePaint);
             canvas.save();
         }
     }
