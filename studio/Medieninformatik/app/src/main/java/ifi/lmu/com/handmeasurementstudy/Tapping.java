@@ -2,6 +2,7 @@ package ifi.lmu.com.handmeasurementstudy;
 
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
@@ -13,11 +14,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import ifi.lmu.com.handmeasurementstudy.gui.Drawing;
+import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.Coords;
 import ifi.lmu.com.handmeasurementstudy.system.Tap;
 
@@ -42,6 +45,8 @@ public class Tapping extends Activity {
     private int nViewHeight;
     private float fTargetX;
     private float fTargetY;
+
+    private boolean bBackPressedSecondTime = false;
 
     // touch related variables
     private float fTouchDownX;
@@ -313,5 +318,26 @@ public class Tapping extends Activity {
         Log.d("Tapping", "setBackgroundSize: " + i_nBackgroundW + " x " + i_nBackgroundH);
         nViewWidth = i_nBackgroundW;
         nViewHeight = i_nBackgroundH;
+    }
+
+    public void onBackPressed() {
+        //doing nothing on pressing Back key
+        if( ! bBackPressedSecondTime){
+            bBackPressedSecondTime = true;
+            Toast.makeText(getApplicationContext(), "press < again to leave", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            bBackPressedSecondTime = false;
+        }
+    }
+
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
+        ActivityManager.SaveResultsInDatabase((Object[]) loggedTaps.toArray());
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("isFinished",true);
+        setResult(Activity.RESULT_OK,returnIntent);
     }
 }
