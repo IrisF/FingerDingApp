@@ -9,4 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ifi.lmu.com.handmeasurementstudy.Tablet">
 
+    <TextView
+        android:id="@+id/zoomingDescr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tablet_description"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/finishTabletTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fertig"
+        android:layout_below="@+id/zoomingDescr"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

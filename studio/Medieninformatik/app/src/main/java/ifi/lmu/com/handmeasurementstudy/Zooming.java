@@ -1,5 +1,6 @@
 package ifi.lmu.com.handmeasurementstudy;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
@@ -17,12 +18,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ifi.lmu.com.handmeasurementstudy.system.IActivityFinished;
+import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
 import ifi.lmu.com.handmeasurementstudy.system.Zoom;
 
 
-public class Zooming extends ActionBarActivity implements View.OnTouchListener, IActivityFinished {
+public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     private ScaleGestureDetector scaleGestureDetector;
     private ArrayList<Zoom> zoomData;
@@ -143,6 +144,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener, 
                 }
 
                 if (imageViewHeight >= rectangleHeight || imageViewWidth >= rectangleWidth) {
+                    Log.e("zoom", "image reached");
                     //stop scaling, give success message
                     counter++;
                     if(counter >= zoomLatinRow.length) {
@@ -223,12 +225,6 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener, 
                 //end here for maximum zooming gesture
                 if(counter >= zoomLatinRow.length) {
                     Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY());
-
-                    Object[] loggingData = new Object[zoomData.size()];
-                    for(int i=0; i < zoomData.size(); i++){
-                        loggingData[i] = zoomData.get(i);
-                    }
-                    this.onActivityFinished(loggingData);
                 }
                 break;
         }
@@ -243,7 +239,11 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener, 
     }
 
     @Override
-    public void onActivityFinished(Object[] i_aoLoggingArray) {
-
+    protected void onDestroy () {
+        super.onDestroy();
+        ActivityManager.SaveResultsInDatabase((Object[]) zoomData.toArray());
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("isFinished",true);
+        setResult(Activity.RESULT_OK,returnIntent);
     }
 }
