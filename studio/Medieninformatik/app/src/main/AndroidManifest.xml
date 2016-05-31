@@ -18,17 +18,18 @@
         </activity>
         <activity
             android:name=".Tapping"
-            android:label="@string/title_activity_tapping"></activity>
+            android:label="@string/title_activity_tapping" />
         <activity
             android:name=".Swiping"
-            android:label="@string/title_activity_swiping"></activity>
+            android:label="@string/title_activity_swiping" />
         <activity
             android:name=".Scrolling"
-            android:label="@string/title_activity_scrolling"></activity>
+            android:label="@string/title_activity_scrolling" />
         <activity
             android:name=".Zooming"
-            android:label="@string/title_activity_zooming"></activity>
-        <activity android:name=".Tablet"></activity>
+            android:label="@string/title_activity_zooming" />
+        <activity android:name=".Tablet" />
+        <activity android:name=".TabletActivity"></activity>
     </application>
 
 </manifest>
