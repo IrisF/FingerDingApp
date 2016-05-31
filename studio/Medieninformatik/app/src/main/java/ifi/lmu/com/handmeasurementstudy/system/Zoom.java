@@ -13,6 +13,8 @@ public class Zoom {
     public float timeDelta;
     public float eventTime;
 
+
+
     public Zoom(float currentSpan, float currentX, float currentY, float focusX, float focusY, float scaleFactor, float timeDelta, float eventTime) {
         this.currentSpan = currentSpan;
         this.currentX = currentX;

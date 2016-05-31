@@ -30,6 +30,7 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
     private ArrayList<Zoom> zoomData;
 
     private int userID;
+    private boolean isZoomed;
 
     private ImageView imageView;
     private Button startButton;
@@ -57,6 +58,8 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
 
                 imageView.setVisibility(View.VISIBLE);
 
+                isZoomed = false;
+
                 initImageDimensions();
             }
         });
@@ -76,10 +79,12 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());
 
-                //this is maximum scaling task, so just scale image
-                imageView.getLayoutParams().width += 20;
-                imageView.getLayoutParams().height += 20;
-                imageView.requestLayout();
+                if (!isZoomed) {
+                    //this is maximum scaling task, so just scale image
+                    imageView.getLayoutParams().width += 20;
+                    imageView.getLayoutParams().height += 20;
+                    imageView.requestLayout();
+                }
 
                 return false;
             }
@@ -142,6 +147,8 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
             case MotionEvent.ACTION_UP:
                 //end here for maximum zooming gesture
                 Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY());
+                isZoomed = true;
+                finish();
 
                 break;
         }

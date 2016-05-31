@@ -30,7 +30,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
             n_ACTIVITY_SWIPING = 1,
             n_ACTIVITY_ZOOMING = 2,
             n_ACTIVITY_SCOLLING = 3,
-            n_ACTIVITY_ZOOMING_MAXIMUM = 4,
+            n_ACTIVITY_ZOOMING_VIEW = 4,
             n_ACTIVITY_TABLET = 5;
 
     enum Activities {
@@ -121,7 +121,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
                 return Activities.n_ACTIVITY_ZOOMING;
             case n_ACTIVITY_SCOLLING: //3
                 return Activities.n_ACTIVITY_SCOLLING;
-            case n_ACTIVITY_ZOOMING_MAXIMUM: //4
+            case n_ACTIVITY_ZOOMING_VIEW: //4
                 return Activities.n_ACTIVITY_ZOOMING_MAXIMUM;
             case n_ACTIVITY_TABLET: //5
                 return Activities.n_ACTIVITY_TABLET;
@@ -150,7 +150,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
                 Scroll[] aoScroll = (Scroll[]) _aoResult;
                 // TODO save to database
                 break;
-            case n_ACTIVITY_ZOOMING_MAXIMUM: //4
+            case n_ACTIVITY_ZOOMING_VIEW: //4
                 Zoom[] aoZoom1 = (Zoom[]) _aoResult;
                 // TODO save to database
                 break;

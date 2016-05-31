@@ -31,6 +31,13 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     private ZoomingRectangles zoomingRectangles;
     private RelativeLayout zoomingLayout;
 
+    private long startTimeSeconds;
+    private long endTimeSeconds;
+
+    private boolean rectangleZoomingStarted;
+    private boolean rectangleIsZoomed;
+    private boolean taskOver;
+
     //case 1
     public int heightBig, widthBig;
     //case 2
@@ -88,8 +95,6 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 widthBig = zoomingRectangles.getMeasuredWidth();
                 heightBig = zoomingRectangles.getMeasuredHeight();
 
-                Log.e("sizes", "here zooming Rectangle size w " + widthBig + " h " + heightBig);
-
                 widthMedium = zoomingRectangles.getMeasuredWidth() / 2;
                 heightMedium = zoomingRectangles.getMeasuredHeight() / 2;
 
@@ -100,7 +105,11 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 rectangleIndex = zoomLatinRow[counter];
 
                 initImageDimensions();
+                rectangleIsZoomed = false;
+                rectangleZoomingStarted = false;
                 zoomingRectangles.invalidate();
+
+                taskOver = false;
             }
         });
 
@@ -115,6 +124,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
             @Override
             public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+                rectangleZoomingStarted = true;
                 Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime());
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());
@@ -143,24 +153,23 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                         break;
                 }
 
-                if (imageViewHeight >= rectangleHeight || imageViewWidth >= rectangleWidth) {
-                    Log.e("zoom", "image reached");
-                    //stop scaling, give success message
+                if (imageViewHeight >= rectangleHeight && imageViewWidth >= rectangleWidth) {
                     counter++;
-                    if(counter >= zoomLatinRow.length) {
-                        Log.i("End", "zooming is over !!!!!!!!!!!!");
-                        //TODO activity end
-                    } else {
-                        rectangleIndex = zoomLatinRow[counter];
-                        Log.i("Scale", "Scaling was successful, index is now " + rectangleIndex);
+                    rectangleIsZoomed = true;
+                    Log.i("zoom", "image reached, image dimensions: " + imageViewHeight + imageViewWidth + " rectangle dimensions: " + rectangleHeight + rectangleWidth + "index " + rectangleIndex);
 
+                    if(counter < zoomLatinRow.length) {
+                        //a next rectangle exist, so draw it
+                        rectangleIndex = zoomLatinRow[counter];
                         initImageDimensions();
                         zoomingRectangles.invalidate();
+                    } else {
+                        taskOver = true;
                     }
 
                 } else {
-                    imageView.getLayoutParams().width += 20;
-                    imageView.getLayoutParams().height += 20;
+                    imageView.getLayoutParams().width += 5;
+                    imageView.getLayoutParams().height += 5;
                     imageView.requestLayout();
                 }
                 return false;
@@ -207,25 +216,33 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
         return true;
     }
 
-
-    //TODO stop time and log start & end points
     @Override
     public boolean onTouchEvent (MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //log start points
-                Log.i("Scale", "Start Points x " + event.getX() + " y " + event.getY());
+                if(!rectangleZoomingStarted) {
+                    startTimeSeconds = System.currentTimeMillis();
+                    Log.i("Scale", "Start Points x " + event.getX() + " y " + event.getY() + " time " + startTimeSeconds);
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 //scale
                 scaleGestureDetector.onTouchEvent(event);
-                Log.e("ZoomData", zoomData.toString());
                 break;
             case MotionEvent.ACTION_UP:
-                //end here for maximum zooming gesture
-                if(counter >= zoomLatinRow.length) {
-                    Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY());
+                //log end points
+                if(rectangleIsZoomed) {
+                    endTimeSeconds = System.currentTimeMillis();
+                    Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY() + " time " + endTimeSeconds);
+                    rectangleIsZoomed = false;
+                    rectangleZoomingStarted = false;
                 }
+
+                if(taskOver){
+                    finish();
+                }
+
                 break;
         }
         return true;
@@ -235,7 +252,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     private void initImageDimensions() {
         //this is the smartphone test application, so orientation is portrait and width < height
         imageView.getLayoutParams().height = heightBig/8;
-        imageView.getLayoutParams().width = widthBig/8 * (9/16);
+        imageView.getLayoutParams().width = widthBig/8;
     }
 
     @Override
