@@ -11,6 +11,7 @@ import ifi.lmu.com.handmeasurementstudy.ZoomingView;
 import ifi.lmu.com.handmeasurementstudy.Tapping;
 import ifi.lmu.com.handmeasurementstudy.Zooming;
 import ifi.lmu.com.handmeasurementstudy.Scrolling;
+import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
 
 /**
  * Created by Jonny on 24.05.2016.
@@ -59,6 +60,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
     private int _nCurrentActivity;
     private int _nUserId;
     private Context _oContext;
+    private DBHandler _oDbHandler;
 
     public ActivityManager (Context context, int i_nUserId) {
 
@@ -73,6 +75,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
         int[] anLatinRow = latinSquare[ i_nUserId % latinSquare.length ];
 
         _aoOrder = new Class[6];
+        _oDbHandler = DBHandler.getInstance(getApplicationContext());
 
         // create latin order
         for(int i = 0; i < anLatinRow.length; i++){
@@ -136,23 +139,34 @@ public class ActivityManager extends Activity { // extends Activity to call star
         switch(_nCurrentActivity){
             case n_ACTIVITY_TAPPING: //0
                 Tap[] aoTap = (Tap[]) _aoResult;
-                // TODO save to database
+                // save to database
+                for(int i = 0; i < aoTap.length; i++){
+                    _oDbHandler.insertTap(aoTap[i], _nUserId);
+                }
                 break;
             case n_ACTIVITY_SWIPING: //1
                 Swipe[] aoSwipe = (Swipe[]) _aoResult;
-                // TODO save to database
+                for(int i = 0; i < aoSwipe.length; i++){
+                    _oDbHandler.insertSwipe(aoSwipe[i]);
+                }
                 break;
             case n_ACTIVITY_ZOOMING: //2
                 Zoom[] aoZoom = (Zoom[]) _aoResult;
-                // TODO save to database
+                for(int i = 0; i < aoZoom.length; i++){
+                    _oDbHandler.insertZoom(aoZoom[i]);
+                }
                 break;
             case n_ACTIVITY_SCOLLING: //3
                 Scroll[] aoScroll = (Scroll[]) _aoResult;
-                // TODO save to database
+                for(int i = 0; i < aoScroll.length; i++){
+                    _oDbHandler.insertScroll(aoScroll[i]);
+                }
                 break;
             case n_ACTIVITY_ZOOMING_VIEW: //4
                 Zoom[] aoZoom1 = (Zoom[]) _aoResult;
-                // TODO save to database
+                for(int i = 0; i < aoZoom1.length; i++){
+                    _oDbHandler.insertZoom(aoZoom1[i]);
+                }
                 break;
             case n_ACTIVITY_TABLET: //5
                 // do nothing, tablet handles this

@@ -215,19 +215,18 @@ public class DBHandler extends SQLiteOpenHelper {
 		return id;
 	}
 
-	public void insertTap(Tap tap, TrialSettings trialSettings, int trialDBID) {
+	public void insertTap(Tap tap, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
 		values.put(TAPS_COL_TARGET_X, tap.targetX);
 		values.put(TAPS_COL_TARGET_Y, tap.targetY);
-		values.put(TAPS_COL_TARGET_W, trialSettings.getButtonWidth());
-		values.put(TAPS_COL_TARGET_H, trialSettings.getButtonHeight());
+		//values.put(TAPS_COL_TARGET_W, trialSettings.getButtonWidth());
+		//values.put(TAPS_COL_TARGET_H, trialSettings.getButtonHeight());
 		values.put(TAPS_COL_TOUCH_DOWN_X, tap.downX);
 		values.put(TAPS_COL_TOUCH_DOWN_Y, tap.downY);
 		values.put(TAPS_COL_TOUCH_UP_X, tap.upX);
-		values.put(TAPS_COL_TOUCH_UP_Y, tap.upY);
 		values.put(TAPS_COL_TOUCH_UP_Y, tap.upY);
 		//values.put(TAPS_COL_HIT, tap.hit);
 		values.put(TAPS_COL_TIME_DOWN, tap.timeDown);
@@ -240,7 +239,7 @@ public class DBHandler extends SQLiteOpenHelper {
         //values.put(TAPS_COL_MINOR_UP, tap.minorUp);
        // values.put(TAPS_COL_MAJOR_DOWN, tap.majorDown);
         //values.put(TAPS_COL_MAJOR_UP, tap.majorUp);
-		values.put(TAPS_COL_TRIAL_ID, trialDBID);
+		values.put(TAPS_COL_TRIAL_ID, userId);
 
 		int id = (int) db.insert(TABLE_TAPS, null, values);
 		Log.d("DEBUG", "inserted tap with id: " + id);
