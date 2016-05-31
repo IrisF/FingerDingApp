@@ -58,15 +58,31 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String SCROLLING_COL_ID = "id";
     private static final String SCROLLING_COL_X = "x";
     private static final String SCROLLING_COL_Y = "y";
-
+    private static final String SCROLLING_COL_TIME= "time";
+    private static final String SCROLLING_COL_ACCX = "accX";
+    private static final String SCROLLING_COL_ACCY = "accY";
+    private static final String SCROLLING_COL_ACCZ = "accZ";
+    private static final String SCROLLING_COL_GRAX = "graX";
+    private static final String SCROLLING_COL_GRAY = "graY";
+    private static final String SCROLLING_COL_GRAZ = "graZ";
+    private static final String SCROLLING_COL_GYRX = "gyrX";
+    private static final String SCROLLING_COL_GYRY = "gyrY";
+    private static final String SCROLLING_COL_GYRZ = "gyrZ";
     //Table Swiping
     private static final String TABLE_SWIPING = "swiping";
     private static final String SWIPING_COL_ID = "id";
     private static final String SWIPING_COL_X = "x";
     private static final String SWIPING_COL_Y = "y";
-    private static final String SWIPING_COL_TOOL_TYPE = "toolType";
-    private static final String SWIPING_COL_EVENT_TIME = "eventTime";
-    private static final String SWIPING_COL_DOWN_TIME = "downTime";
+    private static final String SWIPING_COL_TIME= "time";
+    private static final String SWIPING_COL_ACCX = "accX";
+    private static final String SWIPING_COL_ACCY = "accY";
+	private static final String SWIPING_COL_ACCZ = "accZ";
+	private static final String SWIPING_COL_GRAX = "graX";
+	private static final String SWIPING_COL_GRAY = "graY";
+	private static final String SWIPING_COL_GRAZ = "graZ";
+	private static final String SWIPING_COL_GYRX = "gyrX";
+	private static final String SWIPING_COL_GYRY = "gyrY";
+	private static final String SWIPING_COL_GYRZ = "gyrZ";
 
     //Table Zooming
     private static final String TABLE_ZOOMING = "zooming";
@@ -275,6 +291,16 @@ public class DBHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(SCROLLING_COL_X, scroll.x);
 		values.put(SCROLLING_COL_Y, scroll.x);
+        values.put(SCROLLING_COL_TIME, scroll.time);
+        values.put(SCROLLING_COL_ACCX, scroll.accX);
+        values.put(SCROLLING_COL_ACCY, scroll.accY);
+        values.put(SCROLLING_COL_ACCZ, scroll.accZ);
+        values.put(SCROLLING_COL_GRAX, scroll.graX);
+        values.put(SCROLLING_COL_GRAY, scroll.graY);
+        values.put(SCROLLING_COL_GRAZ, scroll.graZ);
+        values.put(SCROLLING_COL_GYRX, scroll.gyrX);
+        values.put(SCROLLING_COL_GYRY, scroll.gyrY);
+        values.put(SCROLLING_COL_GYRZ, scroll.gyrZ);
 
 		int id = (int) db.insert(TABLE_SCROLLING, null, values);
 		Log.d("DEBUG", "inserted scroll with id: " + id);
@@ -289,9 +315,16 @@ public class DBHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(SWIPING_COL_X, swipe.x);
 		values.put(SWIPING_COL_Y, swipe.y);
-		values.put(SWIPING_COL_TOOL_TYPE, swipe.toolType);
-		values.put(SWIPING_COL_DOWN_TIME, swipe.downTime);
-		values.put(SWIPING_COL_EVENT_TIME, swipe.eventTime);
+		values.put(SWIPING_COL_TIME, swipe.time);
+		values.put(SWIPING_COL_ACCX, swipe.accX);
+		values.put(SWIPING_COL_ACCY, swipe.accY);
+		values.put(SWIPING_COL_ACCZ, swipe.accZ);
+		values.put(SWIPING_COL_GRAX, swipe.graX);
+		values.put(SWIPING_COL_GRAY, swipe.graY);
+		values.put(SWIPING_COL_GRAZ, swipe.graZ);
+		values.put(SWIPING_COL_GYRX, swipe.gyrX);
+		values.put(SWIPING_COL_GYRY, swipe.gyrY);
+		values.put(SWIPING_COL_GYRZ, swipe.gyrZ);
 
 		int id = (int) db.insert(TABLE_SWIPING, null, values);
 		Log.d("DEBUG", "inserted swipe with id: " + id);
