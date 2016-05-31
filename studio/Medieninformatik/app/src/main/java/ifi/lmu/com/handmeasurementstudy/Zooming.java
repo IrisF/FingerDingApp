@@ -1,6 +1,7 @@
 package ifi.lmu.com.handmeasurementstudy;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -62,6 +63,11 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
