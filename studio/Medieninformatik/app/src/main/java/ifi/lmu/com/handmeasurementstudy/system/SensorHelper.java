@@ -17,12 +17,20 @@ public class SensorHelper implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor senAccelerometer;
 
+    private float[] acceleromterData;
+    private float[] gravitiyData;
+    private float[] gyroscopeData;
+
 
     public SensorHelper(Context context) {
         //initialize the sensor manager
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+
+        acceleromterData = new float[3];
+        gravitiyData = new float[3];
+        gyroscopeData = new float[3];
     }
 
     @Override
@@ -32,12 +40,21 @@ public class SensorHelper implements SensorEventListener {
         switch(mySensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
                 Log.i("Sensor", "Accelerometer: " + event.values.toString());
+                acceleromterData[0] = event.values[0];
+                acceleromterData[1] = event.values[1];
+                acceleromterData[2] = event.values[2];
                 break;
             case Sensor.TYPE_GRAVITY:
                 Log.i("Sensor", "Gravity: " + event.values.toString());
+                gravitiyData[0] = event.values[0];
+                gravitiyData[1] = event.values[1];
+                gravitiyData[2] = event.values[2];
                 break;
             case Sensor.TYPE_GYROSCOPE:
                 Log.i("Sensor", "Gyroscope: " + event.values.toString());
+                gyroscopeData[0] = event.values[0];
+                gyroscopeData[1] = event.values[1];
+                gyroscopeData[2] = event.values[2];
                 break;
             case Sensor.TYPE_GYROSCOPE_UNCALIBRATED:
                 Log.i("Sensor", "Gyroscope uncalibrated: " + event.values.toString());
@@ -81,5 +98,17 @@ public class SensorHelper implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public float[] getAcceleromterData() {
+        return acceleromterData;
+    }
+
+    public float[] getGravitiyData() {
+        return gravitiyData;
+    }
+
+    public float[] getGyroscopeData() {
+        return gyroscopeData;
     }
 }

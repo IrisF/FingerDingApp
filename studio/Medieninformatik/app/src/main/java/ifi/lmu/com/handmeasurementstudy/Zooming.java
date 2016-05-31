@@ -125,7 +125,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
             @Override
             public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
                 rectangleZoomingStarted = true;
-                Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime());
+                Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime(), sensorHelper.getAcceleromterData(), sensorHelper.getGravitiyData(), sensorHelper.getGyroscopeData(), rectangleIndex);
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());
 
