@@ -1,5 +1,7 @@
 package ifi.lmu.com.handmeasurementstudy;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +19,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
+import ifi.lmu.com.handmeasurementstudy.system.Swipe;
 
 
 public class Swiping extends ActionBarActivity implements SensorEventListener {
@@ -49,7 +54,11 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     private long timeTask3;
     private long timeTask4;
     private long timeAllTasks;
+    private long currentTime;
     private boolean taskStarted =false;
+    private int userId;
+    private int[] currentRow;
+    private ArrayList<Swipe> loggedSwipes;
 
     private static final int[][] latinSquare = {
             {1, 2, 3, 4},
@@ -62,6 +71,11 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swiping);
+        //Bundle extras = getIntent().getExtras();
+        loggedSwipes = new ArrayList<>();
+        Intent intent = getIntent();
+        userId = intent.getIntExtra("id", 0);
+        setCurrentRow();
         seekBar = (SeekBar) findViewById(R.id.seekbar);
         textView = (TextView) findViewById(R.id.swipingDescr);
         button = (Button) findViewById(R.id.startButton);
@@ -75,22 +89,28 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
             }
         });
         
-        showSlider(nTargetCounter);
+        showSlider();
         seekBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                float x =0;
+                float y =0;
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
+                        x =  event.getX();
+                        y = event.getY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        int x = (int) event.getX();
-                        int y = (int) event.getY();
-                        //System.out.println("x: " + x + " y: " + y);
+                        x = event.getX();
+                        y = event.getY();
 
                         break;
                     case MotionEvent.ACTION_UP:
+                        x = event.getX();
+                        y = event.getY();
                         break;
                 }
+                createSwipeObject(x,y);
                 return false;
             }
         });
@@ -101,7 +121,7 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
                 if(taskStarted){
                     seekBar.setProgress(0);
                     nTargetCounter++;
-                    showSlider(nTargetCounter);
+                    showSlider();
                     taskStarted=false;
                 }
             }
@@ -120,37 +140,45 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
         });
     }
 
-    private void showSlider (int i_nSliderIndex) {
-        int[] anLatinIndex =  getLatinIndexByCrosshairCount(i_nSliderIndex);
+    private void setCurrentRow(){
+        currentRow = latinSquare[ userId % latinSquare.length ];
+    }
+
+    private void showSlider () {
         seekBar.setProgress(0);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) seekBar.getLayoutParams();
-        switch(i_nSliderIndex){
-            case 0:
-                params.topMargin = 20;
-                break;
+        if(currentRow.length>nTargetCounter){
+        switch(currentRow[nTargetCounter]){
             case 1:
-                timeTask1 = System.currentTimeMillis() - secondsAtStart;
-                currentStartTime = System.currentTimeMillis();
-                params.topMargin = 500;
+                currentTime = System.currentTimeMillis();
+                params.topMargin = 20;
+                seekBar.setRotation(0);
                 break;
             case 2:
-                timeTask2 = System.currentTimeMillis() - currentStartTime;
-                currentStartTime = System.currentTimeMillis();
-                params.topMargin = 1000;
+                currentTime = System.currentTimeMillis();
+                params.topMargin = 500;
+                seekBar.setRotation(0);
                 break;
             case 3:
-                timeTask3 = System.currentTimeMillis() - currentStartTime;
-                currentStartTime = System.currentTimeMillis();
+                currentTime = System.currentTimeMillis();
+                params.topMargin = 1000;
+                seekBar.setRotation(0);
+                break;
+            case 4:
+                currentTime = System.currentTimeMillis();
                 params.topMargin = 500;
                 seekBar.setRotation(-45);
                 break;
             default:
-                timeTask4 = System.currentTimeMillis() - currentStartTime;
-                timeAllTasks = System.currentTimeMillis()- secondsAtStart;
-                seekBar.setVisibility(View.INVISIBLE);
-                System.out.println("Task 1: " + timeTask1 + " Task 2: " + timeTask2 + " Task 3: " + timeTask3 + " Task 4: " + timeTask4 + " all Tasks: " + timeAllTasks);
+
                 break;
         }
+        }else{
+            currentTime = System.currentTimeMillis();
+            seekBar.setVisibility(View.INVISIBLE);
+            finish();
+        }
+
         seekBar.setLayoutParams(params);
     }
 
@@ -212,12 +240,20 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
 
     }
 
-    private int[] getLatinIndexByCrosshairCount(int i_nSliderIndex) {
-        int[] anLatinIndex = new int[1];
+    private void createSwipeObject(float x, float y){
+        Swipe swipe = new Swipe(x,y,currentTime, accX, accY, accZ, graX, graY, graZ, gyrX, gyrY, gyrZ);
+        if(currentTime!=0){
+            currentTime=0;
+        }
+        loggedSwipes.add(swipe);
+    }
 
-        int nLatinSize = latinSquare.length;
-        anLatinIndex[0] = i_nSliderIndex / nLatinSize;
-
-        return anLatinIndex;
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
+        ActivityManager.SaveResultsInDatabase((Object[]) loggedSwipes.toArray());
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("isFinished",true);
+        setResult(Activity.RESULT_OK,returnIntent);
     }
 }

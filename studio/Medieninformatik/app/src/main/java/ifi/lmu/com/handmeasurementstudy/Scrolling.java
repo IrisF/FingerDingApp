@@ -1,5 +1,7 @@
 package ifi.lmu.com.handmeasurementstudy;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,6 +15,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
+import ifi.lmu.com.handmeasurementstudy.system.Scroll;
+import ifi.lmu.com.handmeasurementstudy.system.Swipe;
 
 
 public class Scrolling extends ActionBarActivity implements SensorEventListener {
@@ -34,12 +42,14 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
     private TextView textView;
     private Button button;
     private long secondsAtStart;
-    private long timeNeeded;
+    private long time;
+    private ArrayList<Scroll> loggedScrolls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
+        loggedScrolls = new ArrayList<>();
         textView = (TextView) findViewById(R.id.scrollingDescr);
         button = (Button) findViewById(R.id.startButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -55,25 +65,33 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                float x=0;
+                float y=0;
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
+                        x = event.getX();
+                        y = event.getY();
+                        time = System.currentTimeMillis();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        int x = (int) event.getX();
-                        int y = (int) event.getY();
+                        x = event.getX();
+                        y = event.getY();
                         //System.out.println("x: " + x + " y: " + y);
                         if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() -1 &&
                                 listView.getChildAt(listView.getChildCount() - 1).getBottom() <= listView.getHeight())
                         {
-                            timeNeeded = System.currentTimeMillis()-secondsAtStart;
+                            time = System.currentTimeMillis();
                             listView.setVisibility(View.INVISIBLE);
-                            System.out.println("Time: " + timeNeeded);
-
+                            finish();
                         }
                         break;
                     case MotionEvent.ACTION_UP:
+                        x = event.getX();
+                        y = event.getY();
+                        time = System.currentTimeMillis();
                         break;
                 }
+                createScrollObject(x,y);
                 return false;
             }
         });
@@ -108,6 +126,11 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
         return false;
     }
 
+    private void createScrollObject(float x, float y){
+        Scroll scroll = new Scroll(x,y,time, accX, accY, accZ, graX, graY, graZ, gyrX, gyrY, gyrZ);
+        loggedScrolls.add(scroll);
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER){
@@ -134,5 +157,14 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
+        ActivityManager.SaveResultsInDatabase((Object[]) loggedScrolls.toArray());
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("isFinished",true);
+        setResult(Activity.RESULT_OK,returnIntent);
     }
 }
