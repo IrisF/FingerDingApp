@@ -321,7 +321,6 @@ public class Tapping extends Activity {
     }
 
     public void onBackPressed() {
-        //doing nothing on pressing Back key
         if( ! bBackPressedSecondTime){
             bBackPressedSecondTime = true;
             Toast.makeText(getApplicationContext(), "press < again to leave", Toast.LENGTH_SHORT).show();
@@ -329,13 +328,14 @@ public class Tapping extends Activity {
         }
         else {
             bBackPressedSecondTime = false;
+            super.onBackPressed();
         }
     }
 
     @Override
     protected void onDestroy () {
         super.onDestroy();
-        ActivityManager.SaveResultsInDatabase((Object[]) loggedTaps.toArray());
+        ActivityManager.SaveResultsInDatabase(loggedTaps.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
