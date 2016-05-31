@@ -54,6 +54,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     private int[] zoomLatinRow;
 
+    private float startX, startY;
+
     private ImageView imageView;
     private Button startButton;
 
@@ -124,7 +126,11 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
             @Override
             public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
-                rectangleZoomingStarted = true;
+                if(!rectangleZoomingStarted) { //log start point here to know that scaling really begun
+                    rectangleZoomingStarted = true;
+//TODO save start point?!
+                    Log.i("Scale", "Start Points x " + startX + " y " + startY + " time " + startTimeSeconds);
+                }
                 Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime(), sensorHelper.getAcceleromterData(), sensorHelper.getGravitiyData(), sensorHelper.getGyroscopeData(), rectangleIndex);
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());
@@ -223,7 +229,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 //log start points
                 if(!rectangleZoomingStarted) {
                     startTimeSeconds = System.currentTimeMillis();
-                    Log.i("Scale", "Start Points x " + event.getX() + " y " + event.getY() + " time " + startTimeSeconds);
+                    startX = event.getX();
+                    startY = event.getY();
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -234,6 +241,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 //log end points
                 if(rectangleIsZoomed) {
                     endTimeSeconds = System.currentTimeMillis();
+//TODO save end Points?!
                     Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY() + " time " + endTimeSeconds);
                     rectangleIsZoomed = false;
                     rectangleZoomingStarted = false;

@@ -31,9 +31,14 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
 
     private int userID;
     private boolean isZoomed;
+    private boolean rectangleZoomingStarted;
 
     private ImageView imageView;
     private Button startButton;
+
+    private float startX, startY;
+    private long startTimeSeconds;
+    private long endTimeSeconds;
 
     private SensorHelper sensorHelper;
 
@@ -59,6 +64,7 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
                 imageView.setVisibility(View.VISIBLE);
 
                 isZoomed = false;
+                rectangleZoomingStarted = false;
 
                 initImageDimensions();
             }
@@ -75,6 +81,12 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
 
             @Override
             public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+                if(!rectangleZoomingStarted) { //log start point here to know that scaling really begun
+                    rectangleZoomingStarted = true;
+//TODO save start point?!
+                    Log.i("Scale", "Start Points x " + startX + " y " + startY + " time " + startTimeSeconds);
+                }
+
                 Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime(), sensorHelper.getAcceleromterData(), sensorHelper.getGravitiyData(), sensorHelper.getGyroscopeData(), -1);
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());
@@ -137,7 +149,11 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //log start points
-                Log.i("Scale", "Start Points x " + event.getX() + " y " + event.getY());
+                if(!rectangleZoomingStarted) {
+                    startTimeSeconds = System.currentTimeMillis();
+                    startX = event.getX();
+                    startY = event.getY();
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 //scale
@@ -145,9 +161,13 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
                 Log.e("ZoomData", zoomData.toString());
                 break;
             case MotionEvent.ACTION_UP:
-                //end here for maximum zooming gesture
-                Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY());
-                isZoomed = true;
+                //log end points
+
+                endTimeSeconds = System.currentTimeMillis();
+    //TODO save end Points?!
+                Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY() + " time " + endTimeSeconds);
+                rectangleZoomingStarted = false;
+
                 finish();
 
                 break;
