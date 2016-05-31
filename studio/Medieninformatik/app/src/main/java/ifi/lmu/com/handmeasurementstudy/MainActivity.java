@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
         debugArray.add("Zooming");
         debugArray.add("Scrolling");
         debugArray.add("Swiping");
+        debugArray.add("ZoomingMaximum");
 
         ArrayAdapter<String> debugAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, debugArray);
@@ -162,6 +163,9 @@ public class MainActivity extends Activity {
                     break;
                 case 3: // Swiping
                     intent = new Intent(this, Swiping.class);
+                    break;
+                case 4: // Zooming Maximum
+                    intent = new Intent(this, ZoomingMaximum.class);
                     break;
                 default:
                     intent = new Intent(this, Tapping.class);
