@@ -30,6 +30,7 @@
             android:label="@string/title_activity_zooming" />
         <activity android:name=".Tablet" />
         <activity android:name=".TabletActivity"></activity>
+        <activity android:name=".ZoomingMaximum"></activity>
     </application>
 
 </manifest>
