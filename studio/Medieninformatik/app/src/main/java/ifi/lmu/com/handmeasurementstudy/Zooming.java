@@ -17,11 +17,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ifi.lmu.com.handmeasurementstudy.system.IActivityFinished;
 import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
 import ifi.lmu.com.handmeasurementstudy.system.Zoom;
 
 
-public class Zooming extends ActionBarActivity implements View.OnTouchListener {
+public class Zooming extends ActionBarActivity implements View.OnTouchListener, IActivityFinished {
 
     private ScaleGestureDetector scaleGestureDetector;
     private ArrayList<Zoom> zoomData;
@@ -220,8 +221,14 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 break;
             case MotionEvent.ACTION_UP:
                 //end here for maximum zooming gesture
-                if(rectangleIndex == 4) {
+                if(counter >= zoomLatinRow.length) {
                     Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY());
+
+                    Object[] loggingData = new Object[zoomData.size()];
+                    for(int i=0; i < zoomData.size(); i++){
+                        loggingData[i] = zoomData.get(i);
+                    }
+                    this.onActivityFinished(loggingData);
                 }
                 break;
         }
@@ -233,33 +240,10 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
         //this is the smartphone test application, so orientation is portrait and width < height
         imageView.getLayoutParams().height = heightBig/8;
         imageView.getLayoutParams().width = widthBig/8 * (9/16);
+    }
 
-
-        /*
-        double aspectRatio;
-        switch (getResources().getConfiguration().orientation) {
-            case Configuration.ORIENTATION_LANDSCAPE:
-                aspectRatio = widthBig / heightBig;
-                Log.i("ratio", Double.toString(aspectRatio));
-                //width is biggest size
-                imageView.getLayoutParams().width = widthBig / 8;
-                imageView.getLayoutParams().height = (int) Math.round(imageView.getLayoutParams().width / (16/9));
-                break;
-            case Configuration.ORIENTATION_PORTRAIT:
-                aspectRatio = zoomingRectangles.getMeasuredWidth() / zoomingRectangles.getMeasuredHeight();
-                Log.i("ratio", Double.toString(aspectRatio));
-                //height is biggest size
-                imageView.getLayoutParams().height = zoomingRectangles.getMeasuredHeight() / 8;
-                imageView.getLayoutParams().width = (int) Math.round((zoomingRectangles.getMeasuredHeight() / 8) * (9/16));
-                break;
-            case Configuration.ORIENTATION_UNDEFINED:
-                //assume that it's portrait on smartphone
-                aspectRatio = zoomingRectangles.getMeasuredWidth() / zoomingRectangles.getMeasuredHeight();
-                Log.i("ratio", Double.toString(aspectRatio));
-                imageView.getLayoutParams().height = zoomingRectangles.getMeasuredHeight() / 8;
-                imageView.getLayoutParams().width = (int) Math.round((zoomingRectangles.getMeasuredHeight() / 8) * (9/16));
-                break;
-        }*/
+    @Override
+    public void onActivityFinished(Object[] i_aoLoggingArray) {
 
     }
 }
