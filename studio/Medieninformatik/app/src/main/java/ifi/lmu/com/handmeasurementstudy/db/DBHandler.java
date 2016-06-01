@@ -66,6 +66,12 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String SCROLLING_COL_GRAZ = "graZ";
 	private static final String SCROLLING_COL_GYRX = "gyrX";
 	private static final String SCROLLING_COL_GYRY = "gyrY";
+	private static final String SCROLLING_COL_ORIENTATION_X = "orientationX";
+	private static final String SCROLLING_COL_ORIENTATION_Y = "orientationY";
+	private static final String SCROLLING_COL_ORIENTATION_Z = "orientationZ";
+	private static final String SCROLLING_COL_ROT_X = "rotX";
+	private static final String SCROLLING_COL_ROT_Y = "rotY";
+	private static final String SCROLLING_COL_ROT_Z = "rotZ";
 	private static final String SCROLLING_COL_GYRZ = "gyrZ";
 	private static final String SCROLLING_COL_TIME= "time";
 	//Table Swiping
@@ -83,6 +89,12 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String SWIPING_COL_GYRX = "gyrX";
 	private static final String SWIPING_COL_GYRY = "gyrY";
 	private static final String SWIPING_COL_GYRZ = "gyrZ";
+	private static final String SWIPING_COL_ORIENTATION_X = "orientationX";
+	private static final String SWIPING_COL_ORIENTATION_Y = "orientationY";
+	private static final String SWIPING_COL_ORIENTATION_Z = "orientationZ";
+	private static final String SWIPING_COL_ROT_X = "rotX";
+	private static final String SWIPING_COL_ROT_Y = "rotY";
+	private static final String SWIPING_COL_ROT_Z = "rotZ";
 
     //Table Zooming
     private static final String TABLE_ZOOMING = "zooming";
@@ -300,6 +312,12 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(SCROLLING_COL_GYRX, scroll.gyrX);
         values.put(SCROLLING_COL_GYRY, scroll.gyrY);
         values.put(SCROLLING_COL_GYRZ, scroll.gyrZ);
+		values.put(SCROLLING_COL_ORIENTATION_X, scroll.orientationX);
+		values.put(SCROLLING_COL_ORIENTATION_Y, scroll.orientationY);
+		values.put(SCROLLING_COL_ORIENTATION_Z, scroll.orientationZ);
+		values.put(SCROLLING_COL_ROT_X, scroll.rotX);
+		values.put(SCROLLING_COL_ROT_Y, scroll.rotY);
+		values.put(SCROLLING_COL_ROT_Z, scroll.rotZ);
 
 		int id = (int) db.insert(TABLE_SCROLLING, null, values);
 		Log.d("DEBUG", "inserted scroll with id: " + id);
@@ -324,6 +342,12 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(SWIPING_COL_GYRX, swipe.gyrX);
 		values.put(SWIPING_COL_GYRY, swipe.gyrY);
 		values.put(SWIPING_COL_GYRZ, swipe.gyrZ);
+		values.put(SWIPING_COL_ORIENTATION_X, swipe.orientationX);
+		values.put(SWIPING_COL_ORIENTATION_Y, swipe.orientationY);
+		values.put(SWIPING_COL_ORIENTATION_Z, swipe.orientationZ);
+		values.put(SWIPING_COL_ROT_X, swipe.rotX);
+		values.put(SWIPING_COL_ROT_Y, swipe.rotY);
+		values.put(SWIPING_COL_ROT_Z, swipe.rotZ);
 
 		int id = (int) db.insert(TABLE_SWIPING, null, values);
 		Log.d("DEBUG", "inserted swipe with id: " + id);
