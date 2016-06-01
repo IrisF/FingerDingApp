@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUserId() {
         TextView idView = (TextView) findViewById(R.id.userId);
-        int nId = 1; // TODO get user id through DB connection
+        int nId = 2; // TODO get user id through DB connection
         idView.setText(String.valueOf(nId));
         nCurrentId = nId;
     }

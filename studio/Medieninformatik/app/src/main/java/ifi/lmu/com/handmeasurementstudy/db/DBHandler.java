@@ -58,17 +58,17 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String SCROLLING_COL_ID = "id";
     private static final String SCROLLING_COL_X = "x";
     private static final String SCROLLING_COL_Y = "y";
-    private static final String SCROLLING_COL_TIME= "time";
     private static final String SCROLLING_COL_ACCX = "accX";
-    private static final String SCROLLING_COL_ACCY = "accY";
-    private static final String SCROLLING_COL_ACCZ = "accZ";
-    private static final String SCROLLING_COL_GRAX = "graX";
-    private static final String SCROLLING_COL_GRAY = "graY";
-    private static final String SCROLLING_COL_GRAZ = "graZ";
-    private static final String SCROLLING_COL_GYRX = "gyrX";
-    private static final String SCROLLING_COL_GYRY = "gyrY";
-    private static final String SCROLLING_COL_GYRZ = "gyrZ";
-    //Table Swiping
+	private static final String SCROLLING_COL_ACCY = "accY";
+	private static final String SCROLLING_COL_ACCZ = "accZ";
+	private static final String SCROLLING_COL_GRAX = "graX";
+	private static final String SCROLLING_COL_GRAY = "graY";
+	private static final String SCROLLING_COL_GRAZ = "graZ";
+	private static final String SCROLLING_COL_GYRX = "gyrX";
+	private static final String SCROLLING_COL_GYRY = "gyrY";
+	private static final String SCROLLING_COL_GYRZ = "gyrZ";
+	private static final String SCROLLING_COL_TIME= "time";
+	//Table Swiping
     private static final String TABLE_SWIPING = "swiping";
     private static final String SWIPING_COL_ID = "id";
     private static final String SWIPING_COL_X = "x";

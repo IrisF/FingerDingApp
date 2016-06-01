@@ -47,6 +47,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
     }
 
     private Activities _eCurrentActivity;
+    private int _nCurrentActivityNum;
 
     private Class[] _aoActivities = {
             Tapping.class,
@@ -59,6 +60,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
 
     private Class[] _aoOrder;
     private static Object[] _aoResult;
+    private int[] _anLatinRow;
 
     private int _nCurrentActivity;
     private int _nUserId;
@@ -81,16 +83,17 @@ public class ActivityManager extends Activity { // extends Activity to call star
     private void init (int i_nUserId){
         _nUserId = i_nUserId;
         // get current latin row
-        int[] anLatinRow = latinSquare[ i_nUserId % latinSquare.length ];
+        _anLatinRow = latinSquare[ i_nUserId % latinSquare.length ];
 
         _aoOrder = new Class[6];
         _oDbHandler = DBHandler.getInstance(_oContext);
 
         // create latin order
-        for(int i = 0; i < anLatinRow.length; i++){
-            _aoOrder[i] = _aoActivities[anLatinRow[i]-1];
+        for(int i = 0; i < _anLatinRow.length; i++){
+            _aoOrder[i] = _aoActivities[_anLatinRow[i]-1];
         }
         _nCurrentActivity = 0;
+        _nCurrentActivityNum= -1;
 
 
     }
@@ -148,7 +151,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
             //Intent i = new Intent(_oContext, Tapping.class);
             //i.putExtra("id", _nUserId);
             //startActivity(i);
-
+            _nCurrentActivityNum = _anLatinRow[_nCurrentActivity];
             _nCurrentActivity++;
         }
         else {
@@ -183,7 +186,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
     public void StoreResultsInDatabase () {
         // TODO distinguish and save accordingly
         Log.d("ActivityManager", "StoreResultsInDatabase");
-        switch(_nCurrentActivity){
+        switch(_nCurrentActivityNum - 1){
             case n_ACTIVITY_TAPPING: //0
                 //Tap[] aoTap = (Tap[]) _aoResult;
                 // save to database

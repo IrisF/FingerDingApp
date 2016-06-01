@@ -15,6 +15,9 @@ public class Scroll {
     public float gyrX;
     public float gyrY;
     public float gyrZ;
+    public float orientationZ;
+    public float orientationX;
+    public float orientationY;
     public long time;
 
     public Scroll(float x, float y, long time, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ) {

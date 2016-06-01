@@ -58,7 +58,6 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     };
 
     private int[] zoomLatinRow;
-    private ImageView image;
     private boolean finishedSuccessfully = false;
 
     private float startX, startY;
@@ -270,6 +269,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     //initialize imageView with the help of device orientation and aspect ratio
     private void initImageDimensions() {
+
         //this is the smartphone test application, so orientation is portrait and width < height
         imageView.getLayoutParams().height = heightBig/8;
         imageView.getLayoutParams().width = widthBig/8;
