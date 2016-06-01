@@ -23,7 +23,7 @@ import ifi.lmu.com.handmeasurementstudy.system.TrialSettings;
 public class DBHandler extends SQLiteOpenHelper {
 
 	// DB constants:
-	private static final String DATABASE_NAME = "tapsDB";
+	private static final String DATABASE_NAME = "FingerDingDB";
 	private static final int DATABASE_VERSION = 11;
 
 	// DB structure constants:
@@ -182,8 +182,7 @@ public class DBHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-		String createUsersTableString = "CREATE TABLE " + TABLE_USERS + "("
+		String createUsersTableString = "CREATE TABLE IF NOT EXISTS" + TABLE_USERS + "("
 				+ USER_COL_ID + " INTEGER PRIMARY KEY,"
 				+ USER_COL_AGE + "INT"
 				+ USER_COL_GENDER + "CHAR"
@@ -192,8 +191,7 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ USER_COL_HAND_WIDTH + "INT)";
 		db.execSQL(createUsersTableString);
 
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAPS);
-		String createTapsTableString = "CREATE TABLE " + TABLE_TAPS + "("
+		String createTapsTableString = "CREATE TABLE IF NOT EXISTS" + TABLE_TAPS + "("
 				+ TAPS_COL_ID + " INTEGER PRIMARY KEY," + TAPS_COL_TARGET_X
 				+ " REAL," + TAPS_COL_TARGET_Y + " REAL,"
 				+ TAPS_COL_TARGET_W + " REAL," + TAPS_COL_TARGET_H
@@ -210,8 +208,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + TAPS_COL_TRIAL_ID + " INTEGER)";
 		db.execSQL(createTapsTableString);
 
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ZOOMING);
-		String createZoomingTableString = "CREATE TABLE " + TABLE_ZOOMING + "("
+		String createZoomingTableString = "CREATE TABLE IF NOT EXISTS" + TABLE_ZOOMING + "("
 				+ ZOOMING_COL_ID + " INTEGER PRIMARY KEY,"
 				+ ZOOMING_COL_CURRENT_SPAN + " FLOAT,"
 				+ ZOOMING_COL_CURRENT_X + " FLOAT,"
@@ -239,12 +236,48 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ ZOOMING_COL_RECT + " INTEGER)";
 		db.execSQL(createZoomingTableString);
 
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SWIPING);
-		String createSwipingTable = "";
+		String createSwipingTable = "CREATE TABLE IF NOT EXISTS" + TABLE_SWIPING + "("
+				+ SWIPING_COL_ID + " INTEGER PRIMARY KEY,"
+				+ SWIPING_COL_X + "FLOAT"
+				+ SWIPING_COL_Y + "FLOAT"
+				+ SWIPING_COL_ACCX + "FLOAT"
+				+ SWIPING_COL_ACCY + "FLOAT"
+				+ SWIPING_COL_ACCZ + "FLOAT"
+				+ SWIPING_COL_GRAX + "FLOAT"
+				+ SWIPING_COL_GRAY + "FLOAT"
+				+ SWIPING_COL_GRAZ + "FLOAT"
+				+ SWIPING_COL_GYRX + "FLOAT"
+				+ SWIPING_COL_GYRY + "FLOAT"
+				+ SWIPING_COL_GYRZ + "FLOAT"
+				+ SWIPING_COL_ORIENTATION_X + "FLOAT"
+				+ SWIPING_COL_ORIENTATION_Y + "FLOAT"
+				+ SWIPING_COL_ORIENTATION_Z + "FLOAT"
+				+ SWIPING_COL_ROT_X + "FLOAT"
+				+ SWIPING_COL_ROT_Y + "FLOAT"
+				+ SWIPING_COL_ROT_Z + "FLOAT"
+				+ SWIPING_COL_TIME + "LONG";
 		db.execSQL(createSwipingTable);
 
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCROLLING);
-		String createScrollingTable = "";
+		String createScrollingTable = "CREATE TABLE IF NOT EXISTS" + TABLE_SCROLLING + "("
+				+ SCROLLING_COL_ID + "INTEGER PRIMARY KEY,"
+				+ SCROLLING_COL_X + "FLOAT"
+				+ SCROLLING_COL_Y + "FLOAT"
+				+ SCROLLING_COL_ACCX + "FLOAT"
+				+ SCROLLING_COL_ACCY + "FLOAT"
+				+ SCROLLING_COL_ACCZ + "FLOAT"
+				+ SCROLLING_COL_GRAX + "FLOAT"
+				+ SCROLLING_COL_GRAY + "FLOAT"
+				+ SCROLLING_COL_GRAZ + "FLOAT"
+				+ SCROLLING_COL_GYRX + "FLOAT"
+				+ SCROLLING_COL_GYRY + "FLOAT"
+				+ SCROLLING_COL_GYRZ + "FLOAT"
+				+ SCROLLING_COL_ORIENTATION_X + "FLOAT"
+				+ SCROLLING_COL_ORIENTATION_Y + "FLOAT"
+				+ SCROLLING_COL_ORIENTATION_Z + "FLOAT"
+				+ SCROLLING_COL_ROT_X + "FLOAT"
+				+ SCROLLING_COL_ROT_Y + "FLOAT"
+				+ SCROLLING_COL_ROT_Z + "FLOAT"
+				+ SCROLLING_COL_TIME + "LONG";
 		db.execSQL(createScrollingTable);
 	}
 
