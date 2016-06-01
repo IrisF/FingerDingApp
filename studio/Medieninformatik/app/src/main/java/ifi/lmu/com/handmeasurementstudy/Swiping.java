@@ -41,6 +41,7 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     private float gyrZ;
     private SeekBar seekBar;
     private ArrayList<String> posList = new ArrayList();
+    private boolean finishedSuccessfully = false;
 
     private int nTargetCounter = 0;
 
@@ -176,6 +177,7 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
         }else{
             currentTime = System.currentTimeMillis();
             seekBar.setVisibility(View.INVISIBLE);
+            finishedSuccessfully = true;
             finish();
         }
 
@@ -250,10 +252,31 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
 
     @Override
     public void finish () {
-        ActivityManager.SaveResultsInDatabase(loggedSwipes.toArray());
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("isFinished",true);
-        setResult(Activity.RESULT_OK,returnIntent);
-        super.finish();
+        if(finishedSuccessfully) {
+            ActivityManager.SaveResultsInDatabase((Object[]) loggedSwipes.toArray());
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("isFinished", true);
+            setResult(Activity.RESULT_OK, returnIntent);
+        }
+            super.finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_swiping, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
+        return true;
     }
 }

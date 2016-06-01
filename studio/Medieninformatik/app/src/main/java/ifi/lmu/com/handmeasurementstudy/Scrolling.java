@@ -44,6 +44,7 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
     private long secondsAtStart;
     private long time;
     private ArrayList<Scroll> loggedScrolls;
+    private boolean finishedSuccessfully = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
                         {
                             time = System.currentTimeMillis();
                             listView.setVisibility(View.INVISIBLE);
+                            finishedSuccessfully = true;
                             finish();
                         }
                         break;
@@ -161,10 +163,31 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
 
     @Override
     public void finish () {
-        ActivityManager.SaveResultsInDatabase(loggedScrolls.toArray());
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("isFinished",true);
-        setResult(Activity.RESULT_OK,returnIntent);
-        super.finish();
+        if(finishedSuccessfully) {
+            ActivityManager.SaveResultsInDatabase((Object[]) loggedScrolls.toArray());
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("isFinished", true);
+            setResult(Activity.RESULT_OK, returnIntent);
+        }
+            super.finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
+        return true;
     }
 }

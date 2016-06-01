@@ -312,6 +312,11 @@ public class Tapping extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -342,4 +347,5 @@ public class Tapping extends Activity {
         setResult(Activity.RESULT_OK,returnIntent);
         super.finish();
     }
+
 }
