@@ -23,7 +23,7 @@ import ifi.lmu.com.handmeasurementstudy.system.TrialSettings;
 public class DBHandler extends SQLiteOpenHelper {
 
 	// DB constants:
-	private static final String DATABASE_NAME = "tapsDB";
+	private static final String DATABASE_NAME = "FingerDingDB";
 	private static final int DATABASE_VERSION = 11;
 
 	// DB structure constants:
@@ -107,26 +107,34 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String ZOOMING_COL_SCALE_FACTOR = "scaleFactor";
     private static final String ZOOMING_COL_TIME_DELTA = "timeDelta";
     private static final String ZOOMING_COL_EVENT_TIME = "eventTime";
-    private static final String ZOOMING_COL_TRIAL_ID = "trialID";
+	private static final String ZOOMING_COL_ACC_X = "accX";
+	private static final String ZOOMING_COL_ACC_Y = "accY";
+	private static final String ZOOMING_COL_ACC_Z = "accZ";
+	private static final String ZOOMING_COL_GRA_X = "graX";
+	private static final String ZOOMING_COL_GRA_Y = "graY";
+	private static final String ZOOMING_COL_GRA_Z = "graZ";
+	private static final String ZOOMING_COL_GYR_X = "gyrX";
+	private static final String ZOOMING_COL_GYR_Y = "gyrY";
+	private static final String ZOOMING_COL_GYR_Z = "gyrZ";
+	private static final String ZOOMING_COL_ORIENTATION_Z = "orientationZ";
+	private static final String ZOOMING_COL_ORIENTATION_X = "orientationX";
+	private static final String ZOOMING_COL_ORIENTATION_Y = "orientationY";
+	private static final String ZOOMING_COL_ROT_X = "rotationX";
+	private static final String ZOOMING_COL_ROT_Y = "rotationY";
+	private static final String ZOOMING_COL_ROT_Z = "rotationZ";
+	private static final String ZOOMING_COL_RECT = "rectangleIndex";
+    private static final String ZOOMING_COL_USER_ID = "userID";
 
 
-//TODO do we need this? maybe put participant's demographic data in here
+
 	// Table trials:
-	private static final String TABLE_TRIALS = "trials";
-	private static final String TRIALS_COL_ID = "id";
-	private static final String TRIALS_COL_TIME = "timestamp";
-	private static final String TRIALS_COL_NAME = "subjectName";
-	private static final String TRIALS_COL_SUBJECT_ID = "subjectID";
-	private static final String TRIALS_COL_TRIAL_MODE = "trialMode";
-	private static final String TRIALS_COL_SESSION_INDEX = "sessionIndex";
-	private static final String TRIALS_COL_INPUT_STYLE = "inputStyle";
-    private static final String TRIALS_COL_MOBILITY = "mobility";
-	private static final String TRIALS_COL_SURFACE_W = "surfaceW";
-	private static final String TRIALS_COL_SURFACE_H = "surfaceH";
-	private static final String TRIALS_COL_SURFACE_X = "surfaceX";
-	private static final String TRIALS_COL_SURFACE_Y = "surfaceY";
-	private static final String TRIALS_COL_SCREEN_W = "screenW";
-	private static final String TRIALS_COL_SCREEN_H = "screenH";
+	private static final String TABLE_USERS = "users";
+	private static final String USER_COL_ID = "id";
+	private static final String USER_COL_AGE = "age";
+	private static final String USER_COL_GENDER = "gender";
+	private static final String USER_COL_HAND_SPAN = "handSpan";
+	private static final String USER_COL_HAND_WIDTH = "handWidth";
+	private static final String USER_COL_HAND_LENGTH = "handLength";
 
 	private Context context;
 
@@ -174,8 +182,18 @@ public class DBHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
         Log.d("Mal schauen", "Ob was passiert");
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAPS);
-		String createTapsTableString = "CREATE TABLE " + TABLE_TAPS + "("
+
+
+		String createUsersTableString = "CREATE TABLE IF NOT EXISTS" + TABLE_USERS + "("
+				+ USER_COL_ID + " INTEGER PRIMARY KEY,"
+				+ USER_COL_AGE + "INT"
+				+ USER_COL_GENDER + "CHAR"
+				+ USER_COL_HAND_SPAN + "INT"
+				+ USER_COL_HAND_LENGTH + "INT"
+				+ USER_COL_HAND_WIDTH + "INT)";
+		db.execSQL(createUsersTableString);
+
+		String createTapsTableString = "CREATE TABLE IF NOT EXISTS" + TABLE_TAPS + "("
 				+ TAPS_COL_ID + " INTEGER PRIMARY KEY," + TAPS_COL_TARGET_X
 				+ " REAL," + TAPS_COL_TARGET_Y + " REAL,"
 				+ TAPS_COL_TARGET_W + " REAL," + TAPS_COL_TARGET_H
@@ -192,52 +210,95 @@ public class DBHandler extends SQLiteOpenHelper {
                 + TAPS_COL_TRIAL_ID + " INTEGER)";
 		db.execSQL(createTapsTableString);
 
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIALS);
-		String createTrialsTableString = "CREATE TABLE " + TABLE_TRIALS + "("
-				+ TRIALS_COL_ID + " INTEGER PRIMARY KEY," + TRIALS_COL_TIME
-				+ " TIMESTAMP NOT NULL DEFAULT current_timestamp, "
-				+ TRIALS_COL_TRIAL_MODE + " INTEGER, "
-				+ TRIALS_COL_SESSION_INDEX + " INTEGER,"
-				+ TRIALS_COL_INPUT_STYLE + " INTEGER," + TRIALS_COL_MOBILITY + " INTEGER,"
-                + TRIALS_COL_SURFACE_X + " INTEGER," + TRIALS_COL_SURFACE_Y + " INTEGER,"
-				+ TRIALS_COL_SURFACE_W + " INTEGER," + TRIALS_COL_SURFACE_H
-				+ " INTEGER," + TRIALS_COL_SCREEN_W + " INTEGER,"
-				+ TRIALS_COL_SCREEN_H + " INTEGER," + TRIALS_COL_NAME
-				+ " TEXT," + TRIALS_COL_SUBJECT_ID + " INTEGER)";
-		db.execSQL(createTrialsTableString);
+		String createZoomingTableString = "CREATE TABLE IF NOT EXISTS" + TABLE_ZOOMING + "("
+				+ ZOOMING_COL_ID + " INTEGER PRIMARY KEY,"
+				+ ZOOMING_COL_CURRENT_SPAN + " FLOAT,"
+				+ ZOOMING_COL_CURRENT_X + " FLOAT,"
+				+ ZOOMING_COL_CURRENT_Y + " FLOAT,"
+				+ ZOOMING_COL_FOCUS_X + " FLOAT,"
+				+ ZOOMING_COL_FOCUS_Y + " FLOAT,"
+				+ ZOOMING_COL_SCALE_FACTOR + " FLOAT,"
+				+ ZOOMING_COL_TIME_DELTA + " FLOAT,"
+				+ ZOOMING_COL_EVENT_TIME + " FLOAT,"
+				+ ZOOMING_COL_ACC_X + " FLOAT,"
+				+ ZOOMING_COL_ACC_Y + " FLOAT,"
+				+ ZOOMING_COL_ACC_Z + " FLOAT,"
+				+ ZOOMING_COL_GRA_X + " FLOAT,"
+				+ ZOOMING_COL_GRA_Y + " FLOAT,"
+				+ ZOOMING_COL_GRA_Z + " FLOAT,"
+				+ ZOOMING_COL_GYR_X + " FLOAT,"
+				+ ZOOMING_COL_GYR_Y + " FLOAT,"
+				+ ZOOMING_COL_GYR_Z + " FLOAT,"
+				+ ZOOMING_COL_ORIENTATION_X + " FLOAT,"
+				+ ZOOMING_COL_ORIENTATION_Y + " FLOAT,"
+				+ ZOOMING_COL_ORIENTATION_Z + " FLOAT,"
+				+ ZOOMING_COL_ROT_X + " FLOAT,"
+				+ ZOOMING_COL_ROT_Y + " FLOAT,"
+				+ ZOOMING_COL_ROT_Z + " FLOAT,"
+				+ ZOOMING_COL_RECT + " INTEGER)";
+		db.execSQL(createZoomingTableString);
+
+		String createSwipingTable = "CREATE TABLE IF NOT EXISTS" + TABLE_SWIPING + "("
+				+ SWIPING_COL_ID + " INTEGER PRIMARY KEY,"
+				+ SWIPING_COL_X + "FLOAT"
+				+ SWIPING_COL_Y + "FLOAT"
+				+ SWIPING_COL_ACCX + "FLOAT"
+				+ SWIPING_COL_ACCY + "FLOAT"
+				+ SWIPING_COL_ACCZ + "FLOAT"
+				+ SWIPING_COL_GRAX + "FLOAT"
+				+ SWIPING_COL_GRAY + "FLOAT"
+				+ SWIPING_COL_GRAZ + "FLOAT"
+				+ SWIPING_COL_GYRX + "FLOAT"
+				+ SWIPING_COL_GYRY + "FLOAT"
+				+ SWIPING_COL_GYRZ + "FLOAT"
+				+ SWIPING_COL_ORIENTATION_X + "FLOAT"
+				+ SWIPING_COL_ORIENTATION_Y + "FLOAT"
+				+ SWIPING_COL_ORIENTATION_Z + "FLOAT"
+				+ SWIPING_COL_ROT_X + "FLOAT"
+				+ SWIPING_COL_ROT_Y + "FLOAT"
+				+ SWIPING_COL_ROT_Z + "FLOAT"
+				+ SWIPING_COL_TIME + "LONG";
+		db.execSQL(createSwipingTable);
+
+		String createScrollingTable = "CREATE TABLE IF NOT EXISTS" + TABLE_SCROLLING + "("
+				+ SCROLLING_COL_ID + "INTEGER PRIMARY KEY,"
+				+ SCROLLING_COL_X + "FLOAT"
+				+ SCROLLING_COL_Y + "FLOAT"
+				+ SCROLLING_COL_ACCX + "FLOAT"
+				+ SCROLLING_COL_ACCY + "FLOAT"
+				+ SCROLLING_COL_ACCZ + "FLOAT"
+				+ SCROLLING_COL_GRAX + "FLOAT"
+				+ SCROLLING_COL_GRAY + "FLOAT"
+				+ SCROLLING_COL_GRAZ + "FLOAT"
+				+ SCROLLING_COL_GYRX + "FLOAT"
+				+ SCROLLING_COL_GYRY + "FLOAT"
+				+ SCROLLING_COL_GYRZ + "FLOAT"
+				+ SCROLLING_COL_ORIENTATION_X + "FLOAT"
+				+ SCROLLING_COL_ORIENTATION_Y + "FLOAT"
+				+ SCROLLING_COL_ORIENTATION_Z + "FLOAT"
+				+ SCROLLING_COL_ROT_X + "FLOAT"
+				+ SCROLLING_COL_ROT_Y + "FLOAT"
+				+ SCROLLING_COL_ROT_Z + "FLOAT"
+				+ SCROLLING_COL_TIME + "LONG";
+		db.execSQL(createScrollingTable);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAPS);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIALS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
 		onCreate(db);
 	}
 
-	public int insertTrial(String subjectName, int subjectID,
-			TrialSettings trialSettings, int sessionIndex, int surfaceX,
-			int surfaceY, int surfaceW, int surfaceH, int screenW, int screenH) {
+	public int insertUser() {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
 
-		values.put(TRIALS_COL_TRIAL_MODE, trialSettings.getTrialMode());
-		values.put(TRIALS_COL_SESSION_INDEX, sessionIndex);
-		values.put(TRIALS_COL_INPUT_STYLE, trialSettings.getInputStyle());
-        values.put(TRIALS_COL_MOBILITY, trialSettings.getMobility());
-		values.put(TRIALS_COL_NAME, subjectName);
-		values.put(TRIALS_COL_SUBJECT_ID, subjectID);
-		values.put(TRIALS_COL_SURFACE_X, surfaceX);
-		values.put(TRIALS_COL_SURFACE_Y, surfaceY);
-		values.put(TRIALS_COL_SURFACE_W, surfaceW);
-		values.put(TRIALS_COL_SURFACE_H, surfaceH);
-		values.put(TRIALS_COL_SCREEN_W, screenW);
-		values.put(TRIALS_COL_SCREEN_H, screenH);
+		//TODO insert User data
 
-		int id = (int) db.insert(TABLE_TRIALS, null, values);
-		Log.d("DEBUG", "inserted trial with id: " + id + " and inputStyle="
-				+ trialSettings.getInputStyle() + " and mobility=" + trialSettings.getMobility());
+		int id = (int) db.insert(TABLE_USERS, null, values);
 
 		db.close();
 		return id;
@@ -288,6 +349,22 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(ZOOMING_COL_SCALE_FACTOR, zoom.scaleFactor);
 		values.put(ZOOMING_COL_TIME_DELTA, zoom.timeDelta);
 		values.put(ZOOMING_COL_EVENT_TIME, zoom.eventTime);
+		values.put(ZOOMING_COL_ACC_X, zoom.accX);
+		values.put(ZOOMING_COL_ACC_Y, zoom.accY);
+		values.put(ZOOMING_COL_ACC_Z, zoom.accZ);
+		values.put(ZOOMING_COL_GRA_X, zoom.graX);
+		values.put(ZOOMING_COL_GRA_Y, zoom.graY);
+		values.put(ZOOMING_COL_GRA_Z, zoom.graZ);
+		values.put(ZOOMING_COL_GYR_X, zoom.gyrX);
+		values.put(ZOOMING_COL_GYR_Y, zoom.gyrY);
+		values.put(ZOOMING_COL_GYR_Z, zoom.gyrZ);
+		values.put(ZOOMING_COL_ORIENTATION_X, zoom.orientationX);
+		values.put(ZOOMING_COL_ORIENTATION_Y, zoom.orientationY);
+		values.put(ZOOMING_COL_ORIENTATION_Z, zoom.orientationZ);
+		values.put(ZOOMING_COL_ROT_X, zoom.rotationX);
+		values.put(ZOOMING_COL_ROT_Y, zoom.rotationY);
+		values.put(ZOOMING_COL_ROT_Z, zoom.rotationZ);
+		values.put(ZOOMING_COL_RECT, zoom.rectangleIndex);
 
 		int id = (int) db.insert(TABLE_ZOOMING, null, values);
 		Log.d("DEBUG", "inserted zoom with id: " + id);
