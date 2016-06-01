@@ -194,7 +194,11 @@ public class MainActivity extends Activity {
 
                 // TODO save user data to DB
 
-                new ActivityManager(this, nCurrentId).Start();
+                //new ActivityManager(this, nCurrentId).Start();
+                Intent i = new Intent(this, ActivityManager.class);
+                i.putExtra("id", nCurrentId);
+                startActivity(i);
+
                 //Intent intent = new Intent(this, Tapping.class);
                 //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
                 // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);

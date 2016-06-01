@@ -249,11 +249,11 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     }
 
     @Override
-    protected void onDestroy () {
-        super.onDestroy();
-        ActivityManager.SaveResultsInDatabase((Object[]) loggedSwipes.toArray());
+    public void finish () {
+        ActivityManager.SaveResultsInDatabase(loggedSwipes.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
 }

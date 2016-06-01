@@ -215,7 +215,6 @@ public class Tapping extends Activity {
                 break;
 
             case MotionEvent.ACTION_UP:
-                int nDuration = (int) (System.currentTimeMillis() - nStartTime);
                 float fTouchUpX = event.getX();
                 float fTouchUpY = event.getY();
                 float fPressureUp = event.getPressure();
@@ -224,8 +223,11 @@ public class Tapping extends Activity {
                 float fTargetY = drawing.getTargetHeight();
                 Coords[] aoMoveArray = aMoveCoords.toArray(new Coords[aMoveCoords.size()]);
 
+                Log.d("Tapping TIME", "TEST");
+                Log.d("Tapping TIME", String.valueOf(System.currentTimeMillis()));
                 Tap oTap = new Tap(fTouchDownX, fTouchDownY, fTouchUpX, fTouchUpY, fTargetX, fTargetY,
-                        nDuration, fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
+                        nStartTime, System.currentTimeMillis(), fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
+                Log.d("Tapping", oTap.toString());
                 loggedTaps.add(oTap);
 
                 aMoveCoords.clear();
@@ -333,11 +335,11 @@ public class Tapping extends Activity {
     }
 
     @Override
-    protected void onDestroy () {
-        super.onDestroy();
+    public void finish () {
         ActivityManager.SaveResultsInDatabase(loggedTaps.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
 }

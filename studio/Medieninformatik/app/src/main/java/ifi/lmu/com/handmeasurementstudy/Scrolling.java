@@ -160,11 +160,11 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
     }
 
     @Override
-    protected void onDestroy () {
-        super.onDestroy();
-        ActivityManager.SaveResultsInDatabase((Object[]) loggedScrolls.toArray());
+    public void finish () {
+        ActivityManager.SaveResultsInDatabase(loggedScrolls.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
 }

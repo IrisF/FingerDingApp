@@ -3,11 +3,14 @@ package ifi.lmu.com.handmeasurementstudy.system;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 
+import ifi.lmu.com.handmeasurementstudy.R;
 import ifi.lmu.com.handmeasurementstudy.Swiping;
-import ifi.lmu.com.handmeasurementstudy.Tablet;
-import ifi.lmu.com.handmeasurementstudy.ZoomingRectangles;
+import ifi.lmu.com.handmeasurementstudy.TabletActivity;
+import ifi.lmu.com.handmeasurementstudy.ZoomingMaximum;
 import ifi.lmu.com.handmeasurementstudy.Tapping;
 import ifi.lmu.com.handmeasurementstudy.Zooming;
 import ifi.lmu.com.handmeasurementstudy.Scrolling;
@@ -31,7 +34,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
             n_ACTIVITY_SWIPING = 1,
             n_ACTIVITY_ZOOMING = 2,
             n_ACTIVITY_SCOLLING = 3,
-            n_ACTIVITY_ZOOMING_VIEW = 4,
+            n_ACTIVITY_ZOOMING_MAXIMUM = 4,
             n_ACTIVITY_TABLET = 5;
 
     enum Activities {
@@ -50,8 +53,8 @@ public class ActivityManager extends Activity { // extends Activity to call star
             Swiping.class,
             Zooming.class,
             Scrolling.class,
-            ZoomingRectangles.class,
-            Tablet.class
+            ZoomingMaximum.class,
+            TabletActivity.class
     };
 
     private Class[] _aoOrder;
@@ -62,27 +65,62 @@ public class ActivityManager extends Activity { // extends Activity to call star
     private Context _oContext;
     private DBHandler _oDbHandler;
 
-    public ActivityManager (Context context, int i_nUserId) {
+    private void ActivityManager (Context context, int i_nUserId) {
 
         // TODO DBHelper anlegen
         // TODO onActivityFinished (Datentyp incht festgelegt --> Objekt?)
 
-        _nCurrentActivity = 0;
-        _oContext = context;
-        _nUserId = i_nUserId;
 
+        _oContext = context;
+
+        init(i_nUserId);
+
+
+    }
+
+    private void init (int i_nUserId){
+        _nUserId = i_nUserId;
         // get current latin row
         int[] anLatinRow = latinSquare[ i_nUserId % latinSquare.length ];
 
         _aoOrder = new Class[6];
-        _oDbHandler = DBHandler.getInstance(getApplicationContext());
+        _oDbHandler = DBHandler.getInstance(_oContext);
 
         // create latin order
         for(int i = 0; i < anLatinRow.length; i++){
-            _aoOrder[i] = _aoActivities[anLatinRow[i]];
+            _aoOrder[i] = _aoActivities[anLatinRow[i]-1];
+        }
+        _nCurrentActivity = 0;
+
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Remove title bar:
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        setContentView(R.layout.activity_blank);
+
+        _oContext = getApplicationContext();
+
+
+        int nId;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                nId= 0;
+            } else {
+                nId= extras.getInt("id");
+            }
+        } else {
+            nId = (int) savedInstanceState.getSerializable("id");
         }
 
-
+        init(nId);
+        Start();
     }
 
     public void Start () {
@@ -92,16 +130,24 @@ public class ActivityManager extends Activity { // extends Activity to call star
     }
 
     private void StartNextActivity() {
+        Log.d("ActivityManager", "StartNextActivity");
 
         if(_nCurrentActivity < _aoOrder.length) {
 
+            //TODO _eCurrentActivvity passt noch nicht
             _eCurrentActivity = SetCurrentActivityEnumByInt(_nCurrentActivity);
             //_eCurrentActivity = Activities.n_ACTIVITY_SCOLLING;
 
             //Intent i = new Intent(_oContext, _aoOrder[_nCurrentActivity]);
-            Intent i = new Intent(this, _aoOrder[_nCurrentActivity]);
+            Log.e("this: " + this.toString(), ", _aoOrder: " +_aoOrder +", _nCurrentActivity:"+ _nCurrentActivity);
+            Intent i = new Intent(_oContext, _aoOrder[_nCurrentActivity]);
             i.putExtra("id", _nUserId);
             startActivityForResult(i,1);
+
+            //only for test - delete later
+            //Intent i = new Intent(_oContext, Tapping.class);
+            //i.putExtra("id", _nUserId);
+            //startActivity(i);
 
             _nCurrentActivity++;
         }
@@ -124,7 +170,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
                 return Activities.n_ACTIVITY_ZOOMING;
             case n_ACTIVITY_SCOLLING: //3
                 return Activities.n_ACTIVITY_SCOLLING;
-            case n_ACTIVITY_ZOOMING_VIEW: //4
+            case n_ACTIVITY_ZOOMING_MAXIMUM: //4
                 return Activities.n_ACTIVITY_ZOOMING_MAXIMUM;
             case n_ACTIVITY_TABLET: //5
                 return Activities.n_ACTIVITY_TABLET;
@@ -136,36 +182,37 @@ public class ActivityManager extends Activity { // extends Activity to call star
 
     public void StoreResultsInDatabase () {
         // TODO distinguish and save accordingly
+        Log.d("ActivityManager", "StoreResultsInDatabase");
         switch(_nCurrentActivity){
             case n_ACTIVITY_TAPPING: //0
-                Tap[] aoTap = (Tap[]) _aoResult;
+                //Tap[] aoTap = (Tap[]) _aoResult;
                 // save to database
-                for(int i = 0; i < aoTap.length; i++){
-                    _oDbHandler.insertTap(aoTap[i], _nUserId);
+                for(int i = 0; i < _aoResult.length; i++){
+                    _oDbHandler.insertTap((Tap) _aoResult[i], _nUserId);
                 }
                 break;
             case n_ACTIVITY_SWIPING: //1
-                Swipe[] aoSwipe = (Swipe[]) _aoResult;
-                for(int i = 0; i < aoSwipe.length; i++){
-                    _oDbHandler.insertSwipe(aoSwipe[i]);
+                //Swipe[] aoSwipe = (Swipe[]) _aoResult;
+                for(int i = 0; i < _aoResult.length; i++){
+                    _oDbHandler.insertSwipe((Swipe) _aoResult[i]);
                 }
                 break;
             case n_ACTIVITY_ZOOMING: //2
-                Zoom[] aoZoom = (Zoom[]) _aoResult;
-                for(int i = 0; i < aoZoom.length; i++){
-                    _oDbHandler.insertZoom(aoZoom[i]);
+                //Zoom[] aoZoom = (Zoom[]) _aoResult;
+                for(int i = 0; i < _aoResult.length; i++){
+                    _oDbHandler.insertZoom((Zoom) _aoResult[i]);
                 }
                 break;
             case n_ACTIVITY_SCOLLING: //3
-                Scroll[] aoScroll = (Scroll[]) _aoResult;
-                for(int i = 0; i < aoScroll.length; i++){
-                    _oDbHandler.insertScroll(aoScroll[i]);
+                //Scroll[] aoScroll = (Scroll[]) _aoResult;
+                for(int i = 0; i < _aoResult.length; i++){
+                    _oDbHandler.insertScroll((Scroll) _aoResult[i]);
                 }
                 break;
-            case n_ACTIVITY_ZOOMING_VIEW: //4
-                Zoom[] aoZoom1 = (Zoom[]) _aoResult;
-                for(int i = 0; i < aoZoom1.length; i++){
-                    _oDbHandler.insertZoom(aoZoom1[i]);
+            case n_ACTIVITY_ZOOMING_MAXIMUM: //4
+                //Zoom[] aoZoom1 = (Zoom[]) _aoResult;
+                for(int i = 0; i < _aoResult.length; i++){
+                    _oDbHandler.insertZoom((Zoom) _aoResult[i]);
                 }
                 break;
             case n_ACTIVITY_TABLET: //5
@@ -180,6 +227,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        Log.d("ActivityManager", "onActivityResult " + String.valueOf(requestCode) +" " + String.valueOf(resultCode)+ " ?= " + String.valueOf(Activity.RESULT_OK));
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 boolean bIsFinished = data.getBooleanExtra("isFinished", true);
@@ -189,13 +237,19 @@ public class ActivityManager extends Activity { // extends Activity to call star
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
+                Log.e("ActvityManager", "RESULT CANCELED");
                 //Write your code if there's no result
             }
         }
     }
 
     public static void SaveResultsInDatabase (Object[] i_aoResults) {
-        _aoResult = i_aoResults;
-        Log.d("ActivityManager RESULTS", i_aoResults.toString());
+        if(i_aoResults != null) {
+            _aoResult = i_aoResults;
+            Log.d("ActivityManager RESULTS", i_aoResults.toString());
+        }
+        else{
+            Log.d("ActivityManager RESULTS", "results NULL :(");
+        }
     }
 }

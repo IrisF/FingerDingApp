@@ -264,11 +264,11 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     }
 
     @Override
-    protected void onDestroy () {
-        super.onDestroy();
+    public void finish () {
         ActivityManager.SaveResultsInDatabase((Object[]) zoomData.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
 }
