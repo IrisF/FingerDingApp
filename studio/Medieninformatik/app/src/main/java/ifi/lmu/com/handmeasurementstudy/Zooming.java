@@ -137,7 +137,17 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 //TODO save start point?!
                     Log.i("Scale", "Start Points x " + startX + " y " + startY + " time " + startTimeSeconds);
                 }
-                Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(), scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(), scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(), scaleGestureDetector.getScaleFactor(), scaleGestureDetector.getTimeDelta(), scaleGestureDetector.getEventTime(), sensorHelper.getAcceleromterData(), sensorHelper.getGravitiyData(), sensorHelper.getGyroscopeData(), rectangleIndex);
+                Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(),
+                        scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(),
+                        scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(),
+                        scaleGestureDetector.getScaleFactor(),
+                        scaleGestureDetector.getTimeDelta(),
+                        scaleGestureDetector.getEventTime(),
+                        sensorHelper.getAcceleromterData()[0], sensorHelper.getAcceleromterData()[1],  sensorHelper.getAcceleromterData()[2],
+                        sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1],sensorHelper.getGravitiyData()[2],
+                        sensorHelper.getGyroscopeData()[0],sensorHelper.getGyroscopeData()[1], sensorHelper.getGyroscopeData()[2],
+                        sensorHelper.getOrientationData()[0],sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2],
+                        rectangleIndex);
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());
 
