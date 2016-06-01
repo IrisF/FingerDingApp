@@ -147,6 +147,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                         sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1],sensorHelper.getGravitiyData()[2],
                         sensorHelper.getGyroscopeData()[0],sensorHelper.getGyroscopeData()[1], sensorHelper.getGyroscopeData()[2],
                         sensorHelper.getOrientationData()[0],sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2],
+                        sensorHelper.getRotationData()[0],sensorHelper.getRotationData()[1], sensorHelper.getRotationData()[2],
                         rectangleIndex);
                 zoomData.add(zoom);
                 Log.i("Scale", zoom.toString());

@@ -119,6 +119,9 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String ZOOMING_COL_ORIENTATION_Z = "orientationZ";
 	private static final String ZOOMING_COL_ORIENTATION_X = "orientationX";
 	private static final String ZOOMING_COL_ORIENTATION_Y = "orientationY";
+	private static final String ZOOMING_COL_ROT_X = "rotationX";
+	private static final String ZOOMING_COL_ROT_Y = "rotationY";
+	private static final String ZOOMING_COL_ROT_Z = "rotationZ";
 	private static final String ZOOMING_COL_RECT = "rectangleIndex";
     private static final String ZOOMING_COL_USER_ID = "userID";
 
@@ -230,6 +233,9 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ ZOOMING_COL_ORIENTATION_X + " FLOAT,"
 				+ ZOOMING_COL_ORIENTATION_Y + " FLOAT,"
 				+ ZOOMING_COL_ORIENTATION_Z + " FLOAT,"
+				+ ZOOMING_COL_ROT_X + " FLOAT,"
+				+ ZOOMING_COL_ROT_Y + " FLOAT,"
+				+ ZOOMING_COL_ROT_Z + " FLOAT,"
 				+ ZOOMING_COL_RECT + " INTEGER)";
 		db.execSQL(createZoomingTableString);
 
@@ -320,6 +326,9 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(ZOOMING_COL_ORIENTATION_X, zoom.orientationX);
 		values.put(ZOOMING_COL_ORIENTATION_Y, zoom.orientationY);
 		values.put(ZOOMING_COL_ORIENTATION_Z, zoom.orientationZ);
+		values.put(ZOOMING_COL_ROT_X, zoom.rotationX);
+		values.put(ZOOMING_COL_ROT_Y, zoom.rotationY);
+		values.put(ZOOMING_COL_ROT_Z, zoom.rotationZ);
 		values.put(ZOOMING_COL_RECT, zoom.rectangleIndex);
 
 		int id = (int) db.insert(TABLE_ZOOMING, null, values);

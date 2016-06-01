@@ -26,9 +26,12 @@ public class Zoom {
     public float orientationZ;
     public float orientationX;
     public float orientationY;
+    public float rotationX;
+    public float rotationY;
+    public float rotationZ;
     public int rectangleIndex;
 
-    public Zoom(float currentSpan, float currentX, float currentY, float focusX, float focusY, float scaleFactor, float timeDelta, float eventTime, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationZ, float orientationX, float orientationY, int rectangleIndex) {
+    public Zoom(float currentSpan, float currentX, float currentY, float focusX, float focusY, float scaleFactor, float timeDelta, float eventTime, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationZ, float orientationX, float orientationY, float rotationX, float rotationY, float rotationZ, int rectangleIndex) {
         this.currentSpan = currentSpan;
         this.currentX = currentX;
         this.currentY = currentY;
@@ -49,6 +52,9 @@ public class Zoom {
         this.orientationZ = orientationZ;
         this.orientationX = orientationX;
         this.orientationY = orientationY;
+        this.rotationX = rotationX;
+        this.rotationY = rotationY;
+        this.rotationZ = rotationZ;
         this.rectangleIndex = rectangleIndex;
     }
 
@@ -75,6 +81,9 @@ public class Zoom {
                 ", orientationZ=" + orientationZ +
                 ", orientationX=" + orientationX +
                 ", orientationY=" + orientationY +
+                ", rotationX=" + rotationX +
+                ", rotationY=" + rotationY +
+                ", rotationZ=" + rotationZ +
                 ", rectangleIndex=" + rectangleIndex +
                 '}';
     }
