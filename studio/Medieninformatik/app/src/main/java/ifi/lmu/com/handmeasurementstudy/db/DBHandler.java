@@ -173,7 +173,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-
+        Log.d("Mal schauen", "Ob was passiert");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAPS);
 		String createTapsTableString = "CREATE TABLE " + TABLE_TAPS + "("
 				+ TAPS_COL_ID + " INTEGER PRIMARY KEY," + TAPS_COL_TARGET_X

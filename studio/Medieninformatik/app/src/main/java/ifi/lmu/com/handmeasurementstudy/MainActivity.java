@@ -43,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
     public static TaskScheduler taskScheduler = null;
 
     private Spinner debugSpinner;
+    private DBHandler _oDBHandler;
 
     private int nCurrentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _oDBHandler = DBHandler.getInstance(getApplicationContext());
         MainActivity.DISPLAY_XDPI = getResources().getDisplayMetrics().xdpi;
         MainActivity.DISPLAY_YDPI = getResources().getDisplayMetrics().ydpi;
 
