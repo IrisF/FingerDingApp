@@ -41,6 +41,7 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     private float gyrZ;
     private SeekBar seekBar;
     private ArrayList<String> posList = new ArrayList();
+    private boolean finishedSuccessfully = false;
 
     private int nTargetCounter = 0;
 
@@ -176,6 +177,7 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
         }else{
             currentTime = System.currentTimeMillis();
             seekBar.setVisibility(View.INVISIBLE);
+            finishedSuccessfully = true;
             finish();
         }
 
@@ -251,10 +253,12 @@ public class Swiping extends ActionBarActivity implements SensorEventListener {
     @Override
     protected void onDestroy () {
         super.onDestroy();
-        ActivityManager.SaveResultsInDatabase((Object[]) loggedSwipes.toArray());
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("isFinished",true);
-        setResult(Activity.RESULT_OK,returnIntent);
+        if(finishedSuccessfully) {
+            ActivityManager.SaveResultsInDatabase((Object[]) loggedSwipes.toArray());
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("isFinished", true);
+            setResult(Activity.RESULT_OK, returnIntent);
+        }
     }
 
     @Override

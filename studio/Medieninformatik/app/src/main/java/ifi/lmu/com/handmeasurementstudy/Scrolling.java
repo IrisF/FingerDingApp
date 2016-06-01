@@ -44,6 +44,7 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
     private long secondsAtStart;
     private long time;
     private ArrayList<Scroll> loggedScrolls;
+    private boolean finishedSuccessfully = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
                         {
                             time = System.currentTimeMillis();
                             listView.setVisibility(View.INVISIBLE);
+                            finishedSuccessfully = true;
                             finish();
                         }
                         break;
@@ -162,10 +164,12 @@ public class Scrolling extends ActionBarActivity implements SensorEventListener 
     @Override
     protected void onDestroy () {
         super.onDestroy();
-        ActivityManager.SaveResultsInDatabase((Object[]) loggedScrolls.toArray());
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("isFinished",true);
-        setResult(Activity.RESULT_OK,returnIntent);
+        if(finishedSuccessfully) {
+            ActivityManager.SaveResultsInDatabase((Object[]) loggedScrolls.toArray());
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("isFinished", true);
+            setResult(Activity.RESULT_OK, returnIntent);
+        }
     }
 
     @Override

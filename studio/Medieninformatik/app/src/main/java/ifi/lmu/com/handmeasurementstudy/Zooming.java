@@ -24,6 +24,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     private ScaleGestureDetector scaleGestureDetector;
     private ImageView image;
+    private boolean finishedSuccessfully = false;
 
     private ZoomingView zoomingView;
     private Paint rectanglePaint;
