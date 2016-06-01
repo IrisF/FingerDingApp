@@ -85,17 +85,22 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String SWIPING_COL_GYRZ = "gyrZ";
 
     //Table Zooming
-    private static final String TABLE_ZOOMING = "zooming";
-    private static final String ZOOMING_COL_ID = "id";
-    private static final String ZOOMING_COL_CURRENT_SPAN = "currentSpan";
-    private static final String ZOOMING_COL_CURRENT_X = "currentX";
-    private static final String ZOOMING_COL_CURRENT_Y = "currentY";
-    private static final String ZOOMING_COL_FOCUS_X = "focusX";
-    private static final String ZOOMING_COL_FOCUS_Y = "focusY";
-    private static final String ZOOMING_COL_SCALE_FACTOR = "scaleFactor";
-    private static final String ZOOMING_COL_TIME_DELTA = "timeDelta";
-    private static final String ZOOMING_COL_EVENT_TIME = "eventTime";
-    private static final String ZOOMING_COL_TRIAL_ID = "trialID";
+	//Table Zooming
+	private static final String TABLE_ZOOMING = "zooming";
+	private static final String ZOOMING_COL_ID = "id";
+	private static final String ZOOMING_COL_CURRENT_SPAN = "currentSpan";
+	private static final String ZOOMING_COL_CURRENT_X = "currentX";
+	private static final String ZOOMING_COL_CURRENT_Y = "currentY";
+	private static final String ZOOMING_COL_FOCUS_X = "focusX";
+	private static final String ZOOMING_COL_FOCUS_Y = "focusY";
+	private static final String ZOOMING_COL_SCALE_FACTOR = "scaleFactor";
+	private static final String ZOOMING_COL_TIME_DELTA = "timeDelta";
+	private static final String ZOOMING_COL_EVENT_TIME = "eventTime";
+	private static final String ZOOMING_ACC_DATA = "accelerometerData";
+	private static final String ZOOMING_GRAV_DATA = "gravitiyData";
+	private static final String ZOOMING_GYR_DATA = "gyroscopeData";
+	private static final String ZOOMING_RECT_INDEX = "rectangleIndex";
+	private static final String ZOOMING_COL_TRIAL_ID = "trialID";
 
 
 //TODO do we need this? maybe put participant's demographic data in here
@@ -193,6 +198,20 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ TRIALS_COL_SCREEN_H + " INTEGER," + TRIALS_COL_NAME
 				+ " TEXT," + TRIALS_COL_SUBJECT_ID + " INTEGER)";
 		db.execSQL(createTrialsTableString);
+
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ZOOMING);
+		String createZoomingTableString = "CREATE TABLE " + TABLE_ZOOMING + "("
+				+ ZOOMING_COL_ID + "INTEGER PRIMARY KEY,"
+				+ ZOOMING_COL_CURRENT_SPAN + "FLOAT,"
+				+ ZOOMING_COL_CURRENT_X + "FLOAT,"
+				+ ZOOMING_COL_CURRENT_Y + "FLOAT,"
+				+ ZOOMING_COL_FOCUS_X + "FLOAT,"
+				+ ZOOMING_COL_FOCUS_Y + "FLOAT,"
+				+ ZOOMING_COL_SCALE_FACTOR + "FLOAT,"
+				+ ZOOMING_COL_TIME_DELTA + "FLOAT,"
+				+ ZOOMING_COL_EVENT_TIME + "FLOAT,"
+				+ ZOOMING_RECT_INDEX + "INTEGER";
+		db.execSQL(createZoomingTableString);
 	}
 
 	@Override
