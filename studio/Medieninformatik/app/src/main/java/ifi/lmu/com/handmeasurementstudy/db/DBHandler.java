@@ -230,7 +230,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(TAPS_COL_TOUCH_UP_Y, tap.upY);
 		//values.put(TAPS_COL_HIT, tap.hit);
 		values.put(TAPS_COL_TIME_DOWN, tap.timeDown);
-		//values.put(TAPS_COL_TIME_UP, tap.timeUp);
+		values.put(TAPS_COL_TIME_UP, tap.timeUp);
         values.put(TAPS_COL_PRESSURE_DOWN, tap.pressureDown);
         values.put(TAPS_COL_PRESSURE_UP, tap.pressureUp);
         values.put(TAPS_COL_SIZE_DOWN, tap.sizeDown);

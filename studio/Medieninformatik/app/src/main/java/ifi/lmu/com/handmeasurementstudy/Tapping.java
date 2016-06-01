@@ -215,7 +215,6 @@ public class Tapping extends Activity {
                 break;
 
             case MotionEvent.ACTION_UP:
-                int nDuration = (int) (System.currentTimeMillis() - nStartTime);
                 float fTouchUpX = event.getX();
                 float fTouchUpY = event.getY();
                 float fPressureUp = event.getPressure();
@@ -223,9 +222,10 @@ public class Tapping extends Activity {
                 float fTargetX = drawing.getTargetWidth();
                 float fTargetY = drawing.getTargetHeight();
                 Coords[] aoMoveArray = aMoveCoords.toArray(new Coords[aMoveCoords.size()]);
+                // TODO get orientation from sensor helper
 
                 Tap oTap = new Tap(fTouchDownX, fTouchDownY, fTouchUpX, fTouchUpY, fTargetX, fTargetY,
-                        nDuration, fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
+                        nStartTime, System.currentTimeMillis(), fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
                 loggedTaps.add(oTap);
 
                 aMoveCoords.clear();

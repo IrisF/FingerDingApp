@@ -10,7 +10,7 @@ public class Tap {
     public float targetY;
 	//public int hit;
     public long timeDown;
-	//public long timeUp;
+	public long timeUp;
     public float pressureDown;
     public float pressureUp;
     public float sizeDown;
@@ -19,10 +19,16 @@ public class Tap {
    // public float minorUp;
    // public float majorDown;
    // public float majorUp;
-   public Coords[] moveCoords;
+    public Coords[] moveCoords;
+
+
+    // TODO get orientation
+    public float orientationX;
+    public float orientationY;
+    public float orientationZ;
 
 	public Tap(float downX, float downY, float upX, float upY, float targetX,
-			float targetY, long timeDown, float pressureDown, float pressureUp,
+			float targetY, long timeDown, long timeUp, float pressureDown, float pressureUp,
                float sizeDown, float sizeUp, Coords[] moveCoords) {
 		this.downX = downX;
 		this.downY = downY;

@@ -50,7 +50,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
             Swiping.class,
             Zooming.class,
             Scrolling.class,
-            ZoomingView.class,
+            ZoomingMax.class,
             Tablet.class
     };
 
