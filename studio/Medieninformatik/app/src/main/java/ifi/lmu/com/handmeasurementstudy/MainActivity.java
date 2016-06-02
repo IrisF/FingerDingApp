@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         debugArray.add("Scrolling");
         debugArray.add("Swiping");
         debugArray.add("ZoomingMaximum");
+        debugArray.add("Tablet");
 
         ArrayAdapter<String> debugAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, debugArray);
@@ -79,18 +80,6 @@ public class MainActivity extends AppCompatActivity {
         //final Spinner
                 debugSpinner = (Spinner) findViewById(R.id.debug_mode);
         debugSpinner.setAdapter(debugAdapter);
-
-
-        // fill session spinner:
-        List<String> spinnerArray = new ArrayList<>();
-        spinnerArray.add("1st session");
-        spinnerArray.add("2nd session");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
-        spinner.setAdapter(adapter);
 
         // fill trial spinner:
         List<String> spinnerArray2 = new ArrayList<>();
@@ -183,30 +172,18 @@ public class MainActivity extends AppCompatActivity {
                 case 4: // Zooming Maximum
                     intent = new Intent(this, ZoomingMaximum.class);
                     break;
+                case 5: // Tablet
+                    intent = new Intent(this, TabletActivity.class);
+                    break;
                 default:
                     intent = new Intent(this, Tapping.class);
             }
+            intent.putExtra("id", nCurrentId);
             startActivity(intent);
         }
         else {
 
             if(checkForInputsCorrect()) {
-
-                Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
-                int sessionIndex = spinner.getSelectedItemPosition();
-
-                //Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
-                // int selectedTrialID = spinner2.getSelectedItemPosition();
-
-                /*
-                EditText userID_edit = (EditText) findViewById(R.id.userID_text);
-                String strUserID = userID_edit.getText().toString();
-                if (!strUserID.equals("")) {
-                    int userID = Integer.parseInt(strUserID);
-                    MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
-                }
-
-                */
 
                 // TODO save user data to DB
 
