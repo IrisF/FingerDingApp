@@ -53,15 +53,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/label_age"
         android:id="@+id/textView"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_toStartOf="@+id/editText" />
+        android:layout_alignBottom="@+id/user_age"
+        android:layout_toStartOf="@+id/user_age" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/user_age"
+        android:id="@+id/hand_span"
         android:layout_below="@+id/userId"
         android:layout_toEndOf="@+id/textView2" />
 
@@ -144,7 +144,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Spanne"
         android:id="@+id/textView3"
-        android:layout_alignBottom="@+id/user_age"
+        android:layout_alignBottom="@+id/hand_span"
         android:layout_alignEnd="@+id/textView" />
 
     <EditText
@@ -152,7 +152,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/user_age"
         android:layout_below="@+id/textViewX"
         android:layout_toEndOf="@+id/textViewX" />
 

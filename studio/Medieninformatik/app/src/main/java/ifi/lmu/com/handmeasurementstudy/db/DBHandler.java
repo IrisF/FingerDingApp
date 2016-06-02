@@ -8,6 +8,7 @@ import java.nio.channels.FileChannel;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.media.MediaScannerConnection;
@@ -16,6 +17,7 @@ import android.util.Log;
 
 import ifi.lmu.com.handmeasurementstudy.system.Scroll;
 import ifi.lmu.com.handmeasurementstudy.system.Swipe;
+import ifi.lmu.com.handmeasurementstudy.system.User;
 import ifi.lmu.com.handmeasurementstudy.system.Zoom;
 import ifi.lmu.com.handmeasurementstudy.system.Tap;
 import ifi.lmu.com.handmeasurementstudy.system.TrialSettings;
@@ -127,7 +129,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
 
-	// Table trials:
+	// Table users
 	private static final String TABLE_USERS = "users";
 	private static final String USER_COL_ID = "id";
 	private static final String USER_COL_AGE = "age";
@@ -187,7 +189,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		String createUsersTableString = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + " ("
 				+ USER_COL_ID + " INTEGER PRIMARY KEY, "
 				+ USER_COL_AGE + " INTEGER, "
-				+ USER_COL_GENDER + " CHAR, "
+				+ USER_COL_GENDER + " TEXT, "
 				+ USER_COL_HAND_SPAN + " INTEGER, "
 				+ USER_COL_HAND_LENGTH + " INTEGER, "
 				+ USER_COL_HAND_WIDTH + " INTEGER)";
@@ -290,18 +292,36 @@ public class DBHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public int insertUser() {
+	public int insertUser(User user) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-
-		//TODO insert User data
+		values.put(USER_COL_ID, user.id);
+		values.put(USER_COL_AGE, user.age);
+		values.put(USER_COL_GENDER, user.gender);
+		values.put(USER_COL_HAND_LENGTH, user.length);
+		values.put(USER_COL_HAND_SPAN, user.span);
+		values.put(USER_COL_HAND_WIDTH, user.width);
 
 		int id = (int) db.insert(TABLE_USERS, null, values);
+		Log.d("DEBUG", "inserted user with id: " + id);
 
 		db.close();
 		return id;
+	}
+
+	public int getLastUsersId() {
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor oCur = db.query(TABLE_USERS, new String[] {USER_COL_ID},
+				null, null, null, null, null);
+		oCur.moveToLast();
+		if(oCur.getCount() > 0){
+			return oCur.getInt(0);
+		}
+		else {
+			return -1;
+		}
 	}
 
 	public void insertTap(Tap tap, int userId) {

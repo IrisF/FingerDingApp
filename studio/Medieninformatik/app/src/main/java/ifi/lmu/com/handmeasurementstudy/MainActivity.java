@@ -1,9 +1,7 @@
 package ifi.lmu.com.handmeasurementstudy;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -16,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
-import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +22,7 @@ import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
 import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.TaskScheduler;
 import ifi.lmu.com.handmeasurementstudy.system.Tools;
+import ifi.lmu.com.handmeasurementstudy.system.User;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -118,9 +116,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUserId() {
         TextView idView = (TextView) findViewById(R.id.userId);
-        int nId = 2; // TODO get user id through DB connection
+        int nId = _oDBHandler.getLastUsersId();
+        if(nId == -1) nId = 1;
+        else nId++; // add 1 to get next ID
         idView.setText(String.valueOf(nId));
         nCurrentId = nId;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUserId();
     }
 
     @Override
@@ -183,14 +189,17 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
 
-            if(checkForInputsCorrect()) {
+            User oUser = checkForInputsCorrect();
 
-                // TODO save user data to DB
+            if(oUser != null) {
 
+                int nNextId = _oDBHandler.insertUser(oUser);
                 //new ActivityManager(this, nCurrentId).Start();
                 Intent i = new Intent(this, ActivityManager.class);
                 i.putExtra("id", nCurrentId);
+                //nCurrentId = nNextId;
                 startActivity(i);
+
 
                 //Intent intent = new Intent(this, Tapping.class);
                 //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
@@ -205,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkForInputsCorrect() {
+    private User checkForInputsCorrect() {
 
         RadioButton m = (RadioButton) findViewById(R.id.radioButton_m);
         RadioButton w = (RadioButton) findViewById(R.id.radioButton_w);
@@ -213,12 +222,13 @@ public class MainActivity extends AppCompatActivity {
         EditText age = (EditText) findViewById(R.id.user_age);
         EditText handLength = (EditText) findViewById(R.id.hand_height);
         EditText handWidth = (EditText) findViewById(R.id.hand_width);
+        EditText handSpan = (EditText) findViewById(R.id.hand_span);
 
 
         if (m.isChecked() == w.isChecked())
         {
             Toast.makeText(getApplicationContext(), "Please select gender.", Toast.LENGTH_SHORT).show();
-            return false;
+            return null;
         }
         if (//id.getText().toString().equals("")
                 handLength.getText().toString().equals("")
@@ -226,10 +236,36 @@ public class MainActivity extends AppCompatActivity {
                 || age.getText().toString().equals(""))
         {
             Toast.makeText(getApplicationContext(), "Bitte fill out all fields.", Toast.LENGTH_SHORT).show();
-            return false;
+            return null;
         }
 
-        return true;
+        int nAge = -1;
+        String strGender = "";
+        int nSpan = -1;
+        int nWidth = -1;
+        int nLength = -1;
+
+        try{
+            nAge = Integer.parseInt(age.getText().toString());
+            nSpan = Integer.parseInt(handSpan.getText().toString());
+            nWidth = Integer.parseInt(handWidth.getText().toString());
+            nLength = Integer.parseInt(handLength.getText().toString());
+
+            if(m.isChecked()) {
+                strGender = "m";
+            }
+            else if(w.isChecked()){
+                strGender = "w";
+            }
+
+        }catch (Exception e){
+            Log.e("CATCH", "Something went wrong with the conversion of the numbers. Check input values, only int allowed!");
+        }
+
+
+
+        User o_oUser = new User(nCurrentId, nAge, strGender, nSpan, nWidth, nLength);
+        return o_oUser;
     }
 
     public void onClickExportDBButton(View view) {
