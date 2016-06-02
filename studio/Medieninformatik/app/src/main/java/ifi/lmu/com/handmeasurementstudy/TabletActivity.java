@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 
@@ -25,6 +26,8 @@ public class TabletActivity extends AppCompatActivity {
                 thisActivity.finish();
             }
         });
+
+        displayID(savedInstanceState);
     }
 
     @Override
@@ -34,5 +37,22 @@ public class TabletActivity extends AppCompatActivity {
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
         super.finish();
+    }
+
+    private void displayID (Bundle i_oBundle) {
+        int nId;
+        if (i_oBundle == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                nId= 0;
+            } else {
+                nId= extras.getInt("id");
+            }
+        } else {
+            nId = (int) i_oBundle.getSerializable("id");
+        }
+
+        TextView oIdView = (TextView) findViewById(R.id.id_tablet);
+        oIdView.setText("User ID: " + String.valueOf(nId));
     }
 }
