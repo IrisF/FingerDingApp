@@ -1,7 +1,9 @@
 package ifi.lmu.com.handmeasurementstudy.system;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -156,8 +158,24 @@ public class ActivityManager extends Activity { // extends Activity to call star
         }
         else {
             _nCurrentActivity = 0;
-            //TODO exit stuff
-            
+            Log.d("ActivityManager", "FERTIG");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String[] strButtons = {"OKAY"};
+            builder.setTitle("FERTIG! Vielen Dank fürs mitmachen!")
+                    .setItems(strButtons, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // The 'which' argument contains the index position
+                            // of the selected item
+                            if(which == 0){
+                                //TODO count up user id
+                                finish();
+                            }
+                        }
+                    });
+            builder.create();
+            builder.show();
+
+
         }
 
     }
@@ -184,8 +202,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
 
 
     public void StoreResultsInDatabase () {
-        // TODO distinguish and save accordingly
-        Log.d("ActivityManager", "StoreResultsInDatabase");
+
         switch(_nCurrentActivityNum - 1){
             case n_ACTIVITY_TAPPING: //0
                 //Tap[] aoTap = (Tap[]) _aoResult;

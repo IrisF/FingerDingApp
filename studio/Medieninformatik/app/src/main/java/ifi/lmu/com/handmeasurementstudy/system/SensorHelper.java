@@ -56,25 +56,25 @@ public class SensorHelper implements SensorEventListener {
 
         switch(mySensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
-                Log.i("Sensor", "Accelerometer: " + String.valueOf(event.values[0]));
+                //Log.i("Sensor", "Accelerometer: " + String.valueOf(event.values[0]));
                 acceleromterData[0] = event.values[0];
                 acceleromterData[1] = event.values[1];
                 acceleromterData[2] = event.values[2];
                 break;
             case Sensor.TYPE_GRAVITY:
-                Log.i("Sensor", "Gravity: " + String.valueOf(event.values[0]));
+                //Log.i("Sensor", "Gravity: " + String.valueOf(event.values[0]));
                 gravitiyData[0] = event.values[0];
                 gravitiyData[1] = event.values[1];
                 gravitiyData[2] = event.values[2];
                 break;
             case Sensor.TYPE_GYROSCOPE:
-                Log.i("Sensor", "Gyroscope: " + String.valueOf(event.values[0]));
+                //Log.i("Sensor", "Gyroscope: " + String.valueOf(event.values[0]));
                 gyroscopeData[0] = event.values[0];
                 gyroscopeData[1] = event.values[1];
                 gyroscopeData[2] = event.values[2];
                 break;
             case Sensor.TYPE_ORIENTATION:
-                Log.i("Sensor", "Orientation " + String.valueOf(event.values[0]));
+                //Log.i("Sensor", "Orientation " + String.valueOf(event.values[0]));
                 //order is z, x, y
                 orientationData[0] = event.values[1];
                 orientationData[1] = event.values[2];
@@ -82,7 +82,7 @@ public class SensorHelper implements SensorEventListener {
 
                 break;
             case Sensor.TYPE_ROTATION_VECTOR:
-                Log.i("Sensor", "Rotation Vector: " + String.valueOf(event.values[0]));
+                //Log.i("Sensor", "Rotation Vector: " + String.valueOf(event.values[0]));
                 rotationData[0] = event.values[0];
                 rotationData[1] = event.values[1];
                 rotationData[2] = event.values[2];
@@ -90,7 +90,7 @@ public class SensorHelper implements SensorEventListener {
 
             //for testing purpose: which other Sensor events occur
             default:
-                Log.i("Sensor", "Other: " + event.values.toString());
+               // Log.i("Sensor", "Other: " + event.values.toString());
                 break;
         }
     }

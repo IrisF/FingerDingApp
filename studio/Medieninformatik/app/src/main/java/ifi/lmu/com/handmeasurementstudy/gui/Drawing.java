@@ -51,9 +51,6 @@ public class Drawing extends AbstractDrawingPanel { //View {
     @Override
     public void onDraw(Canvas canvas) {
 
-        Log.d("Drawing","onDraw");
-
-
         if(targetX == 0) {
             setNewRelativeTargetLocation(0,0);
             calculateAbsoluteTarget();
@@ -109,7 +106,6 @@ public class Drawing extends AbstractDrawingPanel { //View {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d("Drawing","surfaceCreated");
         nBackgroundW = this.getWidth();
         nBackgroundH = this.getHeight();
         parent.setBackgroundSize(nBackgroundW, nBackgroundH);

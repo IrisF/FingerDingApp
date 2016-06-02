@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -68,10 +69,7 @@ public class Tapping extends Activity {
 
 
         nStartTime2 = System.currentTimeMillis();
-        //setContentView(R.layout.activity_tapping);// TODO out for testing
-        // Remove title bar:
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 
         //RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_container); // TODO out for testing
 
@@ -80,7 +78,24 @@ public class Tapping extends Activity {
         loggedTaps = new ArrayList<>();
         aMoveCoords = new ArrayList<>();
 
+        initStartScreen();
 
+    }
+
+    private void initStartScreen () {
+        setContentView(R.layout.activity_tapping);
+        Button oStartButton = (Button) findViewById(R.id.ok_tapping);
+        oStartButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                initActivity();
+                return false;
+            }
+        });
+    }
+
+    private void initActivity () {
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         drawing = new Drawing(this, this);
 
         //mainLayout.addView(drawing); // TODO out for testing
