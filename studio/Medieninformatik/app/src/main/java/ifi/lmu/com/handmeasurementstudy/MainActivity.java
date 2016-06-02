@@ -3,8 +3,11 @@ package ifi.lmu.com.handmeasurementstudy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -24,7 +27,7 @@ import ifi.lmu.com.handmeasurementstudy.system.TaskScheduler;
 import ifi.lmu.com.handmeasurementstudy.system.Tools;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
 
     public static final String EXTRA_SESSION_INDEX = "de.tapstest.SESSION_INDEX";
@@ -40,13 +43,14 @@ public class MainActivity extends Activity {
     public static TaskScheduler taskScheduler = null;
 
     private Spinner debugSpinner;
+    private DBHandler _oDBHandler;
 
     private int nCurrentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        _oDBHandler = DBHandler.getInstance(getApplicationContext());
         MainActivity.DISPLAY_XDPI = getResources().getDisplayMetrics().xdpi;
         MainActivity.DISPLAY_YDPI = getResources().getDisplayMetrics().ydpi;
 
@@ -57,7 +61,7 @@ public class MainActivity extends Activity {
         Log.d("UNITS", "82 mm (ydim): " + Tools.mmToPx(82, false));
 
         // Remove title bar:
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
 
@@ -67,6 +71,7 @@ public class MainActivity extends Activity {
         debugArray.add("Zooming");
         debugArray.add("Scrolling");
         debugArray.add("Swiping");
+        debugArray.add("ZoomingMaximum");
 
         ArrayAdapter<String> debugAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, debugArray);
@@ -124,7 +129,7 @@ public class MainActivity extends Activity {
 
     private void setUserId() {
         TextView idView = (TextView) findViewById(R.id.userId);
-        int nId = 1; // TODO get user id through DB connection
+        int nId = 2; // TODO get user id through DB connection
         idView.setText(String.valueOf(nId));
         nCurrentId = nId;
     }
@@ -132,7 +137,19 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
         return true;
     }
 
@@ -163,6 +180,9 @@ public class MainActivity extends Activity {
                 case 3: // Swiping
                     intent = new Intent(this, Swiping.class);
                     break;
+                case 4: // Zooming Maximum
+                    intent = new Intent(this, ZoomingMaximum.class);
+                    break;
                 default:
                     intent = new Intent(this, Tapping.class);
             }
@@ -190,7 +210,11 @@ public class MainActivity extends Activity {
 
                 // TODO save user data to DB
 
-                new ActivityManager(this, nCurrentId).Start();
+                //new ActivityManager(this, nCurrentId).Start();
+                Intent i = new Intent(this, ActivityManager.class);
+                i.putExtra("id", nCurrentId);
+                startActivity(i);
+
                 //Intent intent = new Intent(this, Tapping.class);
                 //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
                 // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);

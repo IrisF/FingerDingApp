@@ -22,6 +22,9 @@
     <string name="session_index_hint">[1]st or [2]nd session</string>
     <string name="scrolling_description">In diesem Task ist es die Aufgabe, ans Ende einer Liste zu scrollen. Klicke Start um zu beginnen.</string>
     <string name="swiping_description">In diesem Task soll ein Slider von der Anfangs- zur Endpostion bewegt werden. Es gibt insgesamt 4 Durchlaeufe auf unterschiedlichen Positionen des Sliders. Klicke auf Start um zu beginnen.</string>
+    <string name="zooming_description">In diesem Task soll das blaue Rechteck soweit skaliert werden, dass es in den roten Rahmen passt. Es gibt drei verschiedene Rahmen</string>
+    <string name="zooming_maximum_description">In diesem Task soll das blaue Rechteck mit einer einzgen "Pinch-to-Zoom" Geste so weit wie möglich skaliert werden.</string>
+    <string name="tablet_description">Gehe bitte zum Tablet und führe die Aufgabe dort aus. Klicke auf \"Fertig\" wenn du die Aufgabe dort erledigt hast.</string>
 
     <string-array name="sports_array">
         <item>Weiter</item>

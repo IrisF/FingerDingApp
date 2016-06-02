@@ -216,6 +216,7 @@ public class Tapping extends Activity {
 
                 Tap oTap = new Tap(fTouchDownX, fTouchDownY, fTouchUpX, fTouchUpY, fTargetX, fTargetY,
                         nStartTime, System.currentTimeMillis(), fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
+
                 loggedTaps.add(oTap);
 
                 aMoveCoords.clear();
@@ -300,6 +301,11 @@ public class Tapping extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -323,11 +329,12 @@ public class Tapping extends Activity {
     }
 
     @Override
-    protected void onDestroy () {
-        super.onDestroy();
+    public void finish () {
         ActivityManager.SaveResultsInDatabase(loggedTaps.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
+
 }

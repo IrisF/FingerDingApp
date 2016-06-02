@@ -10,23 +10,23 @@
     tools:context="ifi.lmu.com.handmeasurementstudy.Zooming">
 
     <TextView
-        android:id="@+id/zoomingDescr"
+        android:id="@+id/zoomingMaximumDescr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/zooming_description"
+        android:text="@string/zooming_maximum_description"
         android:textSize="20sp"/>
 
     <Button
-        android:id="@+id/startZoomingTask"
+        android:id="@+id/startZoomingMaximumTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
-        android:layout_below="@+id/zoomingDescr"
+        android:layout_below="@+id/zoomingMaximumDescr"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_weight="1"
-        android:id="@+id/imageToZoom"
+        android:id="@+id/imageToZoomMaximum"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/image_to_zoom_portrait"

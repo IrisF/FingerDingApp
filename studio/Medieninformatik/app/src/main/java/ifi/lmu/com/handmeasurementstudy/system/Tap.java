@@ -38,17 +38,19 @@ public class Tap {
 		this.targetY = targetY;
 		//this.hit = hit;
 		this.timeDown = timeDown;
-		//this.timeUp = timeUp;
+		this.timeUp = timeUp;
         this.pressureDown = pressureDown;
         this.pressureUp = pressureUp;
         this.sizeDown = sizeDown;
         this.sizeUp = sizeUp;
+		this.moveCoords = moveCoords;
         //this.minorDown = minorDown;
         //this.minorUp = minorUp;
         //this.majorDown = majorDown;
         //this.majorUp = majorUp;
 	}
-/*
+
+
 	public float getDownX() {
 		return downX;
 	}
@@ -73,6 +75,25 @@ public class Tap {
 		return targetY;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Tap{" +
+				"downX=" + downX +
+				", downY=" + downY +
+				", upX=" + upX +
+				", upY=" + upY +
+				", targetX=" + targetX +
+				", targetY=" + targetY +
+				", timeDown=" + timeDown +
+				", timeUp=" + timeUp +
+				", pressureDown=" + pressureDown +
+				", pressureUp=" + pressureUp +
+				", sizeDown=" + sizeDown +
+				", sizeUp=" + sizeUp +
+				'}';
+	}
+/*
 	public long getTimeDown() {
 		return timeDown;
 	}
