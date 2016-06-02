@@ -82,16 +82,6 @@ public class Tapping extends Activity {
 
 
         drawing = new Drawing(this, this);
-        /*
-        drawing.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d("Tapping", "onTouch: " + event.getAction());
-                onUserTouch(v, event);
-                return false;
-            }
-        });
-        */
 
         //mainLayout.addView(drawing); // TODO out for testing
 
