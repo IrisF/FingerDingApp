@@ -15,9 +15,15 @@ public class Scroll {
     public float gyrX;
     public float gyrY;
     public float gyrZ;
+    public float orientationZ;
+    public float orientationX;
+    public float orientationY;
+    public float rotZ;
+    public float rotX;
+    public float rotY;
     public long time;
 
-    public Scroll(float x, float y, long time, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ) {
+    public Scroll(float x, float y, long time, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationX, float orientationY, float orientationZ, float rotX, float rotY, float rotZ) {
         this.x = x;
         this.y = y;
         this.time = time;
@@ -29,7 +35,13 @@ public class Scroll {
         this.graZ = graZ;
         this.gyrX = gyrX;
         this.gyrY = gyrY;
-        this.gyrZ = gyrZ;;
+        this.gyrZ = gyrZ;
+        this.orientationX = orientationX;
+        this.orientationY = orientationY;
+        this.orientationZ = orientationZ;
+        this.rotX = rotX;
+        this.rotY = rotY;
+        this.rotZ = rotZ;
     }
 
     @Override
@@ -47,6 +59,12 @@ public class Scroll {
                 ", gyrX=" + gyrX +
                 ", gyrY=" + gyrY +
                 ", gyrZ=" + gyrZ +
+                ", orienttationX=" + orientationX +
+                ", orientationY=" + orientationY +
+                ", orientationZ=" + orientationZ +
+                ", rotX=" + rotX +
+                ", rotY=" + rotY +
+                ", rotZ=" + rotZ +
                 '}';
     }
 }

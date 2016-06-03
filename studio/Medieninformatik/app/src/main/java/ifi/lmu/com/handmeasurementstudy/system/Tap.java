@@ -10,7 +10,7 @@ public class Tap {
     public float targetY;
 	//public int hit;
     public long timeDown;
-	//public long timeUp;
+	public long timeUp;
     public float pressureDown;
     public float pressureUp;
     public float sizeDown;
@@ -19,10 +19,16 @@ public class Tap {
    // public float minorUp;
    // public float majorDown;
    // public float majorUp;
-   public Coords[] moveCoords;
+    public Coords[] moveCoords;
+
+
+    // TODO get orientation
+    public float orientationX;
+    public float orientationY;
+    public float orientationZ;
 
 	public Tap(float downX, float downY, float upX, float upY, float targetX,
-			float targetY, long timeDown, float pressureDown, float pressureUp,
+			float targetY, long timeDown, long timeUp, float pressureDown, float pressureUp,
                float sizeDown, float sizeUp, Coords[] moveCoords) {
 		this.downX = downX;
 		this.downY = downY;
@@ -32,16 +38,18 @@ public class Tap {
 		this.targetY = targetY;
 		//this.hit = hit;
 		this.timeDown = timeDown;
-		//this.timeUp = timeUp;
+		this.timeUp = timeUp;
         this.pressureDown = pressureDown;
         this.pressureUp = pressureUp;
         this.sizeDown = sizeDown;
         this.sizeUp = sizeUp;
+		this.moveCoords = moveCoords;
         //this.minorDown = minorDown;
         //this.minorUp = minorUp;
         //this.majorDown = majorDown;
         //this.majorUp = majorUp;
 	}
+
 
 	public float getDownX() {
 		return downX;
@@ -67,7 +75,7 @@ public class Tap {
 		return targetY;
 	}
 
-/*
+
 	@Override
 	public String toString() {
 		return "Tap{" +
@@ -77,20 +85,15 @@ public class Tap {
 				", upY=" + upY +
 				", targetX=" + targetX +
 				", targetY=" + targetY +
-				", hit=" + hit +
 				", timeDown=" + timeDown +
 				", timeUp=" + timeUp +
 				", pressureDown=" + pressureDown +
 				", pressureUp=" + pressureUp +
 				", sizeDown=" + sizeDown +
 				", sizeUp=" + sizeUp +
-				", minorDown=" + minorDown +
-				", minorUp=" + minorUp +
-				", majorDown=" + majorDown +
-				", majorUp=" + majorUp +
 				'}';
 	}
-
+/*
 	public long getTimeDown() {
 		return timeDown;
 	}

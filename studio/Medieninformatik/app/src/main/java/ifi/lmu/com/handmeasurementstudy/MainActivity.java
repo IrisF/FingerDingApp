@@ -1,10 +1,11 @@
 package ifi.lmu.com.handmeasurementstudy;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -13,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
-import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +22,10 @@ import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
 import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.TaskScheduler;
 import ifi.lmu.com.handmeasurementstudy.system.Tools;
+import ifi.lmu.com.handmeasurementstudy.system.User;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
 
     public static final String EXTRA_SESSION_INDEX = "de.tapstest.SESSION_INDEX";
@@ -40,13 +41,14 @@ public class MainActivity extends Activity {
     public static TaskScheduler taskScheduler = null;
 
     private Spinner debugSpinner;
+    private DBHandler _oDBHandler;
 
     private int nCurrentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        _oDBHandler = DBHandler.getInstance(getApplicationContext());
         MainActivity.DISPLAY_XDPI = getResources().getDisplayMetrics().xdpi;
         MainActivity.DISPLAY_YDPI = getResources().getDisplayMetrics().ydpi;
 
@@ -57,7 +59,7 @@ public class MainActivity extends Activity {
         Log.d("UNITS", "82 mm (ydim): " + Tools.mmToPx(82, false));
 
         // Remove title bar:
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
 
@@ -68,6 +70,7 @@ public class MainActivity extends Activity {
         debugArray.add("Scrolling");
         debugArray.add("Swiping");
         debugArray.add("ZoomingMaximum");
+        debugArray.add("Tablet");
 
         ArrayAdapter<String> debugAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, debugArray);
@@ -75,18 +78,6 @@ public class MainActivity extends Activity {
         //final Spinner
                 debugSpinner = (Spinner) findViewById(R.id.debug_mode);
         debugSpinner.setAdapter(debugAdapter);
-
-
-        // fill session spinner:
-        List<String> spinnerArray = new ArrayList<>();
-        spinnerArray.add("1st session");
-        spinnerArray.add("2nd session");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
-        spinner.setAdapter(adapter);
 
         // fill trial spinner:
         List<String> spinnerArray2 = new ArrayList<>();
@@ -125,15 +116,35 @@ public class MainActivity extends Activity {
 
     private void setUserId() {
         TextView idView = (TextView) findViewById(R.id.userId);
-        int nId = 1; // TODO get user id through DB connection
+        int nId = _oDBHandler.getLastUsersId();
+        if(nId == -1) nId = 1;
+        else nId++; // add 1 to get next ID
         idView.setText(String.valueOf(nId));
         nCurrentId = nId;
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setUserId();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
         return true;
     }
 
@@ -167,34 +178,29 @@ public class MainActivity extends Activity {
                 case 4: // Zooming Maximum
                     intent = new Intent(this, ZoomingMaximum.class);
                     break;
+                case 5: // Tablet
+                    intent = new Intent(this, TabletActivity.class);
+                    break;
                 default:
                     intent = new Intent(this, Tapping.class);
             }
+            intent.putExtra("id", nCurrentId);
             startActivity(intent);
         }
         else {
 
-            if(checkForInputsCorrect()) {
+            User oUser = checkForInputsCorrect();
 
-                Spinner spinner = (Spinner) findViewById(R.id.session_index_spinner);
-                int sessionIndex = spinner.getSelectedItemPosition();
+            if(oUser != null) {
 
-                //Spinner spinner2 = (Spinner) findViewById(R.id.trial_spinner);
-                // int selectedTrialID = spinner2.getSelectedItemPosition();
+                int nNextId = _oDBHandler.insertUser(oUser);
+                //new ActivityManager(this, nCurrentId).Start();
+                Intent i = new Intent(this, ActivityManager.class);
+                i.putExtra("id", nCurrentId);
+                //nCurrentId = nNextId;
+                startActivity(i);
 
-                /*
-                EditText userID_edit = (EditText) findViewById(R.id.userID_text);
-                String strUserID = userID_edit.getText().toString();
-                if (!strUserID.equals("")) {
-                    int userID = Integer.parseInt(strUserID);
-                    MainActivity.taskScheduler = new TaskScheduler(userID, sessionIndex);
-                }
 
-                */
-
-                // TODO save user data to DB
-
-                new ActivityManager(this, nCurrentId).Start();
                 //Intent intent = new Intent(this, Tapping.class);
                 //intent.putExtra(MainActivity.EXTRA_SESSION_INDEX, sessionIndex);
                 // intent.putExtra(MainActivity.EXTRA_TRIAL_MODE, selectedTrialID);
@@ -208,7 +214,7 @@ public class MainActivity extends Activity {
 
     }
 
-    private boolean checkForInputsCorrect() {
+    private User checkForInputsCorrect() {
 
         RadioButton m = (RadioButton) findViewById(R.id.radioButton_m);
         RadioButton w = (RadioButton) findViewById(R.id.radioButton_w);
@@ -216,12 +222,13 @@ public class MainActivity extends Activity {
         EditText age = (EditText) findViewById(R.id.user_age);
         EditText handLength = (EditText) findViewById(R.id.hand_height);
         EditText handWidth = (EditText) findViewById(R.id.hand_width);
+        EditText handSpan = (EditText) findViewById(R.id.hand_span);
 
 
         if (m.isChecked() == w.isChecked())
         {
             Toast.makeText(getApplicationContext(), "Please select gender.", Toast.LENGTH_SHORT).show();
-            return false;
+            return null;
         }
         if (//id.getText().toString().equals("")
                 handLength.getText().toString().equals("")
@@ -229,10 +236,36 @@ public class MainActivity extends Activity {
                 || age.getText().toString().equals(""))
         {
             Toast.makeText(getApplicationContext(), "Bitte fill out all fields.", Toast.LENGTH_SHORT).show();
-            return false;
+            return null;
         }
 
-        return true;
+        int nAge = -1;
+        String strGender = "";
+        int nSpan = -1;
+        int nWidth = -1;
+        int nLength = -1;
+
+        try{
+            nAge = Integer.parseInt(age.getText().toString());
+            nSpan = Integer.parseInt(handSpan.getText().toString());
+            nWidth = Integer.parseInt(handWidth.getText().toString());
+            nLength = Integer.parseInt(handLength.getText().toString());
+
+            if(m.isChecked()) {
+                strGender = "m";
+            }
+            else if(w.isChecked()){
+                strGender = "w";
+            }
+
+        }catch (Exception e){
+            Log.e("CATCH", "Something went wrong with the conversion of the numbers. Check input values, only int allowed!");
+        }
+
+
+
+        User o_oUser = new User(nCurrentId, nAge, strGender, nSpan, nWidth, nLength);
+        return o_oUser;
     }
 
     public void onClickExportDBButton(View view) {

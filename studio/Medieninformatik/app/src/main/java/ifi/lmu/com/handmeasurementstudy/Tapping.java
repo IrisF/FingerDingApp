@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -68,10 +69,7 @@ public class Tapping extends Activity {
 
 
         nStartTime2 = System.currentTimeMillis();
-        //setContentView(R.layout.activity_tapping);// TODO out for testing
-        // Remove title bar:
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 
         //RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_container); // TODO out for testing
 
@@ -80,18 +78,25 @@ public class Tapping extends Activity {
         loggedTaps = new ArrayList<>();
         aMoveCoords = new ArrayList<>();
 
+        initStartScreen();
 
-        drawing = new Drawing(this, this);
-        /*
-        drawing.setOnTouchListener(new View.OnTouchListener() {
+    }
+
+    private void initStartScreen () {
+        setContentView(R.layout.activity_tapping);
+        Button oStartButton = (Button) findViewById(R.id.ok_tapping);
+        oStartButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.d("Tapping", "onTouch: " + event.getAction());
-                onUserTouch(v, event);
+                initActivity();
                 return false;
             }
         });
-        */
+    }
+
+    private void initActivity () {
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        drawing = new Drawing(this, this);
 
         //mainLayout.addView(drawing); // TODO out for testing
 
@@ -215,7 +220,6 @@ public class Tapping extends Activity {
                 break;
 
             case MotionEvent.ACTION_UP:
-                int nDuration = (int) (System.currentTimeMillis() - nStartTime);
                 float fTouchUpX = event.getX();
                 float fTouchUpY = event.getY();
                 float fPressureUp = event.getPressure();
@@ -223,9 +227,11 @@ public class Tapping extends Activity {
                 float fTargetX = drawing.getTargetWidth();
                 float fTargetY = drawing.getTargetHeight();
                 Coords[] aoMoveArray = aMoveCoords.toArray(new Coords[aMoveCoords.size()]);
+                // TODO get orientation from sensor helper
 
                 Tap oTap = new Tap(fTouchDownX, fTouchDownY, fTouchUpX, fTouchUpY, fTargetX, fTargetY,
-                        nDuration, fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
+                        nStartTime, System.currentTimeMillis(), fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
+
                 loggedTaps.add(oTap);
 
                 aMoveCoords.clear();
@@ -310,6 +316,11 @@ public class Tapping extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(item.getItemId()==R.id.restart){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -321,7 +332,6 @@ public class Tapping extends Activity {
     }
 
     public void onBackPressed() {
-        //doing nothing on pressing Back key
         if( ! bBackPressedSecondTime){
             bBackPressedSecondTime = true;
             Toast.makeText(getApplicationContext(), "press < again to leave", Toast.LENGTH_SHORT).show();
@@ -329,15 +339,17 @@ public class Tapping extends Activity {
         }
         else {
             bBackPressedSecondTime = false;
+            super.onBackPressed();
         }
     }
 
     @Override
-    protected void onDestroy () {
-        super.onDestroy();
-        ActivityManager.SaveResultsInDatabase((Object[]) loggedTaps.toArray());
+    public void finish () {
+        ActivityManager.SaveResultsInDatabase(loggedTaps.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
+
 }

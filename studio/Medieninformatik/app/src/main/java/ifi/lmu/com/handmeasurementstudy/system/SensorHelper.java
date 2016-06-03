@@ -16,21 +16,38 @@ public class SensorHelper implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor senAccelerometer;
+    private Sensor senGravity;
+    private Sensor senGyroscope;
+    private Sensor senOrientation;
+    private Sensor senRotation;
 
     private float[] acceleromterData;
     private float[] gravitiyData;
     private float[] gyroscopeData;
+    private float[] orientationData;
+    private float[] rotationData;
 
 
     public SensorHelper(Context context) {
         //initialize the sensor manager
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        senGravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+        senGyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        senOrientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        senRotation = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+
         sensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, senGravity, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, senGravity, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, senOrientation, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, senRotation, SensorManager.SENSOR_DELAY_FASTEST);
 
         acceleromterData = new float[3];
         gravitiyData = new float[3];
         gyroscopeData = new float[3];
+        orientationData = new float[3];
+        rotationData = new float[3];
     }
 
     @Override
@@ -39,58 +56,41 @@ public class SensorHelper implements SensorEventListener {
 
         switch(mySensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
-                Log.i("Sensor", "Accelerometer: " + event.values.toString());
+                //Log.i("Sensor", "Accelerometer: " + String.valueOf(event.values[0]));
                 acceleromterData[0] = event.values[0];
                 acceleromterData[1] = event.values[1];
                 acceleromterData[2] = event.values[2];
                 break;
             case Sensor.TYPE_GRAVITY:
-                Log.i("Sensor", "Gravity: " + event.values.toString());
+                //Log.i("Sensor", "Gravity: " + String.valueOf(event.values[0]));
                 gravitiyData[0] = event.values[0];
                 gravitiyData[1] = event.values[1];
                 gravitiyData[2] = event.values[2];
                 break;
             case Sensor.TYPE_GYROSCOPE:
-                Log.i("Sensor", "Gyroscope: " + event.values.toString());
+                //Log.i("Sensor", "Gyroscope: " + String.valueOf(event.values[0]));
                 gyroscopeData[0] = event.values[0];
                 gyroscopeData[1] = event.values[1];
                 gyroscopeData[2] = event.values[2];
                 break;
-            case Sensor.TYPE_GYROSCOPE_UNCALIBRATED:
-                Log.i("Sensor", "Gyroscope uncalibrated: " + event.values.toString());
-                break;
-            case Sensor.TYPE_PRESSURE:
-                Log.i("Sensor", "Pressure: " + event.values.toString());
-                break;
-            case Sensor.TYPE_PROXIMITY:
-                Log.i("Sensor", "Proximity: " + event.values.toString());
-                break;
             case Sensor.TYPE_ORIENTATION:
-                Log.i("Sensor", "Orientation " + event.values.toString());
-            case Sensor.TYPE_ROTATION_VECTOR:
-                Log.i("Sensor", "Rotation Vector: " + event.values.toString());
-                break;
-            case Sensor.TYPE_SIGNIFICANT_MOTION:
-                Log.i("Sensor", "Significant Motion: " + event.values.toString());
-                break;
+                //Log.i("Sensor", "Orientation " + String.valueOf(event.values[0]));
+                //order is z, x, y
+                orientationData[0] = event.values[1];
+                orientationData[1] = event.values[2];
+                orientationData[2] = event.values[0];
 
-    //TODO are these necessary for us?
-            /*
-            case Sensor.TYPE_HEART_RATE:
-            case Sensor.TYPE_LIGHT:
-            case Sensor.TYPE_LINEAR_ACCELERATION:
-            case Sensor.TYPE_GAME_ROTATION_VECTOR:
-            case Sensor.TYPE_MAGNETIC_FIELD:
-            case Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED:
-            case Sensor.TYPE_RELATIVE_HUMIDITY:
-            case Sensor.TYPE_STEP_COUNTER:
-            case Sensor.TYPE_STEP_DETECTOR:
-            case Sensor.TYPE_TEMPERATURE:
-            */
+                break;
+            case Sensor.TYPE_ROTATION_VECTOR:
+                //Log.i("Sensor", "Rotation Vector: " + String.valueOf(event.values[0]));
+                rotationData[0] = event.values[0];
+                rotationData[1] = event.values[1];
+                rotationData[2] = event.values[2];
+                break;
 
             //for testing purpose: which other Sensor events occur
             default:
-                Log.i("Sensor", "Other: " + event.values.toString());
+               // Log.i("Sensor", "Other: " + event.values.toString());
                 break;
         }
     }
@@ -110,5 +110,13 @@ public class SensorHelper implements SensorEventListener {
 
     public float[] getGyroscopeData() {
         return gyroscopeData;
+    }
+
+    public float[] getOrientationData() {
+        return orientationData;
+    }
+
+    public float[] getRotationData() {
+        return rotationData;
     }
 }
