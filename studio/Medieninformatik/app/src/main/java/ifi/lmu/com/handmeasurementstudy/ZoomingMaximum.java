@@ -14,12 +14,10 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
 import ifi.lmu.com.handmeasurementstudy.system.Zoom;
 
@@ -202,7 +200,7 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
 
     @Override
     public void finish () {
-        ActivityManager.SaveResultsInDatabase((Object[]) zoomData.toArray());
+        //TODO save results to DB
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);

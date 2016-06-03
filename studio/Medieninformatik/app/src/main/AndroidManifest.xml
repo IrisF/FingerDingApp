@@ -7,32 +7,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+        <activity android:name=".ZoomingMaximum"></activity>
+        <activity android:name=".MainTabletActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Tapping"
-            android:label="@string/title_activity_tapping" />
-        <activity
-            android:name=".Swiping"
-            android:label="@string/title_activity_swiping" />
-        <activity
-            android:name=".Scrolling"
-            android:label="@string/title_activity_scrolling" />
-        <activity
-            android:name=".Zooming"
-            android:label="@string/title_activity_zooming" />
-        <activity
-            android:name=".system.ActivityManager"
-            android:label="ActivityManager" />
-        <activity android:name=".TabletActivity"></activity>
-        <activity android:name=".ZoomingMaximum"></activity>
     </application>
 
 </manifest>

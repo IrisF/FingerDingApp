@@ -7,29 +7,22 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ifi.lmu.com.handmeasurementstudy.Tablet">
+    tools:context="ifi.lmu.com.handmeasurementstudy.MainTabletActivity">
 
-    <TextView
-        android:id="@+id/zoomingDescr"
+    <EditText
+        android:id="@+id/userID_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tablet_description"
-        android:textSize="20sp"/>
+        android:text="@string/label_userID"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true" />
 
     <Button
-        android:id="@+id/finishTabletTask"
+        android:id="@+id/startTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fertig"
-        android:layout_below="@+id/zoomingDescr"
+        android:text="Start"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/id_tablet"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
