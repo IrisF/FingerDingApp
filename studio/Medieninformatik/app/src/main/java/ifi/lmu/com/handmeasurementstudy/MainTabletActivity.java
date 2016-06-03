@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainTabletActivity extends AppCompatActivity {
 
     private Button startButton;
+    private EditText userIDText;
     private Activity thisActivity;
 
     @Override
@@ -19,12 +22,17 @@ public class MainTabletActivity extends AppCompatActivity {
 
         thisActivity = this;
 
+        userIDText = (EditText) findViewById(R.id.userID_label);
         startButton = (Button) findViewById(R.id.startTasks);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(thisActivity, ZoomingMaximum.class);
-                startActivity(intent);
+                if(userIDText.getText().toString().equals("")){
+                    Toast.makeText(thisActivity, "Bitte User ID angeben", Toast.LENGTH_LONG);
+                } else {
+                    Intent intent = new Intent(thisActivity, ZoomingMaximum.class);
+                    startActivity(intent);
+                }
             }
         });
     }
