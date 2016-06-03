@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
 import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
 import ifi.lmu.com.handmeasurementstudy.system.Zoom;
 
@@ -39,11 +40,18 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
     private long endTimeSeconds;
 
     private SensorHelper sensorHelper;
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zooming_maximum);
+
+        //grap other sensor events
+        sensorHelper = new SensorHelper(this);
+
+        //db Handler
+        dbHandler = DBHandler.getInstance(this);
 
         //get User ID from Intent
         Intent mIntent = getIntent();
@@ -116,8 +124,6 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
             }
         });
 
-        //grap other sensor events
-        sensorHelper = new SensorHelper(this);
     }
 
     @Override
@@ -200,10 +206,22 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
 
     @Override
     public void finish () {
-        //TODO save results to DB
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("isFinished",true);
-        setResult(Activity.RESULT_OK,returnIntent);
-        super.finish();
+        if(storeResultsToDB(zoomData.toArray())){
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("isFinished",true);
+            setResult(Activity.RESULT_OK,returnIntent);
+            super.finish();
+        } else {
+//TODO what to do on error?!
+        }
+
+    }
+
+    //TODO save results to DB
+    private boolean storeResultsToDB (Object[] results) {
+        for(int i = 0; i<results.length; i++){
+            dbHandler.insertZoom((Zoom) results[i]);
+        }
+        return true;
     }
 }
