@@ -22,14 +22,15 @@ public class MainTabletActivity extends AppCompatActivity {
 
         thisActivity = this;
 
-        userIDText = (EditText) findViewById(R.id.userID_label);
+        userIDText = (EditText) findViewById(R.id.user_id);
         startButton = (Button) findViewById(R.id.startTasks);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(userIDText.getText().toString().equals("")){
-                    Toast.makeText(thisActivity, "Bitte User ID angeben", Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), "Bitte User ID angeben", Toast.LENGTH_LONG).show();
                 } else {
+                    userIDText.setText("");
                     Intent intent = new Intent(thisActivity, ZoomingMaximum.class);
                     startActivity(intent);
                 }
