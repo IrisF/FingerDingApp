@@ -206,22 +206,16 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
 
     @Override
     public void finish () {
-        if(storeResultsToDB(zoomData.toArray())){
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("isFinished",true);
-            setResult(Activity.RESULT_OK,returnIntent);
-            super.finish();
-        } else {
-//TODO what to do on error?!
-        }
-
+        storeResultsToDB(zoomData.toArray());
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("isFinished",true);
+        setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
 
-    //TODO save results to DB
-    private boolean storeResultsToDB (Object[] results) {
+    private void storeResultsToDB (Object[] results) {
         for(int i = 0; i<results.length; i++){
             dbHandler.insertZoom((Zoom) results[i]);
         }
-        return true;
     }
 }
