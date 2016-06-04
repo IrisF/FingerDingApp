@@ -39,7 +39,7 @@ public class SensorHelper implements SensorEventListener {
 
         sensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
         sensorManager.registerListener(this, senGravity, SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(this, senGravity, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, senGyroscope, SensorManager.SENSOR_DELAY_FASTEST);
         sensorManager.registerListener(this, senOrientation, SensorManager.SENSOR_DELAY_FASTEST);
         sensorManager.registerListener(this, senRotation, SensorManager.SENSOR_DELAY_FASTEST);
 
