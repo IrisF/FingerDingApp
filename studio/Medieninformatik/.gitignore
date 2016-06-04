@@ -1,5 +1,7 @@
 .idea
 
+studio/Medieninformatik/app/app.iml
+/.idea/
 *.iml
 .gradle
 /local.properties
