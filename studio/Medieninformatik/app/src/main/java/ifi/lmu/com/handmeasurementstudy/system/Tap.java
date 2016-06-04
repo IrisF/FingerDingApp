@@ -1,5 +1,7 @@
 package ifi.lmu.com.handmeasurementstudy.system;
 
+import java.util.Arrays;
+
 public class Tap {
 
 	public float downX;
@@ -15,6 +17,7 @@ public class Tap {
     public float pressureUp;
     public float sizeDown;
     public float sizeUp;
+
    // public float minorDown;
    // public float minorUp;
    // public float majorDown;
@@ -27,52 +30,26 @@ public class Tap {
     public float orientationY;
     public float orientationZ;
 
-	public Tap(float downX, float downY, float upX, float upY, float targetX,
-			float targetY, long timeDown, long timeUp, float pressureDown, float pressureUp,
-               float sizeDown, float sizeUp, Coords[] moveCoords) {
+	public Tap(float downX, float downY, float upX, float upY, float targetX, float targetY,
+			   long timeDown, long timeUp, float pressureDown, float pressureUp, float sizeDown,
+			   float sizeUp, Coords[] moveCoords, float orientationX, float orientationY,
+			   float orientationZ) {
 		this.downX = downX;
 		this.downY = downY;
 		this.upX = upX;
 		this.upY = upY;
 		this.targetX = targetX;
 		this.targetY = targetY;
-		//this.hit = hit;
 		this.timeDown = timeDown;
 		this.timeUp = timeUp;
-        this.pressureDown = pressureDown;
-        this.pressureUp = pressureUp;
-        this.sizeDown = sizeDown;
-        this.sizeUp = sizeUp;
+		this.pressureDown = pressureDown;
+		this.pressureUp = pressureUp;
+		this.sizeDown = sizeDown;
+		this.sizeUp = sizeUp;
 		this.moveCoords = moveCoords;
-        //this.minorDown = minorDown;
-        //this.minorUp = minorUp;
-        //this.majorDown = majorDown;
-        //this.majorUp = majorUp;
-	}
-
-
-	public float getDownX() {
-		return downX;
-	}
-
-	public float getDownY() {
-		return downY;
-	}
-
-	public float getUpX() {
-		return upX;
-	}
-
-	public float getUpY() {
-		return upY;
-	}
-
-	public float getTargetX() {
-		return targetX;
-	}
-
-	public float getTargetY() {
-		return targetY;
+		this.orientationX = orientationX;
+		this.orientationY = orientationY;
+		this.orientationZ = orientationZ;
 	}
 
 
@@ -91,32 +68,11 @@ public class Tap {
 				", pressureUp=" + pressureUp +
 				", sizeDown=" + sizeDown +
 				", sizeUp=" + sizeUp +
+				", moveCoords=" + Arrays.toString(moveCoords) +
+				", orientationX=" + orientationX +
+				", orientationY=" + orientationY +
+				", orientationZ=" + orientationZ +
 				'}';
 	}
-/*
-	public long getTimeDown() {
-		return timeDown;
-	}
-
-	public float getPressureDown() {
-		return pressureDown;
-	}
-
-	public float getPressureUp() {
-		return pressureUp;
-	}
-
-	public float getSizeDown() {
-		return sizeDown;
-	}
-
-	public float getSizeUp() {
-		return sizeUp;
-	}
-
-    public Coords[] getMoveCoords() {
-        return moveCoords;
-    }
-    */
 }
 
