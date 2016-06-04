@@ -173,13 +173,13 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
                 break;
             case MotionEvent.ACTION_UP:
                 //log end points
+                if (rectangleZoomingStarted) {
+                    endTimeSeconds = System.currentTimeMillis();
+                    Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY() + " time " + endTimeSeconds);
+                    rectangleZoomingStarted = false;
 
-                endTimeSeconds = System.currentTimeMillis();
-    //TODO save end Points?!
-                Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY() + " time " + endTimeSeconds);
-                rectangleZoomingStarted = false;
-
-                finish();
+                    finish();
+                }
 
                 break;
         }
