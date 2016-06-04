@@ -2,6 +2,10 @@
 *.apk
 *.ap_
 
+
+studio/Medieninformatik/app/app.iml
+/.idea/
+
 # Files for the Dalvik VM
 *.dex
 

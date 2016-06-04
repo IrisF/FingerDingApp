@@ -460,7 +460,7 @@ public class DBHandler extends SQLiteOpenHelper {
 	 */
 	public boolean exportDB() {
 		// Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
-		File sd = Environment.getExternalStorageDirectory();
+	/*	File sd = Environment.getExternalStorageDirectory();
 		// File sd =
 		// this.context.getFilesDir();//this.context.getExternalFilesDir(null);
 		// File sd =
@@ -469,11 +469,12 @@ public class DBHandler extends SQLiteOpenHelper {
 		File data = Environment.getDataDirectory();
 		FileChannel source = null;
 		FileChannel destination = null;
-		String currentDBPath = "/data/" + "de.tapstest" + "/databases/"
+		String currentDBPath = "/data/" + "FingerDingApp" + "/databases/"
 				+ DATABASE_NAME;
 		String backupDBPath = DATABASE_NAME;
 		File currentDB = new File(data, currentDBPath);
 		File backupDB = new File(sd, backupDBPath);
+
 
 		Log.d("RESTORE", backupDB.toString());
 		try {
@@ -483,11 +484,18 @@ public class DBHandler extends SQLiteOpenHelper {
 			source.close();
 			destination.close();
 			MediaScannerConnection.scanFile(this.context, new String[]{backupDB.getAbsolutePath()}, null, null);
+
+            FileOutputStream fos = context.openFileOutput("Database", Context.MODE_PRIVATE);
+            fos.write(source);
+            fos.close();
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 
-		}
+		}*/
+        SQLiteDatabase db = this.getWritableDatabase();
+        new ExportDatabaseCSVTask(context, db).execute("");
+
 		return false;
 	}
 
