@@ -27,12 +27,6 @@ import ifi.lmu.com.handmeasurementstudy.system.User;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    public static final String EXTRA_SESSION_INDEX = "de.tapstest.SESSION_INDEX";
-    public static final String EXTRA_TRIAL_MODE = "de.tapstest.TRIAL_MODE";
-    public static final String EXTRA_SUBJECT_NAME = "de.tapstest.SUBJECT_NAME";
-    public static final int TRIAL_NUM_AUTO = 5;
-
     public static final boolean b_IS_DEBUG = true;
 
     public static float DISPLAY_XDPI = -1;
@@ -121,6 +115,18 @@ public class MainActivity extends AppCompatActivity {
         else nId++; // add 1 to get next ID
         idView.setText(String.valueOf(nId));
         nCurrentId = nId;
+        clearInputFields();
+    }
+
+    private void clearInputFields() {
+        EditText age = (EditText) findViewById(R.id.user_age);
+        age.setText("");
+        EditText handLength = (EditText) findViewById(R.id.hand_height);
+        handLength.setText("");
+        EditText handWidth = (EditText) findViewById(R.id.hand_width);
+        handWidth.setText("");
+        EditText handSpan = (EditText) findViewById(R.id.hand_span);
+        handSpan.setText("");
     }
 
     @Override

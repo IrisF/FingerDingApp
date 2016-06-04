@@ -23,6 +23,7 @@ import java.util.Random;
 import ifi.lmu.com.handmeasurementstudy.gui.Drawing;
 import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.Coords;
+import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
 import ifi.lmu.com.handmeasurementstudy.system.Tap;
 
 
@@ -61,6 +62,7 @@ public class Tapping extends Activity {
     private ArrayList<Integer> anAllCrosshairs;
 
     private long nStartTime2;
+    private SensorHelper _oSensorHelper;
     //private Array
 
     @Override
@@ -77,6 +79,8 @@ public class Tapping extends Activity {
         //this.dbHandler = DBHandler.getInstance(this);
         loggedTaps = new ArrayList<>();
         aMoveCoords = new ArrayList<>();
+
+        _oSensorHelper = new SensorHelper(this);
 
         initStartScreen();
 
@@ -229,8 +233,11 @@ public class Tapping extends Activity {
                 Coords[] aoMoveArray = aMoveCoords.toArray(new Coords[aMoveCoords.size()]);
                 // TODO get orientation from sensor helper
 
+                float[] afOrientation = _oSensorHelper.getOrientationData();
+
                 Tap oTap = new Tap(fTouchDownX, fTouchDownY, fTouchUpX, fTouchUpY, fTargetX, fTargetY,
-                        nStartTime, System.currentTimeMillis(), fPressureDown, fPressureUp, fSizeDown, fSizeUp, aoMoveArray);
+                        nStartTime, System.currentTimeMillis(), fPressureDown, fPressureUp, fSizeDown,
+                        fSizeUp, aoMoveArray, afOrientation[0], afOrientation[1], afOrientation[2]);
 
                 loggedTaps.add(oTap);
 

@@ -49,11 +49,11 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TAPS_COL_PRESSURE_UP = "pressureUp";
     private static final String TAPS_COL_SIZE_DOWN = "sizeDown";
     private static final String TAPS_COL_SIZE_UP = "sizeUp";
-    private static final String TAPS_COL_MINOR_DOWN = "minorDown";
-    private static final String TAPS_COL_MINOR_UP = "minorUp";
-    private static final String TAPS_COL_MAJOR_DOWN = "majorDown";
-    private static final String TAPS_COL_MAJOR_UP = "majorUp";
 	private static final String TAPS_COL_TRIAL_ID = "trialID";
+	private static final String TAPS_COL_ORIENTATION_X = "orientationX";
+	private static final String TAPS_COL_ORIENTATION_Y = "orientationY";
+	private static final String TAPS_COL_ORIENTATION_Z = "orientationZ";
+	private static final String TAPS_COL_MOVE_CSV = "moveCSV";
 
     //Table Scrolling
     private static final String TABLE_SCROLLING = "scrolling";
@@ -206,9 +206,9 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ " TIMESTAMP NOT NULL DEFAULT current_timestamp, "
 				+ TAPS_COL_TIME_DOWN + " INTEGER, " + TAPS_COL_TIME_UP + " INTEGER, "
                 + TAPS_COL_PRESSURE_DOWN + " REAL, " + TAPS_COL_PRESSURE_UP + " REAL, "
-                + TAPS_COL_SIZE_DOWN + " REAL, " + TAPS_COL_SIZE_UP + " REAL, "
-                + TAPS_COL_MINOR_DOWN + " REAL, " + TAPS_COL_MINOR_UP + " REAL, "
-                + TAPS_COL_MAJOR_DOWN + " REAL, " + TAPS_COL_MAJOR_UP + " REAL, "
+				+ TAPS_COL_SIZE_DOWN + " REAL, " + TAPS_COL_SIZE_UP + " REAL, "
+				+ TAPS_COL_ORIENTATION_X + " REAL, " + TAPS_COL_ORIENTATION_Y + " REAL, "
+				+ TAPS_COL_ORIENTATION_Z + " REAL, " + TAPS_COL_MOVE_CSV + " TEXT, "
                 + TAPS_COL_TRIAL_ID + " INTEGER)";
 		db.execSQL(createTapsTableString);
 
@@ -331,24 +331,27 @@ public class DBHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(TAPS_COL_TARGET_X, tap.targetX);
 		values.put(TAPS_COL_TARGET_Y, tap.targetY);
-		//values.put(TAPS_COL_TARGET_W, trialSettings.getButtonWidth());
-		//values.put(TAPS_COL_TARGET_H, trialSettings.getButtonHeight());
 		values.put(TAPS_COL_TOUCH_DOWN_X, tap.downX);
 		values.put(TAPS_COL_TOUCH_DOWN_Y, tap.downY);
 		values.put(TAPS_COL_TOUCH_UP_X, tap.upX);
 		values.put(TAPS_COL_TOUCH_UP_Y, tap.upY);
-		//values.put(TAPS_COL_HIT, tap.hit);
 		values.put(TAPS_COL_TIME_DOWN, tap.timeDown);
 		values.put(TAPS_COL_TIME_UP, tap.timeUp);
         values.put(TAPS_COL_PRESSURE_DOWN, tap.pressureDown);
         values.put(TAPS_COL_PRESSURE_UP, tap.pressureUp);
         values.put(TAPS_COL_SIZE_DOWN, tap.sizeDown);
         values.put(TAPS_COL_SIZE_UP, tap.sizeUp);
-        //values.put(TAPS_COL_MINOR_DOWN, tap.minorDown);
-        //values.put(TAPS_COL_MINOR_UP, tap.minorUp);
-       // values.put(TAPS_COL_MAJOR_DOWN, tap.majorDown);
-        //values.put(TAPS_COL_MAJOR_UP, tap.majorUp);
 		values.put(TAPS_COL_TRIAL_ID, userId);
+		values.put(TAPS_COL_ORIENTATION_X, tap.orientationX);
+		values.put(TAPS_COL_ORIENTATION_Y, tap.orientationY);
+		values.put(TAPS_COL_ORIENTATION_Z, tap.orientationZ);
+		String strMoveCsv = "";
+		for(int i =0; i < tap.moveCoords.length -1; i++){
+			strMoveCsv += tap.moveCoords[i] + ",";
+		}
+		strMoveCsv += tap.moveCoords[tap.moveCoords.length -1];
+
+		values.put(TAPS_COL_MOVE_CSV, strMoveCsv);
 
 		int id = (int) db.insert(TABLE_TAPS, null, values);
 		Log.d("DEBUG", "inserted tap with id: " + id);
@@ -497,6 +500,12 @@ public class DBHandler extends SQLiteOpenHelper {
         new ExportDatabaseCSVTask(context, db).execute("");
 
 		return false;
+	}
+
+	public void deleteDatabase ()
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.execSQL("DROP DATABASE");
 	}
 
 }
