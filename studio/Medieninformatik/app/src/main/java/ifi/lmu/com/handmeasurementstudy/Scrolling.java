@@ -33,6 +33,7 @@ public class Scrolling extends ActionBarActivity  {
     private ArrayList<Scroll> loggedScrolls;
     private boolean finishedSuccessfully = false;
     private SensorHelper sensorHelper;
+    private int scrollNum =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class Scrolling extends ActionBarActivity  {
                     case MotionEvent.ACTION_UP:
                         x = event.getX();
                         y = event.getY();
+                        scrollNum++;
                         time = System.currentTimeMillis();
                         break;
                 }
@@ -107,7 +109,7 @@ public class Scrolling extends ActionBarActivity  {
     }
 
     private void createScrollObject(float x, float y){
-        Scroll scroll = new Scroll(x,y,time, sensorHelper.getAcceleromterData()[0], sensorHelper.getAcceleromterData()[1], sensorHelper.getAcceleromterData()[2], sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1], sensorHelper.getGravitiyData()[2], sensorHelper.getGyroscopeData()[0], sensorHelper.getGyroscopeData()[1], sensorHelper.getGyroscopeData()[2], sensorHelper.getOrientationData()[0], sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2], sensorHelper.getRotationData()[0], sensorHelper.getRotationData()[1], sensorHelper.getRotationData()[2]);
+        Scroll scroll = new Scroll(x,y,time, sensorHelper.getAcceleromterData()[0], sensorHelper.getAcceleromterData()[1], sensorHelper.getAcceleromterData()[2], sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1], sensorHelper.getGravitiyData()[2], sensorHelper.getGyroscopeData()[0], sensorHelper.getGyroscopeData()[1], sensorHelper.getGyroscopeData()[2], sensorHelper.getOrientationData()[0], sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2], sensorHelper.getRotationData()[0], sensorHelper.getRotationData()[1], sensorHelper.getRotationData()[2], scrollNum);
         loggedScrolls.add(scroll);
     }
     

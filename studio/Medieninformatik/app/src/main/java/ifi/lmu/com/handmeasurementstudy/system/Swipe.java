@@ -21,9 +21,10 @@ public class Swipe {
     public float rotZ;
     public float rotX;
     public float rotY;
+    public int swipeId;
     public long time;
 
-    public Swipe(float x, float y, long time, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationX, float orientationY, float orientationZ, float rotX, float rotY, float rotZ) {
+    public Swipe(float x, float y, long time, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationX, float orientationY, float orientationZ, float rotX, float rotY, float rotZ, int swipeId) {
         this.x = x;
         this.y = y;
         this.time = time;
@@ -42,6 +43,7 @@ public class Swipe {
         this.rotX = rotX;
         this.rotY = rotY;
         this.rotZ = rotZ;
+        this.swipeId = swipeId;
     }
 
     @Override
@@ -65,6 +67,7 @@ public class Swipe {
                 ", rotX=" + rotX +
                 ", rotY=" + rotY +
                 ", rotZ=" + rotZ +
+                ", swipeId=" + swipeId +
                 '}';
     }
 }

@@ -75,6 +75,7 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String SCROLLING_COL_ROT_Y = "rotY";
 	private static final String SCROLLING_COL_ROT_Z = "rotZ";
 	private static final String SCROLLING_COL_GYRZ = "gyrZ";
+	private static final String SCROLLING_COL_SCROLLNUM = "scrollNum";
 	private static final String SCROLLING_COL_TIME= "time";
 	//Table Swiping
     private static final String TABLE_SWIPING = "swiping";
@@ -97,6 +98,7 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String SWIPING_COL_ROT_X = "rotX";
 	private static final String SWIPING_COL_ROT_Y = "rotY";
 	private static final String SWIPING_COL_ROT_Z = "rotZ";
+    private static final String SWIPING_COL_SWIPE_ID = "swipeId";
 
     //Table Zooming
     private static final String TABLE_ZOOMING = "zooming";
@@ -259,6 +261,7 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ SWIPING_COL_ROT_X + " FLOAT, "
 				+ SWIPING_COL_ROT_Y + " FLOAT, "
 				+ SWIPING_COL_ROT_Z + " FLOAT, "
+                + SWIPING_COL_SWIPE_ID+ " INTEGER, "
 				+ SWIPING_COL_TIME + " LONG)";
 		db.execSQL(createSwipingTable);
 
@@ -281,6 +284,7 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ SCROLLING_COL_ROT_X + " FLOAT, "
 				+ SCROLLING_COL_ROT_Y + " FLOAT, "
 				+ SCROLLING_COL_ROT_Z + " FLOAT, "
+				+ SCROLLING_COL_SCROLLNUM + " INETGER, "
 				+ SCROLLING_COL_TIME + " LONG)";
 		db.execSQL(createScrollingTable);
 	}
@@ -418,6 +422,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(SCROLLING_COL_ROT_X, scroll.rotX);
 		values.put(SCROLLING_COL_ROT_Y, scroll.rotY);
 		values.put(SCROLLING_COL_ROT_Z, scroll.rotZ);
+		values.put(SCROLLING_COL_SCROLLNUM, scroll.scrollNum);
 
 		int id = (int) db.insert(TABLE_SCROLLING, null, values);
 		Log.d("DEBUG", "inserted scroll with id: " + id);
@@ -448,6 +453,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(SWIPING_COL_ROT_X, swipe.rotX);
 		values.put(SWIPING_COL_ROT_Y, swipe.rotY);
 		values.put(SWIPING_COL_ROT_Z, swipe.rotZ);
+        values.put(SWIPING_COL_SWIPE_ID, swipe.swipeId);
 
 		int id = (int) db.insert(TABLE_SWIPING, null, values);
 		Log.d("DEBUG", "inserted swipe with id: " + id);
