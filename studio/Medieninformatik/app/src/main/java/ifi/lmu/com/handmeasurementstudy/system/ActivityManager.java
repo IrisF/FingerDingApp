@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 
+import ifi.lmu.com.handmeasurementstudy.MaxRadius;
 import ifi.lmu.com.handmeasurementstudy.R;
 import ifi.lmu.com.handmeasurementstudy.Swiping;
 import ifi.lmu.com.handmeasurementstudy.TabletActivity;
@@ -38,6 +39,9 @@ public class ActivityManager extends Activity { // extends Activity to call star
             n_ACTIVITY_SCOLLING = 3,
             n_ACTIVITY_ZOOMING_MAXIMUM = 4,
             n_ACTIVITY_TABLET = 5;
+
+    private static final int n_REQUEST_CODE_ACTIVITIES = 1,
+            n_REQUEST_CODE_RADIUS = 2;
 
     enum Activities {
         n_ACTIVITY_TAPPING,
@@ -121,7 +125,10 @@ public class ActivityManager extends Activity { // extends Activity to call star
         }
 
         init(nId);
-        Start();
+        Intent oIntent = new Intent(ActivityManager.this, MaxRadius.class);
+        startActivityForResult(oIntent, n_REQUEST_CODE_RADIUS);
+        // Start now in onActivityResult method
+        // Start();
     }
 
     public void Start () {
@@ -143,7 +150,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
             Log.e("this: " + this.toString(), ", _aoOrder: " +_aoOrder +", _nCurrentActivity:"+ _nCurrentActivity);
             Intent i = new Intent(_oContext, _aoOrder[_nCurrentActivity]);
             i.putExtra("id", _nUserId);
-            startActivityForResult(i,1);
+            startActivityForResult(i,n_REQUEST_CODE_ACTIVITIES);
 
             //only for test - delete later
             //Intent i = new Intent(_oContext, Tapping.class);
@@ -197,64 +204,83 @@ public class ActivityManager extends Activity { // extends Activity to call star
     }
 
 
-    public void StoreResultsInDatabase () {
+    public void StoreResultsInDatabase (boolean i_bIsRadius) {
 
-        switch(_nCurrentActivityNum - 1){
-            case n_ACTIVITY_TAPPING: //0
-                //Tap[] aoTap = (Tap[]) _aoResult;
-                // save to database
-                for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertTap((Tap) _aoResult[i], _nUserId);
-                }
-                break;
-            case n_ACTIVITY_SWIPING: //1
-                //Swipe[] aoSwipe = (Swipe[]) _aoResult;
-                for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertSwipe((Swipe) _aoResult[i], _nUserId);
-                }
-                break;
-            case n_ACTIVITY_ZOOMING: //2
-                //Zoom[] aoZoom = (Zoom[]) _aoResult;
-                for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
-                }
-                break;
-            case n_ACTIVITY_SCOLLING: //3
-                //Scroll[] aoScroll = (Scroll[]) _aoResult;
-                for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertScroll((Scroll) _aoResult[i], _nUserId);
-                }
-                break;
-            case n_ACTIVITY_ZOOMING_MAXIMUM: //4
-                //Zoom[] aoZoom1 = (Zoom[]) _aoResult;
-                for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
-                }
-                break;
-            case n_ACTIVITY_TABLET: //5
-                // do nothing, tablet handles this
-            default:
-                break;
+        if( ! i_bIsRadius) {
+            switch (_nCurrentActivityNum - 1) {
+                case n_ACTIVITY_TAPPING: //0
+                    //Tap[] aoTap = (Tap[]) _aoResult;
+                    // save to database
+                    for (int i = 0; i < _aoResult.length; i++) {
+                        _oDbHandler.insertTap((Tap) _aoResult[i], _nUserId);
+                    }
+                    break;
+                case n_ACTIVITY_SWIPING: //1
+                    //Swipe[] aoSwipe = (Swipe[]) _aoResult;
+                    for (int i = 0; i < _aoResult.length; i++) {
+                        _oDbHandler.insertSwipe((Swipe) _aoResult[i], _nUserId);
+                    }
+                    break;
+                case n_ACTIVITY_ZOOMING: //2
+                    //Zoom[] aoZoom = (Zoom[]) _aoResult;
+                    for (int i = 0; i < _aoResult.length; i++) {
+                        _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
+                    }
+                    break;
+                case n_ACTIVITY_SCOLLING: //3
+                    //Scroll[] aoScroll = (Scroll[]) _aoResult;
+                    for (int i = 0; i < _aoResult.length; i++) {
+                        _oDbHandler.insertScroll((Scroll) _aoResult[i], _nUserId);
+                    }
+                    break;
+                case n_ACTIVITY_ZOOMING_MAXIMUM: //4
+                    //Zoom[] aoZoom1 = (Zoom[]) _aoResult;
+                    for (int i = 0; i < _aoResult.length; i++) {
+                        _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
+                    }
+                    break;
+                case n_ACTIVITY_TABLET: //5
+                    // do nothing, tablet handles this
+                default:
+                    break;
+            }
+
+            StartNextActivity();
         }
-
-        StartNextActivity();
+        else {
+            for (int i = 0; i < _aoResult.length; i++) {
+                _oDbHandler.insertRadius((Swipe) _aoResult[i], _nUserId);
+            }
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         Log.d("ActivityManager", "onActivityResult " + String.valueOf(requestCode) +" " + String.valueOf(resultCode)+ " ?= " + String.valueOf(Activity.RESULT_OK));
-        if (requestCode == 1) {
+        if (requestCode == n_REQUEST_CODE_ACTIVITIES) {
             if(resultCode == Activity.RESULT_OK){
                 boolean bIsFinished = data.getBooleanExtra("isFinished", true);
 
                 if(bIsFinished){
-                    StoreResultsInDatabase();
+                    StoreResultsInDatabase(false);
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Log.e("ActvityManager", "RESULT CANCELED");
-                //Write your code if there's no result
+            }
+        }
+        else if (requestCode == n_REQUEST_CODE_RADIUS) {
+            if(resultCode == Activity.RESULT_OK){
+                boolean bIsFinished = data.getBooleanExtra("isFinished", true);
+
+                if(bIsFinished){
+                    StoreResultsInDatabase(true);
+                    Start();
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Log.e("ActvityManager", "RESULT CANCELED");
             }
         }
     }

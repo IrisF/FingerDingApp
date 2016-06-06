@@ -1,5 +1,7 @@
 package ifi.lmu.com.handmeasurementstudy;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -9,12 +11,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.Coords;
+import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
+import ifi.lmu.com.handmeasurementstudy.system.Swipe;
 
 public class MaxRadius extends AppCompatActivity {
 
-    private ArrayList<Coords> _aoRadiusCoords;
+    private ArrayList<Swipe> _aoRadiusCoords;
     private boolean _bActivityHasStarted;
+    private SensorHelper _oSensorHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,22 +57,38 @@ public class MaxRadius extends AppCompatActivity {
 
     private void saveTouch(MotionEvent event) {
 
+        float[] afAcc = _oSensorHelper.getAcceleromterData();
+        float[] afGravity = _oSensorHelper.getGravitiyData();
+        float[] afGyro = _oSensorHelper.getGyroscopeData();
+        float[] afOrient = _oSensorHelper.getOrientationData();
+        float[] afRot = _oSensorHelper.getRotationData();
+
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
-                Coords oCoordDown = new Coords(event.getX(), event.getY());
+                _oSensorHelper = new SensorHelper(this);
+                Swipe oCoordDown = new Swipe(event.getX(), event.getY(), System.currentTimeMillis(),
+                        afAcc[0], afAcc[1], afAcc[2], afGravity[0], afGravity[1], afGravity[2],
+                        afGyro[0], afGyro[1], afGyro[2], afOrient[0], afOrient[1], afOrient[2],
+                        afRot[0], afRot[1], afRot[2], 0);
                 _aoRadiusCoords.add(oCoordDown);
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                Coords oCoordMove = new Coords(event.getX(), event.getY());
+                Swipe oCoordMove = new Swipe(event.getX(), event.getY(), System.currentTimeMillis(),
+                        afAcc[0], afAcc[1], afAcc[2], afGravity[0], afGravity[1], afGravity[2],
+                        afGyro[0], afGyro[1], afGyro[2], afOrient[0], afOrient[1], afOrient[2],
+                        afRot[0], afRot[1], afRot[2], 0);
                 _aoRadiusCoords.add(oCoordMove);
                 break;
 
             case MotionEvent.ACTION_UP:
-                Coords oCoordUp = new Coords(event.getX(), event.getY());
+                Swipe oCoordUp = new Swipe(event.getX(), event.getY(), System.currentTimeMillis(),
+                         afAcc[0], afAcc[1], afAcc[2], afGravity[0], afGravity[1], afGravity[2],
+                        afGyro[0], afGyro[1], afGyro[2], afOrient[0], afOrient[1], afOrient[2],
+                        afRot[0], afRot[1], afRot[2], 0);
                 _aoRadiusCoords.add(oCoordUp);
-                saveMovesToDB((Coords[]) _aoRadiusCoords.toArray());
+
                 finish();
                 break;
 
@@ -75,9 +97,14 @@ public class MaxRadius extends AppCompatActivity {
         }
     }
 
-    private void saveMovesToDB (Coords[] i_aoMoveCoords){
-        //TODO save to DB
 
+    @Override
+    public void finish () {
+        ActivityManager.SaveResultsInDatabase(_aoRadiusCoords.toArray());
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("isFinished",true);
+        setResult(Activity.RESULT_OK,returnIntent);
+        super.finish();
     }
 
 }

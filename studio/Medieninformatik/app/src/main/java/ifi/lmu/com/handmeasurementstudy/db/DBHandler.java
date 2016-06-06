@@ -15,6 +15,7 @@ import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.util.Log;
 
+import ifi.lmu.com.handmeasurementstudy.system.Coords;
 import ifi.lmu.com.handmeasurementstudy.system.Scroll;
 import ifi.lmu.com.handmeasurementstudy.system.Swipe;
 import ifi.lmu.com.handmeasurementstudy.system.User;
@@ -31,6 +32,10 @@ public class DBHandler extends SQLiteOpenHelper {
 	// DB structure constants:
 
 	private static final String COL_USER_ID = "userID";
+
+	// Table taps:
+	private static final String TABLE_RADIUS = "radius";
+	private static final String RADIUS_COL_ID = "id";
 
 	// Table taps:
 	private static final String TABLE_TAPS = "taps";
@@ -291,6 +296,29 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ SCROLLING_COL_SCROLLNUM + " INETGER, "
 				+ SCROLLING_COL_TIME + " LONG)";
 		db.execSQL(createScrollingTable);
+
+		String createRadiusTable = "CREATE TABLE IF NOT EXISTS " + TABLE_RADIUS + " ("
+				+ RADIUS_COL_ID + " INTEGER PRIMARY KEY, "
+				+ COL_USER_ID + " INTEGER, "
+				+ SCROLLING_COL_X + " FLOAT, "
+				+ SCROLLING_COL_Y + " FLOAT, "
+				+ SCROLLING_COL_ACCX + " FLOAT, "
+				+ SCROLLING_COL_ACCY + " FLOAT, "
+				+ SCROLLING_COL_ACCZ + " FLOAT, "
+				+ SCROLLING_COL_GRAX + " FLOAT, "
+				+ SCROLLING_COL_GRAY + " FLOAT, "
+				+ SCROLLING_COL_GRAZ + " FLOAT, "
+				+ SCROLLING_COL_GYRX + " FLOAT, "
+				+ SCROLLING_COL_GYRY + " FLOAT, "
+				+ SCROLLING_COL_GYRZ + " FLOAT, "
+				+ SCROLLING_COL_ORIENTATION_X + " FLOAT, "
+				+ SCROLLING_COL_ORIENTATION_Y + " FLOAT, "
+				+ SCROLLING_COL_ORIENTATION_Z + " FLOAT, "
+				+ SCROLLING_COL_ROT_X + " FLOAT, "
+				+ SCROLLING_COL_ROT_Y + " FLOAT, "
+				+ SCROLLING_COL_ROT_Z + " FLOAT, "
+				+ SCROLLING_COL_TIME + " LONG)";
+		db.execSQL(createRadiusTable);
 	}
 
 	@Override
@@ -467,6 +495,36 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(SWIPING_COL_ROT_Y, swipe.rotY);
 		values.put(SWIPING_COL_ROT_Z, swipe.rotZ);
         values.put(SWIPING_COL_SWIPE_ID, swipe.swipeId);
+
+		int id = (int) db.insert(TABLE_SWIPING, null, values);
+		//Log.d("DEBUG", "inserted swipe with id: " + id);
+
+		db.close();
+	}
+
+	public void insertRadius (Swipe swipe, int userId) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(COL_USER_ID, userId);
+		values.put(SWIPING_COL_X, swipe.x);
+		values.put(SWIPING_COL_Y, swipe.y);
+		values.put(SWIPING_COL_TIME, swipe.time);
+		values.put(SWIPING_COL_ACCX, swipe.accX);
+		values.put(SWIPING_COL_ACCY, swipe.accY);
+		values.put(SWIPING_COL_ACCZ, swipe.accZ);
+		values.put(SWIPING_COL_GRAX, swipe.graX);
+		values.put(SWIPING_COL_GRAY, swipe.graY);
+		values.put(SWIPING_COL_GRAZ, swipe.graZ);
+		values.put(SWIPING_COL_GYRX, swipe.gyrX);
+		values.put(SWIPING_COL_GYRY, swipe.gyrY);
+		values.put(SWIPING_COL_GYRZ, swipe.gyrZ);
+		values.put(SWIPING_COL_ORIENTATION_X, swipe.orientationX);
+		values.put(SWIPING_COL_ORIENTATION_Y, swipe.orientationY);
+		values.put(SWIPING_COL_ORIENTATION_Z, swipe.orientationZ);
+		values.put(SWIPING_COL_ROT_X, swipe.rotX);
+		values.put(SWIPING_COL_ROT_Y, swipe.rotY);
+		values.put(SWIPING_COL_ROT_Z, swipe.rotZ);
 
 		int id = (int) db.insert(TABLE_SWIPING, null, values);
 		//Log.d("DEBUG", "inserted swipe with id: " + id);
