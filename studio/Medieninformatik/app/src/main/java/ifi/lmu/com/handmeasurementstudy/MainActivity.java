@@ -1,5 +1,7 @@
 package ifi.lmu.com.handmeasurementstudy;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +44,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initPhoneStuff();
+        isTabletDialog();
+    }
+
+    private void isTabletDialog () {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] strButtons = {"PHONE", "TABLET"};
+        builder.setTitle("Welches Gerät? Häh?")
+                .setItems(strButtons, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        if (which == 0) {
+                            Log.d("MainActivity", "onClick: 0");
+                            //Do nothing
+                        } else if (which == 1) {
+                            // TODO Tablet main activity here
+                            Log.d("MainActivity", "onClick: 1");
+                            Intent i = new Intent(getApplicationContext(), TabletActivity.class);
+                            startActivity(i);
+                        }
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void initPhoneStuff() {
         _oDBHandler = DBHandler.getInstance(getApplicationContext());
         MainActivity.DISPLAY_XDPI = getResources().getDisplayMetrics().xdpi;
         MainActivity.DISPLAY_YDPI = getResources().getDisplayMetrics().ydpi;
@@ -53,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("UNITS", "82 mm (ydim): " + Tools.mmToPx(82, false));
 
         // Remove title bar:
-       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
 
@@ -70,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, debugArray);
         debugAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //final Spinner
-                debugSpinner = (Spinner) findViewById(R.id.debug_mode);
+        debugSpinner = (Spinner) findViewById(R.id.debug_mode);
         debugSpinner.setAdapter(debugAdapter);
 
         // fill trial spinner:
@@ -105,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void setUserId() {

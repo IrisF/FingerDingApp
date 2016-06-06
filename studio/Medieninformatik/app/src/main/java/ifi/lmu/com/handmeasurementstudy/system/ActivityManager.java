@@ -71,10 +71,6 @@ public class ActivityManager extends Activity { // extends Activity to call star
 
     private void ActivityManager (Context context, int i_nUserId) {
 
-        // TODO DBHelper anlegen
-        // TODO onActivityFinished (Datentyp incht festgelegt --> Objekt?)
-
-
         _oContext = context;
 
         init(i_nUserId);
@@ -214,25 +210,25 @@ public class ActivityManager extends Activity { // extends Activity to call star
             case n_ACTIVITY_SWIPING: //1
                 //Swipe[] aoSwipe = (Swipe[]) _aoResult;
                 for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertSwipe((Swipe) _aoResult[i]);
+                    _oDbHandler.insertSwipe((Swipe) _aoResult[i], _nUserId);
                 }
                 break;
             case n_ACTIVITY_ZOOMING: //2
                 //Zoom[] aoZoom = (Zoom[]) _aoResult;
                 for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertZoom((Zoom) _aoResult[i]);
+                    _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
                 }
                 break;
             case n_ACTIVITY_SCOLLING: //3
                 //Scroll[] aoScroll = (Scroll[]) _aoResult;
                 for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertScroll((Scroll) _aoResult[i]);
+                    _oDbHandler.insertScroll((Scroll) _aoResult[i], _nUserId);
                 }
                 break;
             case n_ACTIVITY_ZOOMING_MAXIMUM: //4
                 //Zoom[] aoZoom1 = (Zoom[]) _aoResult;
                 for(int i = 0; i < _aoResult.length; i++){
-                    _oDbHandler.insertZoom((Zoom) _aoResult[i]);
+                    _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
                 }
                 break;
             case n_ACTIVITY_TABLET: //5

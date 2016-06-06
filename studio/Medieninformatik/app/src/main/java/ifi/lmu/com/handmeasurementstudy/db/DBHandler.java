@@ -30,26 +30,23 @@ public class DBHandler extends SQLiteOpenHelper {
 
 	// DB structure constants:
 
+	private static final String COL_USER_ID = "userID";
+
 	// Table taps:
 	private static final String TABLE_TAPS = "taps";
 	private static final String TAPS_COL_ID = "id";
 	private static final String TAPS_COL_TARGET_X = "targetX";
 	private static final String TAPS_COL_TARGET_Y = "targetY";
-	private static final String TAPS_COL_TARGET_W = "targetW";
-	private static final String TAPS_COL_TARGET_H = "targetH";
 	private static final String TAPS_COL_TOUCH_DOWN_X = "touchDownX";
 	private static final String TAPS_COL_TOUCH_DOWN_Y = "touchDownY";
 	private static final String TAPS_COL_TOUCH_UP_X = "touchUpX";
 	private static final String TAPS_COL_TOUCH_UP_Y = "touchUpY";
-	private static final String TAPS_COL_HIT = "hit";
-	private static final String TAPS_COL_TIME = "timestamp";
 	private static final String TAPS_COL_TIME_DOWN = "timeDown";
 	private static final String TAPS_COL_TIME_UP = "timeUp";
     private static final String TAPS_COL_PRESSURE_DOWN = "pressureDown";
     private static final String TAPS_COL_PRESSURE_UP = "pressureUp";
     private static final String TAPS_COL_SIZE_DOWN = "sizeDown";
     private static final String TAPS_COL_SIZE_UP = "sizeUp";
-	private static final String TAPS_COL_TRIAL_ID = "trialID";
 	private static final String TAPS_COL_ORIENTATION_X = "orientationX";
 	private static final String TAPS_COL_ORIENTATION_Y = "orientationY";
 	private static final String TAPS_COL_ORIENTATION_Z = "orientationZ";
@@ -77,6 +74,7 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String SCROLLING_COL_GYRZ = "gyrZ";
 	private static final String SCROLLING_COL_SCROLLNUM = "scrollNum";
 	private static final String SCROLLING_COL_TIME= "time";
+
 	//Table Swiping
     private static final String TABLE_SWIPING = "swiping";
     private static final String SWIPING_COL_ID = "id";
@@ -127,7 +125,6 @@ public class DBHandler extends SQLiteOpenHelper {
 	private static final String ZOOMING_COL_ROT_Y = "rotationY";
 	private static final String ZOOMING_COL_ROT_Z = "rotationZ";
 	private static final String ZOOMING_COL_RECT = "rectangleIndex";
-    private static final String ZOOMING_COL_USER_ID = "userID";
 
 
 
@@ -198,24 +195,29 @@ public class DBHandler extends SQLiteOpenHelper {
 		db.execSQL(createUsersTableString);
 
 		String createTapsTableString = "CREATE TABLE IF NOT EXISTS " + TABLE_TAPS + " ("
-				+ TAPS_COL_ID + " INTEGER PRIMARY KEY, " + TAPS_COL_TARGET_X
-				+ " REAL, " + TAPS_COL_TARGET_Y + " REAL, "
-				+ TAPS_COL_TARGET_W + " REAL, " + TAPS_COL_TARGET_H
-				+ " REAL, " + TAPS_COL_TOUCH_DOWN_X + " REAL, "
-				+ TAPS_COL_TOUCH_DOWN_Y + " REAL, " + TAPS_COL_TOUCH_UP_X
-				+ " REAL, " + TAPS_COL_TOUCH_UP_Y + " REAL, "
-				+ TAPS_COL_HIT + " INTEGER, " + TAPS_COL_TIME
-				+ " TIMESTAMP NOT NULL DEFAULT current_timestamp, "
-				+ TAPS_COL_TIME_DOWN + " INTEGER, " + TAPS_COL_TIME_UP + " INTEGER, "
-                + TAPS_COL_PRESSURE_DOWN + " REAL, " + TAPS_COL_PRESSURE_UP + " REAL, "
-				+ TAPS_COL_SIZE_DOWN + " REAL, " + TAPS_COL_SIZE_UP + " REAL, "
-				+ TAPS_COL_ORIENTATION_X + " REAL, " + TAPS_COL_ORIENTATION_Y + " REAL, "
-				+ TAPS_COL_ORIENTATION_Z + " REAL, " + TAPS_COL_MOVE_CSV + " TEXT, "
-                + TAPS_COL_TRIAL_ID + " INTEGER)";
+				+ TAPS_COL_ID + " INTEGER PRIMARY KEY, "
+				+ COL_USER_ID + " INTEGER, "
+				+ TAPS_COL_TARGET_X + " REAL, "
+				+ TAPS_COL_TARGET_Y + " REAL, "
+				+ TAPS_COL_TOUCH_DOWN_X + " REAL, "
+				+ TAPS_COL_TOUCH_DOWN_Y + " REAL, "
+				+ TAPS_COL_TOUCH_UP_X + " REAL, "
+				+ TAPS_COL_TOUCH_UP_Y + " REAL, "
+				+ TAPS_COL_TIME_DOWN + " INTEGER, "
+				+ TAPS_COL_TIME_UP + " INTEGER, "
+                + TAPS_COL_PRESSURE_DOWN + " REAL, "
+				+ TAPS_COL_PRESSURE_UP + " REAL, "
+				+ TAPS_COL_SIZE_DOWN + " REAL, "
+				+ TAPS_COL_SIZE_UP + " REAL, "
+				+ TAPS_COL_ORIENTATION_X + " REAL, "
+				+ TAPS_COL_ORIENTATION_Y + " REAL, "
+				+ TAPS_COL_ORIENTATION_Z + " REAL, "
+				+ TAPS_COL_MOVE_CSV + " TEXT)";
 		db.execSQL(createTapsTableString);
 
 		String createZoomingTableString = "CREATE TABLE IF NOT EXISTS " + TABLE_ZOOMING + " ("
 				+ ZOOMING_COL_ID + " INTEGER PRIMARY KEY, "
+				+ COL_USER_ID + " INTEGER, "
 				+ ZOOMING_COL_CURRENT_SPAN + " FLOAT, "
 				+ ZOOMING_COL_CURRENT_X + " FLOAT, "
 				+ ZOOMING_COL_CURRENT_Y + " FLOAT, "
@@ -244,6 +246,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
 		String createSwipingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SWIPING + " ("
 				+ SWIPING_COL_ID + " INTEGER PRIMARY KEY, "
+				+ COL_USER_ID + " INTEGER, "
 				+ SWIPING_COL_X + " FLOAT, "
 				+ SWIPING_COL_Y + " FLOAT, "
 				+ SWIPING_COL_ACCX + " FLOAT, "
@@ -266,7 +269,8 @@ public class DBHandler extends SQLiteOpenHelper {
 		db.execSQL(createSwipingTable);
 
 		String createScrollingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SCROLLING + " ("
-				+ SCROLLING_COL_ID + "INTEGER PRIMARY KEY, "
+				+ SCROLLING_COL_ID + " INTEGER PRIMARY KEY, "
+				+ COL_USER_ID + " INTEGER, "
 				+ SCROLLING_COL_X + " FLOAT, "
 				+ SCROLLING_COL_Y + " FLOAT, "
 				+ SCROLLING_COL_ACCX + " FLOAT, "
@@ -309,7 +313,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(USER_COL_HAND_WIDTH, user.width);
 
 		int id = (int) db.insert(TABLE_USERS, null, values);
-		Log.d("DEBUG", "inserted user with id: " + id);
+		//Log.d("DEBUG", "inserted user with id: " + id);
 
 		db.close();
 		return id;
@@ -319,13 +323,15 @@ public class DBHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor oCur = db.query(TABLE_USERS, new String[] {USER_COL_ID},
 				null, null, null, null, null);
-		oCur.moveToLast();
-		if(oCur.getCount() > 0){
-			return oCur.getInt(0);
+		if(oCur != null) {
+			oCur.moveToLast();
+			if (oCur.getCount() > 0) {
+				return oCur.getInt(0);
+			} else {
+				return -1;
+			}
 		}
-		else {
-			return -1;
-		}
+		else return -1;
 	}
 
 	public void insertTap(Tap tap, int userId) {
@@ -345,29 +351,34 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(TAPS_COL_PRESSURE_UP, tap.pressureUp);
         values.put(TAPS_COL_SIZE_DOWN, tap.sizeDown);
         values.put(TAPS_COL_SIZE_UP, tap.sizeUp);
-		values.put(TAPS_COL_TRIAL_ID, userId);
+		values.put(COL_USER_ID, userId);
 		values.put(TAPS_COL_ORIENTATION_X, tap.orientationX);
 		values.put(TAPS_COL_ORIENTATION_Y, tap.orientationY);
 		values.put(TAPS_COL_ORIENTATION_Z, tap.orientationZ);
 		String strMoveCsv = "";
 		for(int i =0; i < tap.moveCoords.length -1; i++){
-			strMoveCsv += tap.moveCoords[i] + ",";
+			strMoveCsv += String.valueOf(tap.moveCoords[i].getX()) + "#";
+			strMoveCsv += String.valueOf(tap.moveCoords[i].getY()) + ";";
 		}
-		strMoveCsv += tap.moveCoords[tap.moveCoords.length -1];
+		if(tap.moveCoords.length > 0) {
+			strMoveCsv += String.valueOf(tap.moveCoords[tap.moveCoords.length - 1].getX()) + "#";
+			strMoveCsv += String.valueOf(tap.moveCoords[tap.moveCoords.length - 1].getY());
+		}
 
 		values.put(TAPS_COL_MOVE_CSV, strMoveCsv);
 
 		int id = (int) db.insert(TABLE_TAPS, null, values);
-		Log.d("DEBUG", "inserted tap with id: " + id);
+		//Log.d("DEBUG", "inserted tap with id: " + id);
 
 		db.close();
 	}
 
-	public void insertZoom(Zoom zoom) {
+	public void insertZoom(Zoom zoom, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put(COL_USER_ID, userId);
 		values.put(ZOOMING_COL_CURRENT_SPAN, zoom.currentSpan);
 		values.put(ZOOMING_COL_CURRENT_X, zoom.currentX);
 		values.put(ZOOMING_COL_CURRENT_Y, zoom.currentY);
@@ -394,16 +405,17 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(ZOOMING_COL_RECT, zoom.rectangleIndex);
 
 		int id = (int) db.insert(TABLE_ZOOMING, null, values);
-		Log.d("DEBUG", "inserted zoom with id: " + id);
+		//Log.d("DEBUG", "inserted zoom with id: " + id);
 
 		db.close();
 	}
 
-	public void insertScroll(Scroll scroll) {
+	public void insertScroll(Scroll scroll, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put(COL_USER_ID, userId);
 		values.put(SCROLLING_COL_X, scroll.x);
 		values.put(SCROLLING_COL_Y, scroll.x);
         values.put(SCROLLING_COL_TIME, scroll.time);
@@ -425,16 +437,17 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(SCROLLING_COL_SCROLLNUM, scroll.scrollNum);
 
 		int id = (int) db.insert(TABLE_SCROLLING, null, values);
-		Log.d("DEBUG", "inserted scroll with id: " + id);
+		//Log.d("DEBUG", "inserted scroll with id: " + id);
 
 		db.close();
 	}
 
-	public void insertSwipe(Swipe swipe) {
+	public void insertSwipe(Swipe swipe, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put(COL_USER_ID, userId);
 		values.put(SWIPING_COL_X, swipe.x);
 		values.put(SWIPING_COL_Y, swipe.y);
 		values.put(SWIPING_COL_TIME, swipe.time);
@@ -456,7 +469,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(SWIPING_COL_SWIPE_ID, swipe.swipeId);
 
 		int id = (int) db.insert(TABLE_SWIPING, null, values);
-		Log.d("DEBUG", "inserted swipe with id: " + id);
+		//Log.d("DEBUG", "inserted swipe with id: " + id);
 
 		db.close();
 	}
