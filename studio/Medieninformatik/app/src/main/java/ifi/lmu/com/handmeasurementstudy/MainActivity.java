@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         } else if (which == 1) {
                             // TODO Tablet main activity here
                             Log.d("MainActivity", "onClick: 1");
-                            Intent i = new Intent(getApplicationContext(), TabletActivity.class);
+                            Intent i = new Intent(getApplicationContext(), MainTabletActivity.class);
                             startActivity(i);
                         }
                     }

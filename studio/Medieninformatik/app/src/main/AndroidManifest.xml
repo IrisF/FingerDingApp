@@ -36,6 +36,8 @@
             android:label="ActivityManager" />
         <activity android:name=".TabletActivity"></activity>
         <activity android:name=".ZoomingMaximum"></activity>
+        <activity android:name=".ZoomingMaximumTablet"></activity>
+        <activity android:name=".MainTabletActivity"></activity>
     </application>
 
 </manifest>
