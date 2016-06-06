@@ -191,8 +191,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                     }
 
                 } else {
-                    imageView.getLayoutParams().width += 5;
-                    imageView.getLayoutParams().height += 5;
+                    imageView.getLayoutParams().width += 15;
+                    imageView.getLayoutParams().height += 15;
                     imageView.requestLayout();
                 }
                 return false;
