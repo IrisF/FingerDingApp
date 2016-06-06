@@ -146,8 +146,6 @@ public class ActivityManager extends Activity { // extends Activity to call star
             _eCurrentActivity = SetCurrentActivityEnumByInt(_nCurrentActivity);
             //_eCurrentActivity = Activities.n_ACTIVITY_SCOLLING;
 
-            //Intent i = new Intent(_oContext, _aoOrder[_nCurrentActivity]);
-            Log.e("this: " + this.toString(), ", _aoOrder: " +_aoOrder +", _nCurrentActivity:"+ _nCurrentActivity);
             Intent i = new Intent(_oContext, _aoOrder[_nCurrentActivity]);
             i.putExtra("id", _nUserId);
             startActivityForResult(i,n_REQUEST_CODE_ACTIVITIES);

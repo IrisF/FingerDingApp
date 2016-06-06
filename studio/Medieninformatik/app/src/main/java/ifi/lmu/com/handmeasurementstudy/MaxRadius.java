@@ -27,6 +27,7 @@ public class MaxRadius extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_max_radius);
 
+        _oSensorHelper = new SensorHelper(this);
         _aoRadiusCoords = new ArrayList<>();
 
         _bActivityHasStarted = false;
