@@ -35,12 +35,12 @@ public class Swiping extends ActionBarActivity {
 
     private TextView textView;
     private Button button;
-    private long currentTime;
     private boolean taskStarted =false;
     private int userId;
     private int[] currentRow;
     private ArrayList<Swipe> loggedSwipes;
     private SensorHelper sensorHelper;
+    private int swipeID = 1;
 
     private static final int[][] latinSquare = {
             {1, 2, 3, 4},
@@ -105,6 +105,7 @@ public class Swiping extends ActionBarActivity {
                     nTargetCounter++;
                     showSlider();
                     taskStarted=false;
+                    swipeID++;
                 }
             }
 
@@ -132,22 +133,18 @@ public class Swiping extends ActionBarActivity {
         if(currentRow.length>nTargetCounter){
         switch(currentRow[nTargetCounter]){
             case 1:
-                currentTime = System.currentTimeMillis();
                 params.topMargin = 20;
                 seekBar.setRotation(0);
                 break;
             case 2:
-                currentTime = System.currentTimeMillis();
                 params.topMargin = 500;
                 seekBar.setRotation(0);
                 break;
             case 3:
-                currentTime = System.currentTimeMillis();
                 params.topMargin = 1000;
                 seekBar.setRotation(0);
                 break;
             case 4:
-                currentTime = System.currentTimeMillis();
                 params.topMargin = 500;
                 seekBar.setRotation(-45);
                 break;
@@ -156,7 +153,6 @@ public class Swiping extends ActionBarActivity {
                 break;
         }
         }else{
-            currentTime = System.currentTimeMillis();
             seekBar.setVisibility(View.INVISIBLE);
             finishedSuccessfully = true;
             finish();
@@ -188,10 +184,7 @@ public class Swiping extends ActionBarActivity {
     }
 
     private void createSwipeObject(float x, float y){
-        Swipe swipe = new Swipe(x,y,currentTime, sensorHelper.getAcceleromterData()[0], sensorHelper.getAcceleromterData()[1], sensorHelper.getAcceleromterData()[2], sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1], sensorHelper.getGravitiyData()[2], sensorHelper.getGyroscopeData()[0], sensorHelper.getGyroscopeData()[1], sensorHelper.getGyroscopeData()[2], sensorHelper.getOrientationData()[0], sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2], sensorHelper.getRotationData()[0], sensorHelper.getRotationData()[1], sensorHelper.getRotationData()[2]);
-        if(currentTime!=0){
-            currentTime=0;
-        }
+        Swipe swipe = new Swipe(x,y,System.currentTimeMillis(), sensorHelper.getAcceleromterData()[0], sensorHelper.getAcceleromterData()[1], sensorHelper.getAcceleromterData()[2], sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1], sensorHelper.getGravitiyData()[2], sensorHelper.getGyroscopeData()[0], sensorHelper.getGyroscopeData()[1], sensorHelper.getGyroscopeData()[2], sensorHelper.getOrientationData()[0], sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2], sensorHelper.getRotationData()[0], sensorHelper.getRotationData()[1], sensorHelper.getRotationData()[2], swipeID);
         loggedSwipes.add(swipe);
     }
 

@@ -22,8 +22,9 @@ public class Scroll {
     public float rotX;
     public float rotY;
     public long time;
+    public int scrollNum;
 
-    public Scroll(float x, float y, long time, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationX, float orientationY, float orientationZ, float rotX, float rotY, float rotZ) {
+    public Scroll(float x, float y, long time, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationX, float orientationY, float orientationZ, float rotX, float rotY, float rotZ, int scrollNum) {
         this.x = x;
         this.y = y;
         this.time = time;
@@ -42,6 +43,7 @@ public class Scroll {
         this.rotX = rotX;
         this.rotY = rotY;
         this.rotZ = rotZ;
+        this.scrollNum = scrollNum;
     }
 
     @Override
@@ -65,6 +67,7 @@ public class Scroll {
                 ", rotX=" + rotX +
                 ", rotY=" + rotY +
                 ", rotZ=" + rotZ +
+                ", scrollNum=" + scrollNum +
                 '}';
     }
 }
