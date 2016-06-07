@@ -33,7 +33,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
 	private static final String COL_USER_ID = "userID";
 
-	// Table taps:
+	// Table radius:
 	private static final String TABLE_RADIUS = "radius";
 	private static final String RADIUS_COL_ID = "id";
 
@@ -526,7 +526,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(SWIPING_COL_ROT_Y, swipe.rotY);
 		values.put(SWIPING_COL_ROT_Z, swipe.rotZ);
 
-		int id = (int) db.insert(TABLE_SWIPING, null, values);
+		int id = (int) db.insert(TABLE_RADIUS, null, values);
 		//Log.d("DEBUG", "inserted swipe with id: " + id);
 
 		db.close();

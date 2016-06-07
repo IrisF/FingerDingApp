@@ -16,6 +16,16 @@ import ifi.lmu.com.handmeasurementstudy.system.Tools;
  */
 public class Drawing extends AbstractDrawingPanel { //View {
 
+    /// DEBUG stuffy start
+    private float _oldTargetX;
+    private float _oldTargetY;
+    private float _oldTouchX;
+    private float _oldTouchY;
+    private Paint _paintOldTarget = new Paint();
+    private Paint _paintOldTouch = new Paint();
+
+    /// DEBUG stuffy end
+
     private Tapping parent;
 
     private int nBackgroundW;
@@ -45,6 +55,23 @@ public class Drawing extends AbstractDrawingPanel { //View {
         this.rectBackground = new Rect(0, 0, this.nBackgroundW,
                 this.nBackgroundH);
 
+
+        /// DEBUG stuffy start
+        if(Tapping.b_IS_DEBUG) {
+            this._paintOldTarget = new Paint();
+            this._paintOldTarget.setStrokeWidth(5);
+            this._paintOldTarget.setColor(Color.rgb(180, 180, 180));
+            _oldTargetY = 0.0f;
+            _oldTargetX = 0.0f;
+
+            this._paintOldTouch = new Paint();
+            this._paintOldTouch.setStrokeWidth(5);
+            this._paintOldTouch.setColor(Color.rgb(255, 0, 0));
+            _oldTouchX = 0.0f;
+            _oldTouchY = 0.0f;
+        }
+        /// DEBUG stuffy end
+
     }
 
 
@@ -70,7 +97,38 @@ public class Drawing extends AbstractDrawingPanel { //View {
                 paintTarget);
 
 
+        /// DEBUG stuffy start
+        if(Tapping.b_IS_DEBUG) {
+            //canvas.translate(this._oldTargetX, this._oldTargetY);
+            canvas.drawLine(-ch_size / 2, 0, ch_size / 2, 0,
+                    _paintOldTarget);
+            canvas.drawLine(0, -ch_size / 2, 0, ch_size / 2,
+                    _paintOldTarget);
+
+
+
+            //canvas.translate(this._oldTouchX, this._oldTouchY);
+            canvas.drawLine(-ch_size / 2, 0, ch_size / 2, 0,
+                    _paintOldTouch);
+            canvas.drawLine(0, -ch_size / 2, 0, ch_size / 2,
+                    _paintOldTouch);
+
+            Log.d("Debug drawing:","Current cross: X="+targetX+" Y="+targetY+ "; Old cross: X="+_oldTargetX+" Y="+_oldTargetY);
+
+            _oldTargetX = targetX;
+            _oldTargetY = targetY;
+        }
+        /// DEBUG stuffy end
+
     }
+
+    /// DEBUG stuffy start
+    public void setTouchLocation (float i_fTouchX, float i_fTouchY){
+        _oldTouchX = i_fTouchX;
+        _oldTouchY = i_fTouchY;
+    }
+
+    /// DEBUG stuffy end
 
     private void calculateAbsoluteTarget() {
         targetX = (nBackgroundW / Tapping.n_TARGET_WIDTH) * (fRelativeTargetX + 0.5f);
@@ -98,9 +156,13 @@ public class Drawing extends AbstractDrawingPanel { //View {
         return nBackgroundH;
     }
 
-    public float getTargetWidth () { return targetX; }
+    public float getTargetWidth () {
+        //return _oldTargetX;
+        return targetX;
+    }
 
     public float getTargetHeight () {
+        //return _oldTargetY;
         return targetY;
     }
 
@@ -119,6 +181,20 @@ public class Drawing extends AbstractDrawingPanel { //View {
         paintBackground.setStyle(Paint.Style.FILL);
         paintBackground.setColor(Color.rgb(255, 255, 255));
         new Rect(0, 0, nBackgroundW, nBackgroundH);
+
+        /// DEBUG stuffy start
+        if(Tapping.b_IS_DEBUG) {
+            this._paintOldTarget = new Paint();
+            this._paintOldTarget.setStrokeWidth(5);
+            paintTarget.setStyle(Paint.Style.FILL);
+            this._paintOldTarget.setColor(Color.rgb(180, 180, 180));
+
+            this._paintOldTouch = new Paint();
+            this._paintOldTouch.setStrokeWidth(5);
+            paintTarget.setStyle(Paint.Style.FILL);
+            this._paintOldTouch.setColor(Color.rgb(255, 0, 0));
+        }
+        /// DEBUG stuffy end
     }
 
     @Override

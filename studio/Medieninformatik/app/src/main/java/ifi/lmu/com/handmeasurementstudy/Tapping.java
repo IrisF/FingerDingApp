@@ -38,6 +38,8 @@ public class Tapping extends Activity {
             {3, 2, 5, 4, 1, 6}
     };
     */
+    public static final boolean b_IS_DEBUG = true;
+
     public static final int n_TARGET_WIDTH = 9;//14;
     public static final int n_TARGET_HEIGHT = 16;//24;
   //  public static int nSideLength = latinSquare.length;
@@ -63,6 +65,8 @@ public class Tapping extends Activity {
 
     private long nStartTime2;
     private SensorHelper _oSensorHelper;
+
+    private boolean _bHasStarted;
     //private Array
 
     @Override
@@ -70,6 +74,7 @@ public class Tapping extends Activity {
         super.onCreate(savedInstanceState);
 
 
+        _bHasStarted = false;
         nStartTime2 = System.currentTimeMillis();
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -93,6 +98,7 @@ public class Tapping extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 initActivity();
+                _bHasStarted = true;
                 return false;
             }
         });
@@ -120,13 +126,13 @@ public class Tapping extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        onUserTouch(event);
+        if(_bHasStarted) {
+            onUserTouch(event);
+        }
         return false;
     }
 
     private void startTappingTest () {
-        // TODO iterate through Latin square
-        // TODO update on touch
         showNextCrosshair();
 
     }
@@ -152,8 +158,7 @@ public class Tapping extends Activity {
             //setContentView(drawing);
         }
         else {
-            // TODO save all to database
-            // TODO switch to next activity
+
             float fTime = (float)(System.currentTimeMillis() - nStartTime2);
             Log.e("TIME FOR THIS TASK: ", String.valueOf(fTime/1000) + " seconds");
             finish();
@@ -199,7 +204,7 @@ public class Tapping extends Activity {
 
         saveTouch(event);
 
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+        if(event.getAction() == MotionEvent.ACTION_UP) {
             onShowNextTap();
         }
 
@@ -216,6 +221,12 @@ public class Tapping extends Activity {
                 nStartTime = System.currentTimeMillis();
                 fSizeDown = event.getSize();
                 fPressureDown = event.getPressure();
+
+                // DEBUG start
+                if(b_IS_DEBUG) {
+                    drawing.setTouchLocation(event.getX(), event.getY());
+                }
+                // DEBUG end
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -239,6 +250,8 @@ public class Tapping extends Activity {
                         nStartTime, System.currentTimeMillis(), fPressureDown, fPressureUp, fSizeDown,
                         fSizeUp, aoMoveArray, afOrientation[0], afOrientation[1], afOrientation[2]);
 
+                Log.d("Debug tapping:", "Current cross: X="+drawing.getTargetWidth()+" Y="+drawing.getTargetHeight()
+                        +"; Current touch: X="+fTouchDownX+" Y="+fTouchDownY);
                 loggedTaps.add(oTap);
 
                 aMoveCoords.clear();
