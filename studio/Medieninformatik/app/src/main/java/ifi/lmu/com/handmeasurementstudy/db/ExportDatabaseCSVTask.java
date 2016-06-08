@@ -53,7 +53,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
             for(int i=0; i<TABLE_NAMES.length;i++){
             File file = new File(exportDir, TABLE_NAMES[i] + ".csv");
             file.createNewFile();
-            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER);
             Cursor curCSV = db.rawQuery("select * from " + TABLE_NAMES[i], null);
             csvWrite.writeNext(curCSV.getColumnNames());
             int length = curCSV.getColumnCount();
