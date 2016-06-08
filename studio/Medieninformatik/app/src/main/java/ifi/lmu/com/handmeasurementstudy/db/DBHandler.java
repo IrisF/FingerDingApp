@@ -521,7 +521,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(COL_USER_ID, userId);
 		values.put(SCROLLING_COL_X, scroll.x);
-		values.put(SCROLLING_COL_Y, scroll.x);
+		values.put(SCROLLING_COL_Y, scroll.y);
         values.put(SCROLLING_COL_TIME, scroll.time);
         values.put(SCROLLING_COL_ACCX, scroll.accX);
         values.put(SCROLLING_COL_ACCY, scroll.accY);
