@@ -51,7 +51,7 @@ public class ZoomingMaximumTablet extends ActionBarActivity implements View.OnTo
         sensorHelper = new SensorHelper(this);
 
         //db Handler
-        dbHandler = DBHandler.getInstance(this);
+        dbHandler = DBHandler.getInstance(getApplicationContext());
 
         //get User ID from Intent
         Intent mIntent = getIntent();
@@ -206,7 +206,7 @@ public class ZoomingMaximumTablet extends ActionBarActivity implements View.OnTo
 
     @Override
     public void finish () {
-        //storeResultsToDB(zoomData.toArray());
+        storeResultsToDB(zoomData.toArray());
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isFinished",true);
         setResult(Activity.RESULT_OK,returnIntent);

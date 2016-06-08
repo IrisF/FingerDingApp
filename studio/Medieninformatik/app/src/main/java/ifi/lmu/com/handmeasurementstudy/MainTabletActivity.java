@@ -11,12 +11,16 @@ import android.widget.Toast;
 
 import ifi.lmu.com.handmeasurementstudy.R;
 import ifi.lmu.com.handmeasurementstudy.ZoomingMaximum;
+import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
 
 public class MainTabletActivity extends AppCompatActivity {
 
     private Button startButton;
+    private Button exportButton;
     private EditText userIDText;
     private Activity thisActivity;
+
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,8 @@ public class MainTabletActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_tablet);
 
         thisActivity = this;
+
+        dbHandler = DBHandler.getInstance(thisActivity);
 
         userIDText = (EditText) findViewById(R.id.user_id);
         startButton = (Button) findViewById(R.id.startTasks);
@@ -36,6 +42,19 @@ public class MainTabletActivity extends AppCompatActivity {
                     userIDText.setText("");
                     Intent intent = new Intent(thisActivity, ZoomingMaximumTablet.class);
                     startActivity(intent);
+                }
+            }
+        });
+
+        exportButton = (Button) findViewById(R.id.button_export_tablet_DB);
+        exportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DBHandler dbHandler = DBHandler.getInstance(thisActivity);
+                boolean result = dbHandler.exportDB();
+                if (result) {
+                    Toast.makeText(thisActivity, "Database exported to external storage! :)",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -2,12 +2,6 @@ package ifi.lmu.com.handmeasurementstudy;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -112,7 +106,7 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 counter = 0;
                 rectangleIndex = zoomLatinRow[counter];
 
-                initImageDimensions();
+                initImage();
                 rectangleIsZoomed = false;
                 rectangleZoomingStarted = false;
                 zoomingRectangles.invalidate();
@@ -184,11 +178,11 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                     if(counter < zoomLatinRow.length) {
                         //a next rectangle exist, so draw it
                         rectangleIndex = zoomLatinRow[counter];
-                        initImageDimensions();
-                        zoomingRectangles.invalidate();
                     } else {
                         taskOver = true;
                     }
+
+                    initImage();
 
                 } else {
                     imageView.getLayoutParams().width += 15;
@@ -253,11 +247,14 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                     startTimeSeconds = System.currentTimeMillis();
                     startX = event.getX();
                     startY = event.getY();
+                    initImage();
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
                 //scale
-                scaleGestureDetector.onTouchEvent(event);
+                if (!rectangleIsZoomed) {
+                    scaleGestureDetector.onTouchEvent(event);
+                }
                 break;
             case MotionEvent.ACTION_UP:
                 //log end points
@@ -279,11 +276,13 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
     }
 
     //initialize imageView with the help of device orientation and aspect ratio
-    private void initImageDimensions() {
-
+    private void initImage() {
+        Log.e("image", "+++++++++++++++++++++ initialize +++++++++++++++++++");
         //this is the smartphone test application, so orientation is portrait and width < height
         imageView.getLayoutParams().height = heightBig/8;
         imageView.getLayoutParams().width = widthBig/8;
+        imageView.requestLayout();
+        zoomingRectangles.invalidate();
     }
 
     @Override

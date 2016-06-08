@@ -99,7 +99,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String SWIPING_COL_SWIPE_ID = "swipeId";
 
     //Table Zooming
-	private static final String TABLE_ZOOMING_TABLET = "zooming_Tablet";
+	private static final String TABLE_ZOOMING_TABLET = "zoomingTablet";
     private static final String TABLE_ZOOMING = "zooming";
     private static final String ZOOMING_COL_ID = "id";
     private static final String ZOOMING_COL_CURRENT_SPAN = "currentSpan";
@@ -184,7 +184,6 @@ public class DBHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
         Log.d("Mal schauen", "Ob was passiert");
-
 
 		String createUsersTableString = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + " ("
 				+ USER_COL_ID + " INTEGER PRIMARY KEY, "
@@ -272,7 +271,8 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ ZOOMING_COL_ROT_Y + " FLOAT, "
 				+ ZOOMING_COL_ROT_Z + " FLOAT, "
 				+ ZOOMING_COL_RECT + " INTEGER)";
-		db.execSQL(createZoomingTableString);
+		db.execSQL(createZoomingTabletTableString);
+		Log.e("TABLE", createZoomingTabletTableString);
 
 		String createSwipingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SWIPING + " ("
 				+ SWIPING_COL_ID + " INTEGER PRIMARY KEY, "
