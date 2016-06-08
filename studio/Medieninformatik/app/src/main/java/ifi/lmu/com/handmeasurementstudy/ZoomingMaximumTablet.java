@@ -173,7 +173,6 @@ public class ZoomingMaximumTablet extends ActionBarActivity implements View.OnTo
             case MotionEvent.ACTION_MOVE:
                 //scale
                 scaleGestureDetector.onTouchEvent(event);
-                Log.e("ZoomData", zoomData.toString());
                 break;
             case MotionEvent.ACTION_UP:
                 //log end points

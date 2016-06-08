@@ -12,8 +12,8 @@ public class Zoom {
     public float focusX;
     public float focusY;
     public float scaleFactor;
-    public float timeDelta;
-    public float eventTime;
+    public long timeDelta;
+    public long eventTime;
     public float accX;
     public float accY;
     public float accZ;
@@ -31,7 +31,7 @@ public class Zoom {
     public float rotationZ;
     public int rectangleIndex;
 
-    public Zoom(float currentSpan, float currentX, float currentY, float focusX, float focusY, float scaleFactor, float timeDelta, float eventTime, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationZ, float orientationX, float orientationY, float rotationX, float rotationY, float rotationZ, int rectangleIndex) {
+    public Zoom(float currentSpan, float currentX, float currentY, float focusX, float focusY, float scaleFactor, long timeDelta, long eventTime, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationZ, float orientationX, float orientationY, float rotationX, float rotationY, float rotationZ, int rectangleIndex) {
         this.currentSpan = currentSpan;
         this.currentX = currentX;
         this.currentY = currentY;

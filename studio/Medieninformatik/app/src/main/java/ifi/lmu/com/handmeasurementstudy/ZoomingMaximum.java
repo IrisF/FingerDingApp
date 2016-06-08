@@ -169,7 +169,6 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
             case MotionEvent.ACTION_MOVE:
                 //scale
                 scaleGestureDetector.onTouchEvent(event);
-                Log.e("ZoomData", zoomData.toString());
                 break;
             case MotionEvent.ACTION_UP:
                 //log end points
