@@ -248,7 +248,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
         else {
             Log.d("ActivityManager", "save radius in db: " +_aoResult[0].toString());
             for (int i = 0; i < _aoResult.length; i++) {
-                _oDbHandler.insertRadius((Swipe) _aoResult[i], _nUserId);
+                _oDbHandler.insertRadius((Radius) _aoResult[i], _nUserId);
             }
         }
     }

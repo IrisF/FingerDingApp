@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import ifi.lmu.com.handmeasurementstudy.system.Coords;
+import ifi.lmu.com.handmeasurementstudy.system.Radius;
 import ifi.lmu.com.handmeasurementstudy.system.Scroll;
 import ifi.lmu.com.handmeasurementstudy.system.Swipe;
 import ifi.lmu.com.handmeasurementstudy.system.User;
@@ -36,6 +37,9 @@ public class DBHandler extends SQLiteOpenHelper {
 	// Table radius:
 	private static final String TABLE_RADIUS = "radius";
 	private static final String RADIUS_COL_ID = "id";
+	private static final String RADIUS_COL_SIZE = "size";
+	private static final String RADIUS_COL_PRESSURE = "pressure";
+
 
 	// Table taps:
 	private static final String TABLE_TAPS = "taps";
@@ -347,7 +351,10 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ SCROLLING_COL_ROT_X + " FLOAT, "
 				+ SCROLLING_COL_ROT_Y + " FLOAT, "
 				+ SCROLLING_COL_ROT_Z + " FLOAT, "
-				+ SCROLLING_COL_TIME + " LONG)";
+				+ SCROLLING_COL_TIME + " LONG, "
+				+ RADIUS_COL_SIZE + " FLOAT, "
+				+ RADIUS_COL_PRESSURE + " FLOAT"
+				+ ")";
 		db.execSQL(createRadiusTable);
 	}
 
@@ -571,31 +578,34 @@ public class DBHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
-	public void insertRadius (Swipe swipe, int userId) {
+	public void insertRadius (Radius radius, int userId) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
 		values.put(COL_USER_ID, userId);
-		values.put(SWIPING_COL_X, swipe.x);
-		values.put(SWIPING_COL_Y, swipe.y);
-		values.put(SWIPING_COL_TIME, swipe.time);
-		values.put(SWIPING_COL_ACCX, swipe.accX);
-		values.put(SWIPING_COL_ACCY, swipe.accY);
-		values.put(SWIPING_COL_ACCZ, swipe.accZ);
-		values.put(SWIPING_COL_GRAX, swipe.graX);
-		values.put(SWIPING_COL_GRAY, swipe.graY);
-		values.put(SWIPING_COL_GRAZ, swipe.graZ);
-		values.put(SWIPING_COL_GYRX, swipe.gyrX);
-		values.put(SWIPING_COL_GYRY, swipe.gyrY);
-		values.put(SWIPING_COL_GYRZ, swipe.gyrZ);
-		values.put(SWIPING_COL_ORIENTATION_X, swipe.orientationX);
-		values.put(SWIPING_COL_ORIENTATION_Y, swipe.orientationY);
-		values.put(SWIPING_COL_ORIENTATION_Z, swipe.orientationZ);
-		values.put(SWIPING_COL_ROT_X, swipe.rotX);
-		values.put(SWIPING_COL_ROT_Y, swipe.rotY);
-		values.put(SWIPING_COL_ROT_Z, swipe.rotZ);
+		values.put(SWIPING_COL_X, radius.x);
+		values.put(SWIPING_COL_Y, radius.y);
 
-		int id = (int) db.insert(TABLE_RADIUS, null, values);
+		values.put(SWIPING_COL_TIME, radius.time);
+		values.put(SWIPING_COL_ACCX, radius.accX);
+		values.put(SWIPING_COL_ACCY, radius.accY);
+		values.put(SWIPING_COL_ACCZ, radius.accZ);
+		values.put(SWIPING_COL_GRAX, radius.graX);
+		values.put(SWIPING_COL_GRAY, radius.graY);
+		values.put(SWIPING_COL_GRAZ, radius.graZ);
+		values.put(SWIPING_COL_GYRX, radius.gyrX);
+		values.put(SWIPING_COL_GYRY, radius.gyrY);
+		values.put(SWIPING_COL_GYRZ, radius.gyrZ);
+		values.put(SWIPING_COL_ORIENTATION_X, radius.orientationX);
+		values.put(SWIPING_COL_ORIENTATION_Y, radius.orientationY);
+		values.put(SWIPING_COL_ORIENTATION_Z, radius.orientationZ);
+		values.put(SWIPING_COL_ROT_X, radius.rotX);
+		values.put(SWIPING_COL_ROT_Y, radius.rotY);
+		values.put(SWIPING_COL_ROT_Z, radius.rotZ);
+		values.put(RADIUS_COL_SIZE, radius.size);
+		values.put(RADIUS_COL_PRESSURE, radius.pressure);
+
+		//int id = (int) db.insert(TABLE_RADIUS, null, values);
 		//Log.d("DEBUG", "inserted swipe with id: " + id);
 
 		db.close();

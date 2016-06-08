@@ -13,12 +13,13 @@ import java.util.ArrayList;
 
 import ifi.lmu.com.handmeasurementstudy.system.ActivityManager;
 import ifi.lmu.com.handmeasurementstudy.system.Coords;
+import ifi.lmu.com.handmeasurementstudy.system.Radius;
 import ifi.lmu.com.handmeasurementstudy.system.SensorHelper;
 import ifi.lmu.com.handmeasurementstudy.system.Swipe;
 
 public class MaxRadius extends AppCompatActivity {
 
-    private ArrayList<Swipe> _aoRadiusCoords;
+    private ArrayList<Radius> _aoRadiusCoords;
     private boolean _bActivityHasStarted;
     private SensorHelper _oSensorHelper;
 
@@ -44,6 +45,7 @@ public class MaxRadius extends AppCompatActivity {
                 oText.setVisibility(View.GONE);
                 oButton.setVisibility(View.GONE);
                 _bActivityHasStarted = true;
+
             }
         });
     }
@@ -64,30 +66,31 @@ public class MaxRadius extends AppCompatActivity {
         float[] afOrient = _oSensorHelper.getOrientationData();
         float[] afRot = _oSensorHelper.getRotationData();
 
+
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
                 _oSensorHelper = new SensorHelper(this);
-                Swipe oCoordDown = new Swipe(event.getX(), event.getY(), System.currentTimeMillis(),
+                Radius oCoordDown = new Radius(event.getX(), event.getY(), System.currentTimeMillis(),
                         afAcc[0], afAcc[1], afAcc[2], afGravity[0], afGravity[1], afGravity[2],
                         afGyro[0], afGyro[1], afGyro[2], afOrient[0], afOrient[1], afOrient[2],
-                        afRot[0], afRot[1], afRot[2], 0);
+                        afRot[0], afRot[1], afRot[2], event.getSize(),event.getPressure());
                 _aoRadiusCoords.add(oCoordDown);
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                Swipe oCoordMove = new Swipe(event.getX(), event.getY(), System.currentTimeMillis(),
+                Radius oCoordMove = new Radius(event.getX(), event.getY(), System.currentTimeMillis(),
                         afAcc[0], afAcc[1], afAcc[2], afGravity[0], afGravity[1], afGravity[2],
                         afGyro[0], afGyro[1], afGyro[2], afOrient[0], afOrient[1], afOrient[2],
-                        afRot[0], afRot[1], afRot[2], 0);
+                        afRot[0], afRot[1], afRot[2], event.getSize(),event.getPressure());
                 _aoRadiusCoords.add(oCoordMove);
                 break;
 
             case MotionEvent.ACTION_UP:
-                Swipe oCoordUp = new Swipe(event.getX(), event.getY(), System.currentTimeMillis(),
-                         afAcc[0], afAcc[1], afAcc[2], afGravity[0], afGravity[1], afGravity[2],
+                Radius oCoordUp = new Radius(event.getX(), event.getY(), System.currentTimeMillis(),
+                        afAcc[0], afAcc[1], afAcc[2], afGravity[0], afGravity[1], afGravity[2],
                         afGyro[0], afGyro[1], afGyro[2], afOrient[0], afOrient[1], afOrient[2],
-                        afRot[0], afRot[1], afRot[2], 0);
+                        afRot[0], afRot[1], afRot[2], event.getSize(),event.getPressure());
                 _aoRadiusCoords.add(oCoordUp);
 
                 finish();
