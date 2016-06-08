@@ -26,7 +26,8 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
 
     private final Context context;
     private static final String DATABASE_NAME = "FingerDingDB";
-    private static final String[] TABLE_NAMES = {"taps", "scrolling", "swiping", "zooming", "users", "radius"};
+    private static final String[] TABLE_NAMES = {"taps", "scrolling", "swiping", "zooming", "users", "radius", "zoomingTablet"};
+
     private static SQLiteDatabase db;
 
 

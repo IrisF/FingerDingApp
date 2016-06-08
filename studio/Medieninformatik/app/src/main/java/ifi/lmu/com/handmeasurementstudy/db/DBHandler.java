@@ -104,6 +104,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String SWIPING_COL_SWIPE_ID = "swipeId";
 
     //Table Zooming
+	private static final String TABLE_ZOOMING_TABLET = "zoomingTablet";
     private static final String TABLE_ZOOMING = "zooming";
     private static final String ZOOMING_COL_ID = "id";
     private static final String ZOOMING_COL_CURRENT_SPAN = "currentSpan";
@@ -189,7 +190,6 @@ public class DBHandler extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
         Log.d("Mal schauen", "Ob was passiert");
 
-
 		String createUsersTableString = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + " ("
 				+ USER_COL_ID + " INTEGER PRIMARY KEY, "
 				+ USER_COL_AGE + " INTEGER, "
@@ -248,6 +248,36 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ ZOOMING_COL_ROT_Z + " FLOAT, "
 				+ ZOOMING_COL_RECT + " INTEGER)";
 		db.execSQL(createZoomingTableString);
+
+		String createZoomingTabletTableString = "CREATE TABLE IF NOT EXISTS " + TABLE_ZOOMING_TABLET + " ("
+				+ ZOOMING_COL_ID + " INTEGER PRIMARY KEY, "
+				+ COL_USER_ID + " INTEGER, "
+				+ ZOOMING_COL_CURRENT_SPAN + " FLOAT, "
+				+ ZOOMING_COL_CURRENT_X + " FLOAT, "
+				+ ZOOMING_COL_CURRENT_Y + " FLOAT, "
+				+ ZOOMING_COL_FOCUS_X + " FLOAT, "
+				+ ZOOMING_COL_FOCUS_Y + " FLOAT, "
+				+ ZOOMING_COL_SCALE_FACTOR + " FLOAT, "
+				+ ZOOMING_COL_TIME_DELTA + " FLOAT, "
+				+ ZOOMING_COL_EVENT_TIME + " FLOAT, "
+				+ ZOOMING_COL_ACC_X + " FLOAT, "
+				+ ZOOMING_COL_ACC_Y + " FLOAT, "
+				+ ZOOMING_COL_ACC_Z + " FLOAT, "
+				+ ZOOMING_COL_GRA_X + " FLOAT, "
+				+ ZOOMING_COL_GRA_Y + " FLOAT, "
+				+ ZOOMING_COL_GRA_Z + " FLOAT, "
+				+ ZOOMING_COL_GYR_X + " FLOAT, "
+				+ ZOOMING_COL_GYR_Y + " FLOAT, "
+				+ ZOOMING_COL_GYR_Z + " FLOAT, "
+				+ ZOOMING_COL_ORIENTATION_X + " FLOAT, "
+				+ ZOOMING_COL_ORIENTATION_Y + " FLOAT, "
+				+ ZOOMING_COL_ORIENTATION_Z + " FLOAT, "
+				+ ZOOMING_COL_ROT_X + " FLOAT, "
+				+ ZOOMING_COL_ROT_Y + " FLOAT, "
+				+ ZOOMING_COL_ROT_Z + " FLOAT, "
+				+ ZOOMING_COL_RECT + " INTEGER)";
+		db.execSQL(createZoomingTabletTableString);
+		Log.e("TABLE", createZoomingTabletTableString);
 
 		String createSwipingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SWIPING + " ("
 				+ SWIPING_COL_ID + " INTEGER PRIMARY KEY, "
@@ -437,6 +467,45 @@ public class DBHandler extends SQLiteOpenHelper {
 
 		db.close();
 	}
+
+	public void insertTabletZoom(Zoom zoom, int userId) {
+
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(COL_USER_ID, userId);
+		values.put(ZOOMING_COL_CURRENT_SPAN, zoom.currentSpan);
+		values.put(ZOOMING_COL_CURRENT_X, zoom.currentX);
+		values.put(ZOOMING_COL_CURRENT_Y, zoom.currentY);
+		values.put(ZOOMING_COL_FOCUS_X, zoom.focusX);
+		values.put(ZOOMING_COL_FOCUS_X, zoom.focusY);
+		values.put(ZOOMING_COL_SCALE_FACTOR, zoom.scaleFactor);
+		values.put(ZOOMING_COL_TIME_DELTA, zoom.timeDelta);
+		values.put(ZOOMING_COL_EVENT_TIME, zoom.eventTime);
+		values.put(ZOOMING_COL_ACC_X, zoom.accX);
+		values.put(ZOOMING_COL_ACC_Y, zoom.accY);
+		values.put(ZOOMING_COL_ACC_Z, zoom.accZ);
+		values.put(ZOOMING_COL_GRA_X, zoom.graX);
+		values.put(ZOOMING_COL_GRA_Y, zoom.graY);
+		values.put(ZOOMING_COL_GRA_Z, zoom.graZ);
+		values.put(ZOOMING_COL_GYR_X, zoom.gyrX);
+		values.put(ZOOMING_COL_GYR_Y, zoom.gyrY);
+		values.put(ZOOMING_COL_GYR_Z, zoom.gyrZ);
+		values.put(ZOOMING_COL_ORIENTATION_X, zoom.orientationX);
+		values.put(ZOOMING_COL_ORIENTATION_Y, zoom.orientationY);
+		values.put(ZOOMING_COL_ORIENTATION_Z, zoom.orientationZ);
+		values.put(ZOOMING_COL_ROT_X, zoom.rotationX);
+		values.put(ZOOMING_COL_ROT_Y, zoom.rotationY);
+		values.put(ZOOMING_COL_ROT_Z, zoom.rotationZ);
+		values.put(ZOOMING_COL_RECT, zoom.rectangleIndex);
+
+		int id = (int) db.insert(TABLE_ZOOMING_TABLET, null, values);
+		Log.d("DEBUG", "inserted tablet zoom with id: " + id);
+
+		db.close();
+	}
+
+
 
 	public void insertScroll(Scroll scroll, int userId) {
 
