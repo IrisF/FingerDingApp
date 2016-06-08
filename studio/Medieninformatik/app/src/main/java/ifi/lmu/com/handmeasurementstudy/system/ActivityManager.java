@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.widget.Toast;
 
 import ifi.lmu.com.handmeasurementstudy.MaxRadius;
 import ifi.lmu.com.handmeasurementstudy.R;
@@ -204,37 +205,53 @@ public class ActivityManager extends Activity { // extends Activity to call star
 
     public void StoreResultsInDatabase (boolean i_bIsRadius) {
 
+        int nDbId = 0;
         if( ! i_bIsRadius) {
             switch (_nCurrentActivityNum - 1) {
                 case n_ACTIVITY_TAPPING: //0
                     //Tap[] aoTap = (Tap[]) _aoResult;
                     // save to database
                     for (int i = 0; i < _aoResult.length; i++) {
-                        _oDbHandler.insertTap((Tap) _aoResult[i], _nUserId);
+                        nDbId = _oDbHandler.insertTap((Tap) _aoResult[i], _nUserId);
+                        if(nDbId == -1){
+                            showErrorToast("Tap");
+                        }
                     }
                     break;
                 case n_ACTIVITY_SWIPING: //1
                     //Swipe[] aoSwipe = (Swipe[]) _aoResult;
                     for (int i = 0; i < _aoResult.length; i++) {
-                        _oDbHandler.insertSwipe((Swipe) _aoResult[i], _nUserId);
+                        nDbId = _oDbHandler.insertSwipe((Swipe) _aoResult[i], _nUserId);
+                        if(nDbId == -1){
+                            showErrorToast("Swipe");
+                        }
                     }
                     break;
                 case n_ACTIVITY_ZOOMING: //2
                     //Zoom[] aoZoom = (Zoom[]) _aoResult;
                     for (int i = 0; i < _aoResult.length; i++) {
-                        _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
+                        nDbId = _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
+                        if(nDbId == -1){
+                            showErrorToast("Zoom");
+                        }
                     }
                     break;
                 case n_ACTIVITY_SCOLLING: //3
                     //Scroll[] aoScroll = (Scroll[]) _aoResult;
                     for (int i = 0; i < _aoResult.length; i++) {
-                        _oDbHandler.insertScroll((Scroll) _aoResult[i], _nUserId);
+                        nDbId = _oDbHandler.insertScroll((Scroll) _aoResult[i], _nUserId);
+                        if(nDbId == -1){
+                            showErrorToast("Scroll");
+                        }
                     }
                     break;
                 case n_ACTIVITY_ZOOMING_MAXIMUM: //4
                     //Zoom[] aoZoom1 = (Zoom[]) _aoResult;
                     for (int i = 0; i < _aoResult.length; i++) {
-                        _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
+                        nDbId = _oDbHandler.insertZoom((Zoom) _aoResult[i], _nUserId);
+                        if(nDbId == -1){
+                            showErrorToast("Zoom");
+                        }
                     }
                     break;
                 case n_ACTIVITY_TABLET: //5
@@ -248,9 +265,17 @@ public class ActivityManager extends Activity { // extends Activity to call star
         else {
             Log.d("ActivityManager", "save radius in db: " +_aoResult[0].toString());
             for (int i = 0; i < _aoResult.length; i++) {
-                _oDbHandler.insertRadius((Radius) _aoResult[i], _nUserId);
+                nDbId = _oDbHandler.insertRadius((Radius) _aoResult[i], _nUserId);
+                if(nDbId == -1){
+                    showErrorToast("Radius");
+                }
             }
         }
+    }
+
+    private void showErrorToast (String i_strErrorTable){
+
+        Toast.makeText(getApplicationContext(), "Error saving " + i_strErrorTable, Toast.LENGTH_SHORT).show();
     }
 
     @Override

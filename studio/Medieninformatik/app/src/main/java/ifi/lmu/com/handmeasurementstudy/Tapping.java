@@ -232,9 +232,11 @@ public class Tapping extends Activity {
             case MotionEvent.ACTION_MOVE:
                 Coords oMove = new Coords(event.getX(), event.getY());
                 aMoveCoords.add(oMove);
+
                 break;
 
             case MotionEvent.ACTION_UP:
+
                 float fTouchUpX = event.getX();
                 float fTouchUpY = event.getY();
                 float fPressureUp = event.getPressure();

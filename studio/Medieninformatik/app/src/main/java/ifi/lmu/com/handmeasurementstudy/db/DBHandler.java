@@ -399,7 +399,7 @@ public class DBHandler extends SQLiteOpenHelper {
 		else return -1;
 	}
 
-	public void insertTap(Tap tap, int userId) {
+	public int insertTap(Tap tap, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -436,9 +436,10 @@ public class DBHandler extends SQLiteOpenHelper {
 		//Log.d("DEBUG", "inserted tap with id: " + id);
 
 		db.close();
+		return id;
 	}
 
-	public void insertZoom(Zoom zoom, int userId) {
+	public int insertZoom(Zoom zoom, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -473,9 +474,10 @@ public class DBHandler extends SQLiteOpenHelper {
 		//Log.d("DEBUG", "inserted zoom with id: " + id);
 
 		db.close();
+		return id;
 	}
 
-	public void insertTabletZoom(Zoom zoom, int userId) {
+	public int insertTabletZoom(Zoom zoom, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -507,14 +509,15 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(ZOOMING_COL_RECT, zoom.rectangleIndex);
 
 		int id = (int) db.insert(TABLE_ZOOMING_TABLET, null, values);
-		Log.d("DEBUG", "inserted tablet zoom with id: " + id);
+		//Log.d("DEBUG", "inserted tablet zoom with id: " + id);
 
 		db.close();
+		return id;
 	}
 
 
 
-	public void insertScroll(Scroll scroll, int userId) {
+	public int insertScroll(Scroll scroll, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -544,9 +547,10 @@ public class DBHandler extends SQLiteOpenHelper {
 		//Log.d("DEBUG", "inserted scroll with id: " + id);
 
 		db.close();
+		return id;
 	}
 
-	public void insertSwipe(Swipe swipe, int userId) {
+	public int insertSwipe(Swipe swipe, int userId) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -576,9 +580,10 @@ public class DBHandler extends SQLiteOpenHelper {
 		//Log.d("DEBUG", "inserted swipe with id: " + id);
 
 		db.close();
+		return id;
 	}
 
-	public void insertRadius (Radius radius, int userId) {
+	public int insertRadius (Radius radius, int userId) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
@@ -605,10 +610,11 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(RADIUS_COL_SIZE, radius.size);
 		values.put(RADIUS_COL_PRESSURE, radius.pressure);
 
-		//int id = (int) db.insert(TABLE_RADIUS, null, values);
+		int id = (int) db.insert(TABLE_RADIUS, null, values);
 		//Log.d("DEBUG", "inserted swipe with id: " + id);
 
 		db.close();
+		return id;
 	}
 
 	/**
