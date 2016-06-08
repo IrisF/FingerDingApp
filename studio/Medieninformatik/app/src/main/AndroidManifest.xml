@@ -20,24 +20,44 @@
         </activity>
         <activity
             android:name=".Tapping"
-            android:label="@string/title_activity_tapping" />
+            android:label="@string/title_activity_tapping"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Swiping"
-            android:label="@string/title_activity_swiping" />
+            android:label="@string/title_activity_swiping"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Scrolling"
-            android:label="@string/title_activity_scrolling" />
+            android:label="@string/title_activity_scrolling"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Zooming"
-            android:label="@string/title_activity_zooming" />
+            android:label="@string/title_activity_zooming"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".system.ActivityManager"
-            android:label="ActivityManager" />
-        <activity android:name=".TabletActivity" />
-        <activity android:name=".ZoomingMaximum" />
-        <activity android:name=".MaxRadius"></activity>
-        <activity android:name=".ZoomingMaximumTablet"></activity>
-        <activity android:name=".MainTabletActivity"></activity>
+            android:label="ActivityManager"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TabletActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ZoomingMaximum"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MaxRadius"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ZoomingMaximumTablet"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainTabletActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
     </application>
 
