@@ -81,7 +81,7 @@ public class ActivityManager extends Activity { // extends Activity to call star
     private void init (int i_nUserId){
         _nUserId = i_nUserId;
         // get current latin row
-        _anLatinRow = latinSquare[ 3 % latinSquare.length ];
+        _anLatinRow = latinSquare[ _nUserId % latinSquare.length ];
 
         _aoOrder = new Class[6];
         _oDbHandler = DBHandler.getInstance(_oContext);
