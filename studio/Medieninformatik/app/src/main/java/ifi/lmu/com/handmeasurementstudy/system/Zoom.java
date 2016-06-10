@@ -9,10 +9,10 @@ public class Zoom {
     public float currentSpan;
     public float currentX;
     public float currentY;
-    public float focusX;
-    public float focusY;
-    public float scaleFactor;
-    public long timeDelta;
+    public float coordX;
+    public float coordY;
+    public float otherX;
+    public float otherY;
     public long eventTime;
     public float accX;
     public float accY;
@@ -31,14 +31,13 @@ public class Zoom {
     public float rotationZ;
     public int rectangleIndex;
 
-    public Zoom(float currentSpan, float currentX, float currentY, float focusX, float focusY, float scaleFactor, long timeDelta, long eventTime, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationZ, float orientationX, float orientationY, float rotationX, float rotationY, float rotationZ, int rectangleIndex) {
+    public Zoom() {
+    }
+
+    public Zoom(float currentSpan, float currentX, float currentY, long eventTime, float accX, float accY, float accZ, float graX, float graY, float graZ, float gyrX, float gyrY, float gyrZ, float orientationZ, float orientationX, float orientationY, float rotationX, float rotationY, float rotationZ, int rectangleIndex) {
         this.currentSpan = currentSpan;
         this.currentX = currentX;
         this.currentY = currentY;
-        this.focusX = focusX;
-        this.focusY = focusY;
-        this.scaleFactor = scaleFactor;
-        this.timeDelta = timeDelta;
         this.eventTime = eventTime;
         this.accX = accX;
         this.accY = accY;
@@ -58,16 +57,32 @@ public class Zoom {
         this.rectangleIndex = rectangleIndex;
     }
 
+    public void setCoordX(float coordX) {
+        this.coordX = coordX;
+    }
+
+    public void setCoordY(float coordY) {
+        this.coordY = coordY;
+    }
+
+    public void setOtherX(float otherX) {
+        this.otherX = otherX;
+    }
+
+    public void setOtherY(float otherY) {
+        this.otherY = otherY;
+    }
+
     @Override
     public String toString() {
         return "Zoom{" +
                 "currentSpan=" + currentSpan +
                 ", currentX=" + currentX +
                 ", currentY=" + currentY +
-                ", focusX=" + focusX +
-                ", focusY=" + focusY +
-                ", scaleFactor=" + scaleFactor +
-                ", timeDelta=" + timeDelta +
+                ", coordX=" + coordX +
+                ", coordY=" + coordY +
+                ", otherX=" + otherX +
+                ", otherY=" + otherY +
                 ", eventTime=" + eventTime +
                 ", accX=" + accX +
                 ", accY=" + accY +

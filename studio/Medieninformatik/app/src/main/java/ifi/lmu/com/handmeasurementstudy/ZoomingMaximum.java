@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Display;
@@ -32,6 +33,8 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
     private int userID;
     private boolean isZoomed;
     private boolean rectangleZoomingStarted;
+
+    private Zoom currentZoom;
 
     private ImageView imageView;
     private Button startButton;
@@ -71,27 +74,15 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
         });
 
         //custom gesture listener to grap zooming gesture
+        currentZoom = new Zoom();
         zoomData = new ArrayList<Zoom>();
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
             @Override
             public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
                 Log.e("scale", "on scale");
-                return false;
-            }
 
-            @Override
-            public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
-                if(!rectangleZoomingStarted) { //log start point here to know that scaling really begun
-                    rectangleZoomingStarted = true;
-//TODO save start point?!
-                    Log.i("Scale", "Start Points x " + startX + " y " + startY + " time " + startTimeSeconds);
-                }
-
-                Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(),
+                currentZoom = new Zoom(scaleGestureDetector.getCurrentSpan(),
                         scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(),
-                        scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(),
-                        scaleGestureDetector.getScaleFactor(),
-                        scaleGestureDetector.getTimeDelta(),
                         scaleGestureDetector.getEventTime(),
                         sensorHelper.getAcceleromterData()[0], sensorHelper.getAcceleromterData()[1],  sensorHelper.getAcceleromterData()[2],
                         sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1],sensorHelper.getGravitiyData()[2],
@@ -99,8 +90,6 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
                         sensorHelper.getOrientationData()[0],sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2],
                         sensorHelper.getRotationData()[0],sensorHelper.getRotationData()[1], sensorHelper.getRotationData()[2],
                         -1);
-                zoomData.add(zoom);
-                Log.i("Scale", zoom.toString());
 
                 if (!isZoomed) {
                     //this is maximum scaling task, so just scale image
@@ -109,7 +98,17 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
                     imageView.requestLayout();
                 }
 
-                return false;
+                return true;
+            }
+
+            @Override
+            public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+                if(!rectangleZoomingStarted) { //log start point here to know that scaling really begun
+                    rectangleZoomingStarted = true;
+                    Log.i("Scale", "Start Points x " + startX + " y " + startY + " time " + startTimeSeconds);
+                }
+
+                return true;
             }
 
             @Override
@@ -154,7 +153,6 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
     }
 
 
-    //TODO stop time and log start & end points
     @Override
     public boolean onTouchEvent (MotionEvent event) {
         switch (event.getAction()) {
@@ -168,7 +166,23 @@ public class ZoomingMaximum extends ActionBarActivity implements View.OnTouchLis
                 break;
             case MotionEvent.ACTION_MOVE:
                 //scale
-                scaleGestureDetector.onTouchEvent(event);
+                if(scaleGestureDetector.onTouchEvent(event)){
+                    //log coords for each finger
+                    if (MotionEventCompat.getPointerCount(event) >= 2) {
+                        //log coords for each finger
+                        currentZoom.setCoordX(event.getX(0));
+                        currentZoom.setCoordY(event.getY(0));
+
+                        currentZoom.setOtherX(event.getX(1));
+                        currentZoom.setOtherY(event.getY(1));
+                    }
+
+                    zoomData.add(currentZoom);
+                    Log.i("Scale", currentZoom.toString());
+
+                }
+
+
                 break;
             case MotionEvent.ACTION_UP:
                 //log end points

@@ -2,6 +2,7 @@ package ifi.lmu.com.handmeasurementstudy;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     private ScaleGestureDetector scaleGestureDetector;
     private ArrayList<Zoom> zoomData;
+
+    private Zoom currentZoom;
 
     private ZoomingRectangles zoomingRectangles;
     private RelativeLayout zoomingLayout;
@@ -81,6 +84,8 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
         zoomingLayout = (RelativeLayout) findViewById(R.id.zoomLayout);
         zoomingLayout.addView(zoomingRectangles);
 
+        currentZoom = new Zoom();
+
         imageView = (ImageView) findViewById(R.id.imageToZoom);
 
         startButton = (Button) findViewById(R.id.startZoomingTask);
@@ -120,30 +125,16 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
             @Override
             public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
                 Log.e("scale", "on scale");
-                return false;
-            }
 
-            @Override
-            public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
-                if(!rectangleZoomingStarted) { //log start point here to know that scaling really begun
-                    rectangleZoomingStarted = true;
-//TODO save start point?!
-                    Log.i("Scale", "Start Points x " + startX + " y " + startY + " time " + startTimeSeconds);
-                }
-                Zoom zoom = new Zoom(scaleGestureDetector.getCurrentSpan(),
+                currentZoom = new Zoom(scaleGestureDetector.getCurrentSpan(),
                         scaleGestureDetector.getCurrentSpanX(), scaleGestureDetector.getCurrentSpanY(),
-                        scaleGestureDetector.getFocusX(), scaleGestureDetector.getFocusY(),
-                        scaleGestureDetector.getScaleFactor(),
-                        scaleGestureDetector.getTimeDelta(),
                         scaleGestureDetector.getEventTime(),
                         sensorHelper.getAcceleromterData()[0], sensorHelper.getAcceleromterData()[1],  sensorHelper.getAcceleromterData()[2],
                         sensorHelper.getGravitiyData()[0], sensorHelper.getGravitiyData()[1],sensorHelper.getGravitiyData()[2],
                         sensorHelper.getGyroscopeData()[0],sensorHelper.getGyroscopeData()[1], sensorHelper.getGyroscopeData()[2],
                         sensorHelper.getOrientationData()[0],sensorHelper.getOrientationData()[1], sensorHelper.getOrientationData()[2],
                         sensorHelper.getRotationData()[0],sensorHelper.getRotationData()[1], sensorHelper.getRotationData()[2],
-                        rectangleIndex);
-                zoomData.add(zoom);
-                Log.i("Scale", zoom.toString());
+                        -1);
 
                 int imageViewWidth = imageView.getLayoutParams().width;
                 int imageViewHeight = imageView.getLayoutParams().height;
@@ -188,7 +179,18 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                     imageView.getLayoutParams().height += 15;
                     imageView.requestLayout();
                 }
-                return false;
+
+                return true;
+            }
+
+            @Override
+            public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+                if(!rectangleZoomingStarted) { //log start point here to know that scaling really begun
+                    rectangleZoomingStarted = true;
+                    Log.i("Scale", "Start Points x " + startX + " y " + startY + " time " + startTimeSeconds);
+                }
+
+                return true;
             }
 
             @Override
@@ -253,13 +255,24 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
                 //scale
                 if (!rectangleIsZoomed) {
                     scaleGestureDetector.onTouchEvent(event);
+
+                   if (MotionEventCompat.getPointerCount(event) >= 2) {
+                        //log coords for each finger
+                        currentZoom.setCoordX(event.getX(0));
+                        currentZoom.setCoordY(event.getY(0));
+
+                        currentZoom.setOtherX(event.getX(1));
+                        currentZoom.setOtherY(event.getY(1));
+                    }
+
+                    zoomData.add(currentZoom);
+                    Log.i("Scale", currentZoom.toString());
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 //log end points
                 if(rectangleIsZoomed) {
                     endTimeSeconds = System.currentTimeMillis();
-//TODO save end Points?!
                     Log.i("Scale", "End Points x " + event.getX() + " y " + event.getY() + " time " + endTimeSeconds);
                     rectangleIsZoomed = false;
                     rectangleZoomingStarted = false;
@@ -276,7 +289,6 @@ public class Zooming extends ActionBarActivity implements View.OnTouchListener {
 
     //initialize imageView with the help of device orientation and aspect ratio
     private void initImage() {
-        Log.e("image", "+++++++++++++++++++++ initialize +++++++++++++++++++");
         //this is the smartphone test application, so orientation is portrait and width < height
         imageView.getLayoutParams().height = heightBig/8;
         imageView.getLayoutParams().width = widthBig/8;

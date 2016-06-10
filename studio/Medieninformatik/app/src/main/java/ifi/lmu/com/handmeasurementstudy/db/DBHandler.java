@@ -114,10 +114,10 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String ZOOMING_COL_CURRENT_SPAN = "currentSpan";
     private static final String ZOOMING_COL_CURRENT_X = "currentX";
     private static final String ZOOMING_COL_CURRENT_Y = "currentY";
-    private static final String ZOOMING_COL_FOCUS_X = "focusX";
-    private static final String ZOOMING_COL_FOCUS_Y = "focusY";
-    private static final String ZOOMING_COL_SCALE_FACTOR = "scaleFactor";
-    private static final String ZOOMING_COL_TIME_DELTA = "timeDelta";
+    private static final String ZOOMING_COL_COORD_X = "coordX";
+    private static final String ZOOMING_COL_COORD_Y = "coordY";
+    private static final String ZOOMING_COL_OTHER_X = "otherX";
+    private static final String ZOOMING_COL_OTHER_Y = "otherY";
     private static final String ZOOMING_COL_EVENT_TIME = "eventTime";
 	private static final String ZOOMING_COL_ACC_X = "accX";
 	private static final String ZOOMING_COL_ACC_Y = "accY";
@@ -230,10 +230,10 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ ZOOMING_COL_CURRENT_SPAN + " FLOAT, "
 				+ ZOOMING_COL_CURRENT_X + " FLOAT, "
 				+ ZOOMING_COL_CURRENT_Y + " FLOAT, "
-				+ ZOOMING_COL_FOCUS_X + " FLOAT, "
-				+ ZOOMING_COL_FOCUS_Y + " FLOAT, "
-				+ ZOOMING_COL_SCALE_FACTOR + " FLOAT, "
-				+ ZOOMING_COL_TIME_DELTA + " LONG, "
+				+ ZOOMING_COL_COORD_X + " FLOAT, "
+				+ ZOOMING_COL_COORD_Y + " FLOAT, "
+				+ ZOOMING_COL_OTHER_X + " FLOAT, "
+				+ ZOOMING_COL_OTHER_Y + " FLOAT, "
 				+ ZOOMING_COL_EVENT_TIME + " LONG, "
 				+ ZOOMING_COL_ACC_X + " FLOAT, "
 				+ ZOOMING_COL_ACC_Y + " FLOAT, "
@@ -259,10 +259,10 @@ public class DBHandler extends SQLiteOpenHelper {
 				+ ZOOMING_COL_CURRENT_SPAN + " FLOAT, "
 				+ ZOOMING_COL_CURRENT_X + " FLOAT, "
 				+ ZOOMING_COL_CURRENT_Y + " FLOAT, "
-				+ ZOOMING_COL_FOCUS_X + " FLOAT, "
-				+ ZOOMING_COL_FOCUS_Y + " FLOAT, "
-				+ ZOOMING_COL_SCALE_FACTOR + " FLOAT, "
-				+ ZOOMING_COL_TIME_DELTA + " LONG, "
+				+ ZOOMING_COL_COORD_X + " FLOAT, "
+				+ ZOOMING_COL_COORD_Y + " FLOAT, "
+				+ ZOOMING_COL_OTHER_X + " FLOAT, "
+				+ ZOOMING_COL_OTHER_Y + " FLOAT, "
 				+ ZOOMING_COL_EVENT_TIME + " LONG, "
 				+ ZOOMING_COL_ACC_X + " FLOAT, "
 				+ ZOOMING_COL_ACC_Y + " FLOAT, "
@@ -448,10 +448,10 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(ZOOMING_COL_CURRENT_SPAN, zoom.currentSpan);
 		values.put(ZOOMING_COL_CURRENT_X, zoom.currentX);
 		values.put(ZOOMING_COL_CURRENT_Y, zoom.currentY);
-		values.put(ZOOMING_COL_FOCUS_X, zoom.focusX);
-		values.put(ZOOMING_COL_FOCUS_X, zoom.focusY);
-		values.put(ZOOMING_COL_SCALE_FACTOR, zoom.scaleFactor);
-		values.put(ZOOMING_COL_TIME_DELTA, zoom.timeDelta);
+		values.put(ZOOMING_COL_COORD_X, zoom.coordX);
+		values.put(ZOOMING_COL_COORD_Y, zoom.coordY);
+		values.put(ZOOMING_COL_OTHER_X, zoom.otherX);
+		values.put(ZOOMING_COL_OTHER_Y, zoom.otherY);
 		values.put(ZOOMING_COL_EVENT_TIME, zoom.eventTime);
 		values.put(ZOOMING_COL_ACC_X, zoom.accX);
 		values.put(ZOOMING_COL_ACC_Y, zoom.accY);
@@ -486,10 +486,10 @@ public class DBHandler extends SQLiteOpenHelper {
 		values.put(ZOOMING_COL_CURRENT_SPAN, zoom.currentSpan);
 		values.put(ZOOMING_COL_CURRENT_X, zoom.currentX);
 		values.put(ZOOMING_COL_CURRENT_Y, zoom.currentY);
-		values.put(ZOOMING_COL_FOCUS_X, zoom.focusX);
-		values.put(ZOOMING_COL_FOCUS_X, zoom.focusY);
-		values.put(ZOOMING_COL_SCALE_FACTOR, zoom.scaleFactor);
-		values.put(ZOOMING_COL_TIME_DELTA, zoom.timeDelta);
+		values.put(ZOOMING_COL_COORD_X, zoom.coordX);
+		values.put(ZOOMING_COL_COORD_Y, zoom.coordY);
+		values.put(ZOOMING_COL_OTHER_X, zoom.otherX);
+		values.put(ZOOMING_COL_OTHER_Y, zoom.otherY);
 		values.put(ZOOMING_COL_EVENT_TIME, zoom.eventTime);
 		values.put(ZOOMING_COL_ACC_X, zoom.accX);
 		values.put(ZOOMING_COL_ACC_Y, zoom.accY);
