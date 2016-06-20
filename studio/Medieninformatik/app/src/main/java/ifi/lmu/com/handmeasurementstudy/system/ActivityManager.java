@@ -26,7 +26,7 @@ import ifi.lmu.com.handmeasurementstudy.db.DBHandler;
 public class ActivityManager extends Activity { // extends Activity to call startActivity()
 
     private static final int[][] latinSquare = {
-            {6, 1, 3, 2, 4, 6},
+            {6, 1, 3, 2, 4, 5},
             {2, 4, 1, 6, 5, 3},
             {4, 3, 2, 5, 6, 1},
             {1, 5, 6, 3, 2, 4},

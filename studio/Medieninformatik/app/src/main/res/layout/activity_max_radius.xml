@@ -13,10 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ziehe mit deinem Daumen einen Halbkreis. Beginne auf 12 Uhr (Rand des Displays)"
+        android:text="Ziehe mit deinem Daumen einen Viertelkreis. Beginne am rechten Rand des Displays. Lege das Handy an den Daumenballen an."
         android:id="@+id/radius_text"
         android:layout_alignParentTop="true"
         android:layout_marginTop="28dp" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -24,6 +25,17 @@
         android:text="Los geht&apos;s"
         android:id="@+id/radius_button"
         android:layout_below="@+id/radius_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp" />
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/arrow"
+        android:src="@drawable/arrow"
+        android:layout_below="@+id/radius_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

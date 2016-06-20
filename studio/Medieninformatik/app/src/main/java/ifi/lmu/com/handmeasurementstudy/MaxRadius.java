@@ -1,12 +1,16 @@
 package ifi.lmu.com.handmeasurementstudy;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,11 +42,13 @@ public class MaxRadius extends AppCompatActivity {
     private void prepareActivityStart () {
         final Button oButton = (Button) findViewById(R.id.radius_button);
         final TextView oText = (TextView) findViewById(R.id.radius_text);
+        final ImageView oArrow = (ImageView) findViewById(R.id.arrow);
 
         oButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 oText.setVisibility(View.GONE);
+                oArrow.setVisibility(View.GONE);
                 oButton.setVisibility(View.GONE);
                 _bActivityHasStarted = true;
 
@@ -93,7 +99,27 @@ public class MaxRadius extends AppCompatActivity {
                         afRot[0], afRot[1], afRot[2], event.getSize(),event.getPressure());
                 _aoRadiusCoords.add(oCoordUp);
 
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                String[] strButtons = {"OKAY", "NOCHMAL"};
+                builder.setTitle("Speichern?")
+                        .setItems(strButtons, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+
+                                if(which == 0){
+                                    finish();
+                                }else{
+                                    _aoRadiusCoords.clear();
+                                    dialog.dismiss();
+                                }
+                            }
+
+                        });
+                builder.setCancelable(false);
+                builder.create();
+                builder.show();
+
                 break;
 
             default:
