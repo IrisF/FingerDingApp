@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/W32TeX)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: proceedings.aux
+The style file: SIGCHI-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: literature.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty publisher in bergstrom2014modeling
+Warning--empty address in bergstrom2014modeling
+Warning--empty publisher in boring2012fat
+Warning--empty address in boring2012fat
+Warning--empty publisher in buschek2015touchml
+Warning--empty address in buschek2015touchml
+Warning--empty publisher in karlson2006studies
+Warning--empty address in karlson2006studies
+Warning--page numbers missing in both pages and numpages fields in karlson2006studies
+Warning--empty publisher in parhi2006target
+Warning--empty address in parhi2006target
+You've used 5 entries,
+            5283 wiz_defined-function locations,
+            1246 strings with 15347 characters,
+and the built_in function-call counts, 4870 in all, are:
+= -- 482
+> -- 170
+< -- 0
++ -- 56
+- -- 60
+* -- 317
+:= -- 530
+add.period$ -- 25
+call.type$ -- 5
+change.case$ -- 36
+chr.to.int$ -- 5
+cite$ -- 16
+duplicate$ -- 484
+empty$ -- 332
+format.name$ -- 75
+if$ -- 1136
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 25
+newline$ -- 64
+num.names$ -- 30
+pop$ -- 232
+preamble$ -- 1
+purify$ -- 56
+quote$ -- 0
+skip$ -- 118
+stack$ -- 0
+substring$ -- 386
+swap$ -- 42
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 45
+warning$ -- 11
+while$ -- 33
+width$ -- 0
+write$ -- 97
+(There were 11 warnings)

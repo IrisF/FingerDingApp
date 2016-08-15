@@ -1,0 +1,77 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{00}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{{\tt DOI:}\penalty0{#1}\ }
+  \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       #1{#1}          \fi
+
+\bibitem{bergstrom2014modeling}
+{Joanna Bergstrom-Lehtovirta} {and} {Antti Oulasvirta}. 2014.
+\newblock \showarticletitle{Modeling the functional area of the thumb on mobile
+  touchscreen surfaces}. In {\em Proceedings of the SIGCHI Conference on Human
+  Factors in Computing Systems}. ACM, 1991--2000.
+\newblock
+
+
+\bibitem{boring2012fat}
+{Sebastian Boring}, {David Ledo}, {Xiang'Anthony' Chen}, {Nicolai Marquardt},
+  {Anthony Tang}, {and} {Saul Greenberg}. 2012.
+\newblock \showarticletitle{The fat thumb: using the thumb's contact size for
+  single-handed mobile interaction}. In {\em Proceedings of the 14th
+  international conference on Human-computer interaction with mobile devices
+  and services}. ACM, 39--48.
+\newblock
+
+
+\bibitem{buschek2015touchml}
+{Daniel Buschek} {and} {Florian Alt}. 2015.
+\newblock \showarticletitle{TouchML: A Machine Learning Toolkit for Modelling
+  Spatial Touch Targeting Behaviour}. In {\em Proceedings of the 20th
+  International Conference on Intelligent User Interfaces}. ACM, 110--114.
+\newblock
+
+
+\bibitem{karlson2006studies}
+{Amy~K Karlson}, {Benjamin~B Bederson}, {and} {Jose~L Contreras-Vidal}. 2006.
+\newblock \showarticletitle{Studies in one-handed mobile design: Habit, desire
+  and agility}. In {\em ERCIM Workshop on User Interfaces for All (UI4ALL)}.
+  Citeseer.
+\newblock
+
+
+\bibitem{parhi2006target}
+{Pekka Parhi}, {Amy~K Karlson}, {and} {Benjamin~B Bederson}. 2006.
+\newblock \showarticletitle{Target size study for one-handed thumb use on small
+  touchscreen devices}. In {\em Proceedings of the 8th conference on
+  Human-computer interaction with mobile devices and services}. ACM, 203--210.
+\newblock
+
+
+\end{thebibliography}
