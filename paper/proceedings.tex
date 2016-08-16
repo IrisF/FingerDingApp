@@ -180,31 +180,27 @@ The paper is organized as follows ...
 
 ------------------Iris ----------------------------------
 \section{Related Work}
-Infos aus \cite{boring2012fat}
+Parhi et al. performed a study about the error rates and preferred positions of different sized targets on a screen. They found out that as the target's size increases the error rate and time to reach decreases. Users also preferred the middle of the screen in contrast to the upper left and lower right corner \cite{parhi2006target}. Another study by Karlson et al. also demonstrates that the middle of the screen is the easiest to reach for a user while reaching the corners is more time consuming \cite{karlson2006studies}. Buschek and Alt also took the hand size into consideration and discovered that users with smaller hands show a larger y-offset in the upper left corner but are more accurate in the lower area of the screen when trying to hit a target \cite{buschek2015touchml}.  Bergstrom et al. defined a functional area which is the reachable region of a user's thumb without repositioning his hand. Smaller hands also show a lesser functional area \cite{bergstrom2014modeling}. As observed by Boring et al. users reposition their hand in order to reach certain areas of the screen \cite{boring2012fat}. 
 
 \section{Study}
-\begin{itemize}
-\item warum haben wir diese Tasks gewählt
-\item warum die Activities
-\item was haben wir wie warum gemacht
-\item wie haben wir damit unsere Studie durchgeführt
-\end{itemize}
+In order to find correlations between a users's hand size and his mobile touch interactions we implemented an android application to measure data for different interactions. 
 
 \subsection{Study Design}
+Since we wanted the measured data to be as natural as possible we chose to investigate four main gestures which users have to perform regularly when operating a smartphone: tapping, swiping, scrolling and zooming. The latter was tested in two tasks which concludes in five tasks in total. The user was allowed to adapt his hand position while performing these tasks. At the beginning of our exploratory study it was unclear whether this natural behaviour could deliver any useful results at all. This is why we chose to add a sixth unnatural task for which the hand position was predetermined. The radius of the user's thumb was meausured while he was holding the phone next to the heel of the hand. The specific tasks were designed as followed:
 \begin{itemize}
-\item jeder hat alle Tasks gemacht (ist das dann "between subjects" oder so ähnlich?)
-\item welche Interaktionen
-\item welche Daten wurden gemessen
-\end{itemize}
+	\item{Radius task:} The user was supposed to swipe a quarter circle from the right edge of the screen to the lower left
+	\item{Tapping task:} The user was instructed to hit small crosses on the screen as pecisely as possible. 144 crosses appeared in an randomized order
+	\item{Scrolling task:} The user had to scroll a list from top to bottom
+	\item{Swiping task:} The user was supposed to swipe a slider from left to right. Four slider positions were tested: top, middle, bottom and diagonal
+	\item{Maximum zooming task:} The user had to zoom a blue rectangle as far as possible with one zoom gesture
+	\item{Frame zooming task:} The user was instructed to zoom a blue rectangle to fit into a frame. Three frame sizes were tested: small, medium and large. The user was allowed to execute multiple zoom gestures
+\end{itemize}The phone we used for our study was the HTC one max with a screen size of 5.9 inches. The study design was within subjects so all participants performed all of the tasks. The first one always was the unnatural interaction followed by the rest in an randomized order. It was also neccessary to measure the participants' hands in order to compare the hand sizes to the measured data delivered by our application. We chose to measure the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger) in order to have more options for possible correlations. 
 
 \subsection{App}
-\begin{itemize}
-\item Aufbau
-\item einzelne Activities aufführen
-\item welche Daten wurden gemessen (DB-Schema)
-\end{itemize}
+The android application implemented for this study contained a screen for entering data about the user (hand measurements, age and gender). Before each task some instructions about the assignment were displayed. While performing the tasks, the application tracked different features which were stored into a database. These comprised of the x- and y- positions of the touch events and sensor data about acceleration, rotation and orientation. Task specific features were the number of scrolls, zooming span, timestamps etc. TODO: Screenshots von tasks
 
 \subsection{Participants}
+The 62 participants of this study were between 18 and 36 years old, 36 males and 26 females. Their hand lengths differed between 152 and 224 mm.
 
 ------------------Sarah ----------------------------------
 \subsection{Procedure}
