@@ -199,18 +199,26 @@ Since we wanted the measured data to be as natural as possible we chose to inves
 	\item{Frame zooming task:} The user was instructed to zoom a blue rectangle to fit into a frame. Three frame sizes were tested: small, medium and large. The user was allowed to execute multiple zoom gestures
 \end{itemize}The phone we used for our study was the HTC one max with a screen size of 5.9 inches. The study design was within subjects so all participants performed all of the tasks. The first one always was the unnatural interaction followed by the rest in an randomized order. It was also neccessary to measure the participants' hands in order to compare the hand sizes to the measured data delivered by our application. We chose to measure the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger) in order to have more options for possible correlations. 
 
+\begin{figure*}
+	\subfigure[Total Span]{\includegraphics[width=0.24\textwidth]{figures/hand01}} 
+    \subfigure[Hand Length]{\includegraphics[width=0.24\textwidth, angle=90]{figures/hand02}} 
+    \subfigure[Hand Width]{\includegraphics[width=0.24\textwidth, angle=90]{figures/hand03}} 
+    \subfigure[Zomming Span]{\includegraphics[width=0.24\textwidth]{figures/hand04}} 
+\caption{Hand Measurements}
+\end{figure*} 
+
 \subsection{App}
 The android application implemented for this study contained a screen for entering data about the user (hand measurements, age and gender). Before each task some instructions about the assignment were displayed. While performing the tasks, the application tracked different features which were stored into a database. These comprised of the x- and y- positions of the touch events and sensor data about acceleration, rotation and orientation. Task specific features were the number of scrolls, zooming span, timestamps etc.
 
 
 \begin{figure*}
-    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot01.png}} 
-    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot02.png}}
-    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot03.png}} 
-    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot04.png}} 
-    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot05.png}} 
-    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot06.png}} 
-\caption{Titel unterm gesamten Bild} 
+    \subfigure[Radius Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot01.png}} 
+    \subfigure[Tapping Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot02.png}}
+    \subfigure[Scrolling Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot03.png}} 
+    \subfigure[Swiping Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot04.png}} 
+    \subfigure[Maximum Zooming Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot05.png}} 
+    \subfigure[Frame Zooming Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot06.png}} 
+\caption{Interaction tasks} 
 \end{figure*} 
 
 
@@ -231,7 +239,10 @@ At first, the participants hand dimensions were measured manually as described b
 \section{Results}
 => das korreliert mit xy
 To understand the results of our study we first have to look at the measured hand data. The correlation of the different hand measurements is not as high as a naive assumption would suggest. The weaker correlations are with the total-span and with the zoom-span which is most likely caused by the measurement technique. For the zoom-span the subjects had to press their hand on the table and the span was measured. Some pressed stronger than others and others were physically able to spread their fingers wider. The tighter (?) measurements were therefore the with and the height of the hand, which also correlate more with 0.8x. Therefore we decided to compare the results with all four measurements separately (see table x.x).
-
+\begin{itemize}
+\item results overview
+\item detailed analysis of high correlations with plots (according to presentation)
+\end{itemize}
 
 \section{Discussion}
 
