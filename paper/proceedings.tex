@@ -59,6 +59,10 @@
 \usepackage{booktabs}
 \usepackage{textcomp}
 
+%graphic packages
+\usepackage{subfigure}
+\usepackage{float}
+
 % Some optional stuff you might like/need.
 \usepackage{microtype}        % Improved Tracking and Kerning
 % \usepackage[all]{hypcap}    % Fixes bug in hyperref caption linking
@@ -196,7 +200,19 @@ Since we wanted the measured data to be as natural as possible we chose to inves
 \end{itemize}The phone we used for our study was the HTC one max with a screen size of 5.9 inches. The study design was within subjects so all participants performed all of the tasks. The first one always was the unnatural interaction followed by the rest in an randomized order. It was also neccessary to measure the participants' hands in order to compare the hand sizes to the measured data delivered by our application. We chose to measure the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger) in order to have more options for possible correlations. 
 
 \subsection{App}
-The android application implemented for this study contained a screen for entering data about the user (hand measurements, age and gender). Before each task some instructions about the assignment were displayed. While performing the tasks, the application tracked different features which were stored into a database. These comprised of the x- and y- positions of the touch events and sensor data about acceleration, rotation and orientation. Task specific features were the number of scrolls, zooming span, timestamps etc. TODO: Screenshots von tasks
+The android application implemented for this study contained a screen for entering data about the user (hand measurements, age and gender). Before each task some instructions about the assignment were displayed. While performing the tasks, the application tracked different features which were stored into a database. These comprised of the x- and y- positions of the touch events and sensor data about acceleration, rotation and orientation. Task specific features were the number of scrolls, zooming span, timestamps etc.
+
+
+\begin{figure*}[H]
+    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot01.png}} 
+    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot02.png}}
+    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot03.png}} 
+    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot04.png}} 
+    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot05.png}} 
+    \subfigure[Bezeichnung der linken Grafik]{\includegraphics[width=0.16\textwidth]{figures/screenshot06.png}} 
+\caption{Titel unterm gesamten Bild} 
+\end{figure*} 
+
 
 \subsection{Participants}
 The 62 participants of this study were between 18 and 36 years old, 36 males and 26 females. Their hand lengths differed between 152 and 224 mm.
