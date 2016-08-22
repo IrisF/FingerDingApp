@@ -246,8 +246,9 @@ At first, the participants hand dimensions were measured manually as described b
 
 \section{Results}
 => das korreliert mit xy
-To understand the results of our study we first have to look at the measured hand data. The correlation of the different hand measurements is not as high as a naive assumption would suggest. The weaker correlations are with the total-span and with the zoom-span which is most likely caused by the measurement technique. For the zoom-span the subjects had to press their hand on the table and the span was measured. Some pressed stronger than others and others were physically able to spread their fingers wider. The tighter (?) measurements were therefore the with and the length of the hand, which correlate more as a result (0.841, see Table \ref{handSizeCorrelations}). Therefore we decided to compare the results with all of the four measurements separately. All results can be found in Table \ref{allCorrelations}. The highest correlation was measured in the artificial Radius task. Participants with a bigger hand, a bigger Zoom Span in particular, were able to reach further to the left side of the screen, which is equivalent to a small X value, as we see in figure \ref{plotRadius}.
-Another interesting result is the number of scrolls the participants needed to scroll to the end of the list in the scrolling task. Subjects with a wider hand needed less scrolls here. While observing the task operated by the participants we could notice that most subjects pushed the list and the waited a short moment until the list slowed down spinning. But some subjects just dragged the list and did not push the list at all, which is how the top outliers in figure \ref{plotScrolling} can be explained.
+To understand the results of our study we first have to look at the measured hand data. The correlation of the different hand measurements is not as high as a naive assumption would suggest. The weaker correlations are with the total-span and with the zoom-span which is most likely caused by the measurement technique. For the zoom-span the subjects had to press their hand on the table and the span was measured. Some pressed stronger than others and others were physically able to spread their fingers wider. The tighter (?) measurements were therefore the with and the length of the hand, which correlate more as a result (0.841, see Table \ref{handSizeCorrelations}). Therefore we decided to compare the results with all of the four measurements separately. All results can be found in Table \ref{allCorrelations}. A calculation of significance could not be done because this study is only exploratory. The highest correlation was measured in the artificial Radius task. Participants with a bigger hand, a bigger Zoom Span in particular, were able to reach further to the left side of the screen, which is equivalent to a small X value, as we see in figure \ref{plotRadius}.
+Another interesting result is the number of scrolls the participants needed to scroll to the end of the list in the scrolling task. Subjects with a wider hand needed less scrolls here. While observing the task operated by the participants we could notice that most subjects pushed the list and then waited a short moment until the list slowed down spinning. But some subjects just dragged the list and did not push the list at all, which is how the top outliers in figure \ref{plotScrolling} can be explained.
+Another interesting plot is from the zooming task, where the subjects had to perform the widest zoom gesture they could. Although it was expected to get the highest correlation with the zooming span of the participants hands, it actually is the lowest and the best is with the width of the hand. It's important to know that most participants were able to perform a bigger zooming gesture than the devices screen. Looking at the plot (figure \ref{plotZooming}) we see that not all the recorded data is plausible because the span of the lowest point is around 5cm. Removing these points increases the correlation up to ???.
 %% letzten plot noch erwähnen
 % erwähnen, warum die correlation besser sind mit der width und die span nicht wie erwarten so geil ist (s.o. --> messungenauigkeit) 
 \begin{itemize}
@@ -265,13 +266,20 @@ Another interesting result is the number of scrolls the participants needed to s
 
 \begin{figure}[ht]
 	\centering
-  \includegraphics[width=0.5\textwidth]{figures/plotRadius.png} %% TODO: insert scrolling # plot here
+  \includegraphics[width=0.5\textwidth]{figures/plotScrolling.png}
 	\caption{Scrolling task: Number of scrolls}
 	\label{plotScrolling}
 \end{figure}
 
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=0.5\textwidth]{figures/plotZooming.png}
+	\caption{Zooming task: Span of maximal zooming gesture}
+	\label{plotZooming}
+\end{figure}
 
-\begin{table}[]
+
+\begin{table}[ht]
 \centering
 \caption{Hand size correlations}
 \label{handSizeCorrelations}
