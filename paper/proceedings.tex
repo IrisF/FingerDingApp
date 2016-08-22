@@ -181,8 +181,10 @@
 % part and parcel of everyday life
 Interaction with your personal mobile device is an individual daily routine. Devices are increasingly smart and have plenty of functions. As today's mobile devices vary highly in their dimensions, interaction has different levels of difficulties. One or two hands might be necessary for different tasks.\\
 People have different hand sizes and tend to have different device sizes, although that might not be closely interlinked. Mobile touch interactions differ widely with hand and device size.\\
-Besides mobility, personalization is an important aspect. Our smartphone can only be smart based on our personal information, like for example our residence, contacts and browsing habits. Our hand size could be another personalization aspect and make our devices even smarter. If my device knows about my hand size, it could for instance adapt the layout to help us reaching the important interaction elements.\\
-The paper is organized as follows. We start with an overview of related work. What has been investigated a lot so far is the touch behavior of different users. An example is touch precision in relation in to the user's hand size. In our study, we were aiming at finding the backward conclusion from the user's touch input to his hand size. We present our study design and procedure before showing our results. We conclude with a discussion and an outlook to future work.
+Besides mobility, personalization is an important aspect. Our smartphone can only be smart based on our personal information, like for example our residence, contacts and browsing habits.\\ %TO DO quelle?!
+Research shows another important personalization factor: hand size. What has been investigated a lot so far is the touch behavior of different users (e.g. \cite{parhi2006target}, \cite{buschek2015touchml}). An example is touch precision in relation to the user's hand size \cite{parhi2006target}. These and others show that hand size actually has an influence on mobile touch interactions. Our hand size could be another personalization aspect and make our devices even smarter. If my device knows about my hand size, it could for instance adapt the layout to help us reaching the important interaction elements.\\
+This highly motivates our research. In our study, we were aiming at finding the backward conclusion from the user's touch input to his hand size as this could be used for further personalization on mobile devices.
+%The paper is organized as follows. We start with an overview of related work. We present our study design and procedure before showing our results. We conclude with a discussion and an outlook to future work.
 
 ------------------Iris ----------------------------------
 \section{Related Work}
@@ -233,9 +235,9 @@ The 62 participants of this study were 36 males and 26 females between 18 and 36
 
 ------------------Sarah ----------------------------------
 \subsection{Procedure}
-% Studienaufbau
+% Studienaufbau, WIE
 The participants have been invited to a 15 minute time slot to take part in our hand measurement study. They could receive credits or an amazon voucher for their participation. In order to allow the usage of their hand and touch data, they had to sign a letter of agreement.\\
-At first, the participants hand dimensions were measured manually as described before. Their data was then entered directly into our app. The participants started with the radius task in a predetermined hand position. After that, the tasks came up in a random order according to a latin square. The participants were free in solving the tasks, except they were only allowed to use one hand. For the zooming tasks, participants were instructed to use the other hand as well or to leave the device on the table.
+At first, the participants hand dimensions were measured manually as described before. Their data was then entered directly into our app. The participants started with the radius task in a predetermined hand position. After that, the tasks came up in a randomized order according to a latin square. The participants were free in solving the tasks, except they were only allowed to use one hand. For the zooming tasks, participants were instructed to use the other hand as well or to leave the device on the table.
 
 ------------------Jonas ----------------------------------\\
 %\section{Evaluation}
@@ -324,8 +326,11 @@ This table should fit in only one column
 \end{table}
 
 \subsection{Machine Learning}
-After identifying results with high correlation to the user's hand sizes, we applied machine learning techniques in order to predict small and big hands from the measured data.
-
+After identifying the values with high correlation to any of the user's hand dimensions, we applied machine learning techniques in order to predict small and big hands from the measured data.\\
+At first, the user's data was sorted by hand length and filtered in such a way that around 20\% of the biggest and the smallest hand sizes are in our data for machine learning, which makes 12 users of each class and a total of 24 data sets.\\
+The feature set was built upon the values with the highest correlation, which are the following as shown before:\\ scrolling number, radius minimum X, taps 1/4 screen derivation, taps 1/4 screen orientation, zooming maximum span. These features where labeled with 'B' and 'S' for the 12 biggest and the 12 smallest user hands.\\
+With this data set, a 10-fold cross validation was performed. As classifier, a Random Forest with default parameters was applied.\footnote{\url{http://scikit-learn.org/stable/modules/ensemble.html\#random-forests}} We could achieve a score of 0.75 with this data set.\\
+Using single features of this data set for a cross validation, the features taps 1/4 screen orientation (0.675) and radius minimum X (0.65) reach the highest score and seem to influence the overall result most. This shows a high potential for predicting the user's hand size from touch interaction. Once again, there is a big advantage in the result with predetermined hand position. To predict the users hand size properly, tasks with fixed hand position may be used for measurement.
 
 \section{Discussion}
 
