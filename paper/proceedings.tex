@@ -176,7 +176,6 @@
 
 \keywords{\plainkeywords}
 
-------------------Sarah ----------------------------------
 \section{Introduction}
 % part and parcel of everyday life
 Interaction with your personal mobile device is an individual daily routine. Devices are increasingly smart and have plenty of functions. As today's mobile devices vary highly in their dimensions, interaction has different levels of difficulties. One or two hands might be necessary for different tasks.\\
@@ -186,7 +185,6 @@ Research shows another important personalization factor: hand size. What has bee
 This highly motivates our research. In our study, we were aiming at finding the backward conclusion from the user's touch input to his hand size as this could be used for further personalization on mobile devices.
 %The paper is organized as follows. We start with an overview of related work. We present our study design and procedure before showing our results. We conclude with a discussion and an outlook to future work.
 
-------------------Iris ----------------------------------
 \section{Related Work}
 Parhi et al. performed a study about the error rates and preferred positions of different sized targets on a screen. They found out that as the target's size increases the error rate and time to reach decreases. Users also preferred the middle of the screen in contrast to the upper left and lower right corner \cite{parhi2006target}. Another study by Karlson et al. also demonstrates that the middle of the screen is the easiest to reach for a user while reaching the corners is more time consuming \cite{karlson2006studies}. Since the target's position seems to be relevant for a user's performance, we also tested different target positions in our study. Buschek and Alt also took the hand size into consideration and discovered that users with smaller hands show a larger y-offset in the upper left corner but are more accurate in the lower area of the screen when trying to hit a target \cite{buschek2015touchml}. In this study only one hand dimension was measured. We chose to measure four different dimension in order to find the highest correlations. A different study by Balakrishnan et al. investigated users' satisfaction for different keyboards. They tried to find correlations between the satisfaction and the user's thumb length or circumference. The results show that the circumreference correlates with the satisfaction of the key size and space between the keys \cite{balakrishnan2008study}. In contrast to Balakrishnan et al. we investigated the hand size in total but not the thumb size itself. Bergstrom et al. defined a functional area which is the reachable region of a user's thumb without repositioning his hand. Smaller hands also show a lesser functional area \cite{bergstrom2014modeling}. As observed by Boring et al. users reposition their hand in order to reach certain areas of the screen \cite{boring2012fat}. These findings are interesting factors which we also took into consideration for our study by measuring the radius of the participant's thumb and including tasks with predefined and undefined hand positions.
 
@@ -233,7 +231,6 @@ The android application implemented for this study contained a screen for enteri
 \subsection{Participants}
 The 62 participants of this study were 36 males and 26 females between 18 and 36 years old. The average age was 24. Their hand lengths differred between 152 and 224 mm.
 
-------------------Sarah ----------------------------------
 \subsection{Procedure}
 % Studienaufbau, WIE
 The participants have been invited to a 15 minute time slot to take part in our hand measurement study. They could receive credits or an amazon voucher for their participation. In order to allow the usage of their hand and touch data, they had to sign a letter of agreement.\\
@@ -341,8 +338,11 @@ With this data set, a 10-fold cross validation was performed. As classifier, a R
 Using single features of this data set for a cross validation, the features taps 1/4 screen orientation (0.675) and radius minimum X (0.65) reach the highest score and seem to influence the overall result most. This shows a high potential for predicting the user's hand size from touch interaction. Once again, there is a big advantage in the result with predetermined hand position. To predict the users hand size properly, tasks with fixed hand position may be used for measurement.
 
 \section{Discussion}
+Investigating hand size in conjunction with mobile touch interactions is difficult. People have their own habits interacting with their devices, regardless of their hand size. Especially with a foreign, oversized device like the one we used in our study, people behave in different ways. People with big hands had in fact no troubles to reach every task stimuli on the screen. In contrast, people with smaller hands tended to compensate their deficits in moving their hand across the device to reach far corners. Observing this difference in reality seems quite easy, while distinguishing it in our data was hardly possible.\\
+Finding out the user's hand size automatically might only be possible by an unnatural, artificial task. As the most promising result we got was from the radius task, this might be the right ways to investigate hand size. Our correlations as well as the classification via random forest showed that a predetermined hand position delivers a consistently higher score.\\
+For the user, it might not be that usable to perform some artificial task for predicting his hand size. It would have been even more comfortable to obtain the hand size inconspicuously from common, frequent interactions like we tried to evaluate with all our other tasks. It turned out that a fixed hand position seems to be necessary for a clear result. After all, it could still be beneficial for the user to let his device know about his hand size, by any kind of interaction task or measurement. It could then be an important personalization factor and enhance mobile touch interaction.
 
-------------------Sarah ----------------------------------
+
 \section{Conclusion and Future Work}
 We came up with different challenges when investigating hand size and mobile touch interactions. In our study, it was hardly possible to determine the user's hand size from his mobile touch interactions during our tasks.\\
 We could show a higher correlation between touch interaction and hand size when we determined the hand position. As this might be uncomfortable for users, the other tasks in our study were designed in such a way that hand position is free and left over to the user. It turned out that machine learning techniques can help to predict the user's hand size but once more a fixed hand position delivers a higher score.\\
