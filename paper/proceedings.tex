@@ -64,6 +64,7 @@
 
 %graphic packages
 \usepackage{subfigure}
+
 %\usepackage{float}
 % Some optional stuff you might like/need.
 \usepackage{microtype}        % Improved Tracking and Kerning
@@ -89,8 +90,7 @@
 \def\plainauthor{First Author, Second Author, Third Author,
   Fourth Author, Fifth Author, Sixth Author}
 \def\emptyauthor{}
-\def\plainkeywords{Authors' choice; of terms; separated; by
-  semicolons; include commas, within terms only; required.}
+\def\plainkeywords{HCI; Hand-Size; Mobile Touch Interactions; Smartphones; Touch Interactions; Evaluation}
 \def\plaingeneralterms{Documentation, Standardization}
 
 % llt: Define a global style for URLs, rather that the default one
@@ -171,19 +171,16 @@
 \end{abstract}
 
 \category{H.5.m.}{Information Interfaces and Presentation
-  (e.g. HCI)}{Miscellaneous} \category{See
-  \url{http://acm.org/about/class/1998/} for the full list of ACM
-  classifiers. This section is required.}{}{}
+  (e.g. HCI)}{Miscellaneous} \category{See \url{http://acm.org/about/class/1998/} for the full list of ACM classifiers. This section is required.}{}{}
 
 \keywords{\plainkeywords}
 
 \section{Introduction}
 % part and parcel of everyday life
 Interaction with your personal mobile device is an individual daily routine. Devices are increasingly smart and have plenty of functions. As today's mobile devices vary highly in their dimensions, interaction has different levels of difficulties. One or two hands might be necessary for different tasks.\\
-People have different hand sizes and tend to have different device sizes, although that might not be closely interlinked. Mobile touch interactions differ widely with hand and device size.\\
-Besides mobility, personalization is an important aspect. Our smartphone can only be smart based on our personal information, like for example our residence, contacts and browsing habits.\\ %TO DO quelle?!
-Research shows another important personalization factor: hand size. What has been investigated a lot so far is the touch behavior of different users (e.g. \citep{parhi2006target}, \citep{buschek2015touchml}). An example is touch precision in relation to the user's hand size \citep{parhi2006target}. These and others show that hand size actually has an influence on mobile touch interactions. Our hand size could be another personalization aspect and make our devices even smarter. If my device knows about my hand size, it could for instance adapt the layout to help us reaching the important interaction elements.\\
-This highly motivates our research. In our study, we were aiming at finding the backward conclusion from the user's touch input to his hand size as this could be used for further personalization on mobile devices.
+People have different hand sizes and tend to have different device sizes, although that might not be closely interlinked. Mobile touch interactions differ widely with hand and device size. Besides mobility, personalization is an important aspect. Our smartphone can only be smart based on our personal information, like for example our residence, contacts and browsing habits.\\ %TO DO quelle?!
+Research shows another important personalization factor: hand size. What has been investigated a lot so far is the touch behavior of different users (e.g. \cite{parhi2006target}, \cite{buschek2015touchml}). An example is touch precision in relation to the user's hand size \cite{parhi2006target}. These and others show that hand size actually has an influence on mobile touch interactions. Our hand size could be another personalization aspect and make our devices even smarter. If my device knows about my hand size, it could for instance adapt the layout to help us reaching the important interaction elements.\\
+This is our motivation to further investigate hand size. In our study, we were aiming at finding the backward conclusion from the user's touch input to his hand size as this could be used for further personalization on mobile devices.
 %The paper is organized as follows. We start with an overview of related work. We present our study design and procedure before showing our results. We conclude with a discussion and an outlook to future work.
 
 \section{Related Work}
@@ -203,20 +200,6 @@ The study design was within subjects so all participants performed the following
 	\item{Maximum zooming task:} The user had to zoom a blue rectangle as far as possible with one zoom gesture
 	\item{Frame zooming task:} The user was instructed to zoom a blue rectangle to fit into a frame. Three frame sizes were tested: small, medium and large. The user was allowed to execute multiple zoom gestures
 \end{itemize}
-%The phone we used for our study was the HTC one max with a screen size of 5.9 inches. The study design was within subjects so all participants performed all of the tasks. The first one always was the unnatural interaction followed by the rest in an randomized order. It was also neccessary to measure the participants' hands in order to compare the hand sizes to the measured data delivered by our application. We chose to measure the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger) in order to have more options for possible correlations. 
-We measured the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger).
-
-\begin{figure*}[ht]
-	\subfigure[Total Span]{\includegraphics[width=0.24\textwidth]{figures/hand01cut}} 
-    \subfigure[Hand Length]{\includegraphics[width=0.24\textwidth]{figures/hand02cut}} 
-    \subfigure[Hand Width]{\includegraphics[width=0.24\textwidth]{figures/hand03cut}} 
-    \subfigure[Zomming Span]{\includegraphics[width=0.24\textwidth]{figures/hand04cut}} 
-\caption{Hand Measurements}
-\end{figure*} 
-
-\subsection{App}
-The android application implemented for this study contained a screen for entering data about the user (hand measurements, age and gender). Before each task some instructions about the assignment were displayed. While performing the tasks, the application tracked different features which were stored into a database. These comprised of the x- and y- positions of the touch events and sensor data about acceleration, rotation and orientation. Task specific features were the number of scrolls, zooming span, timestamps etc. The phone we used for our study was the HTC one max with a screen size of 5.9 inches.
-
 
 \begin{figure*}[ht]
     \subfigure[Radius Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot01.png}} 
@@ -228,13 +211,27 @@ The android application implemented for this study contained a screen for enteri
 \caption{Interaction tasks} 
 \end{figure*} 
 
+%The phone we used for our study was the HTC one max with a screen size of 5.9 inches. The study design was within subjects so all participants performed all of the tasks. The first one always was the unnatural interaction followed by the rest in an randomized order. It was also neccessary to measure the participants' hands in order to compare the hand sizes to the measured data delivered by our application. We chose to measure the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger) in order to have more options for possible correlations. 
+We measured the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger).
+
+\begin{figure*}[h!]
+	\subfigure[Total Span]{\includegraphics[width=0.24\textwidth]{figures/hand01cut}} 
+    \subfigure[Hand Length]{\includegraphics[width=0.24\textwidth]{figures/hand02cut}} 
+    \subfigure[Hand Width]{\includegraphics[width=0.24\textwidth]{figures/hand03cut}} 
+    \subfigure[Zomming Span]{\includegraphics[width=0.24\textwidth]{figures/hand04cut}} 
+\caption{Hand Measurements}
+\end{figure*} 
+
+\subsection{App}
+The android application implemented for this study contained a screen for entering data about the user (hand measurements, age and gender). Before each task some instructions about the assignment were displayed. While performing the tasks, the application tracked different features which were stored into a database. These comprised of the x- and y- positions of the touch events and sensor data about acceleration, rotation and orientation. Task specific features were the number of scrolls, zooming span, timestamps etc. The phone we used for our study was the HTC one max with a screen size of 5.9 inches.
 
 \subsection{Participants}
 The 62 participants of this study were 36 males and 26 females between 18 and 36 years old. The average age was 24. Their hand lengths differed between 152 and 224 mm.
 
 \subsection{Procedure}
 % Studienaufbau, WIE
-The participants have been invited to a 15 minute time slot to take part in our hand measurement study. They could receive credits or an amazon voucher for their participation. In order to allow the usage of their hand and touch data, they had to sign a letter of agreement.\\
+The participants have been invited to a 15 minute time slot to take part in our hand measurement study. %They could receive credits or an amazon voucher for their participation. 
+In order to allow the usage of their hand and touch data, they had to sign a letter of agreement.\\
 At first, the participants hand dimensions were measured manually as described before. Their data was then entered directly into our app. The participants started with the radius task in a predetermined hand position. After that, the tasks came up in a randomized order according to a latin square. The participants were free in solving the tasks, except they were only allowed to use one hand. For the zooming tasks, participants were instructed to use the other hand as well or to leave the device on the table.
 
 \section{Results}
@@ -337,7 +334,7 @@ Investigating hand size in conjunction with mobile touch interactions is difficu
 % von jonas: hier gut eingefügt oder unterbricht der teil zu stark?
 Looking at the results some correlations are quite unexpected. The maximum zooming span (Zooming Task) p.e. had a much higher correlation with the width of the participants than the zooming span. We would have suggested that the correlation is highest with a measurement involving the thumb. This is probably because of the measurement technique we used. For the Zoom Span the Subjects had to spread and press their thumb and index finger on a table. Some participants pressed harder than others and some were physically able to spread their fingers wider. This explains the comparable low correlations between these hand measurements and also some unexpectedly low correlations at the tasks. Because of this we have to take the correlations with the Total Span and the Zooming Span with care.\\
 % einfügen ende
-Finding out the user's hand size automatically might only be possible by an unnatural, artificial task. As the most promising result we got was from the (artificial) radius task, this might be the right ways to investigate hand size. Our correlations as well as the classification via random forest showed that a predetermined hand position delivers a consistently higher score.\\
+Finding out the user's hand size automatically might only be possible by an unnatural, artificial task. As the most promising result we got was from the (artificial) radius task, this might be the right way to investigate hand size. Our correlations as well as the classification via random forest showed that a predetermined hand position delivers a consistently higher score.\\
 For the user, it might not be that usable to perform some artificial task for predicting his hand size. It would have been even more comfortable to obtain the hand size inconspicuously from common, frequent interactions like we tried to evaluate with all our other tasks. It turned out that a fixed hand position seems to be necessary for a clear result. After all, it could still be beneficial for the user to let his device know about his hand size, by any kind of interaction task or measurement. It could then be an important personalization factor and enhance mobile touch interaction.
 
 
@@ -346,7 +343,7 @@ We came up with different challenges when investigating hand size and mobile tou
 We could show a higher correlation between touch interaction and hand size when we determined the hand position. As this might be uncomfortable for users, the other tasks in our study were designed in such a way that hand position is free and left over to the user. It turned out that machine learning techniques can help to predict the user's hand size but once more a fixed hand position delivers a higher score.\\
 Further investigations should eventually determine hand positions in order to evaluate the user's hand size. As the most promising result we got was from our radius task, this interaction could eventually be used to predict the user's hand size.\\ 
 %hier nochmal results zusammen fassen?!
-Knowing about the user's hand size could then enhance mobile interaction. Another personalization aspect could be established through hand dimensions. If our mobile devices know about our hand sizes, they could adapt the user interfaces in order to facilitate the interaction. Navigation bars and other important UI Elements could be moved to make them more reachable. Thereby, our device would be even smarter in adapting to out personal needs.
+Knowing about the user's hand size could then enhance mobile interaction. Another personalization aspect could be established through hand dimensions. If our mobile devices know about our hand sizes, they could adapt the user interfaces in order to facilitate the interaction. Navigation bars and other important UI Elements could be moved to make them more reachable. Thereby, our device would be even smarter in adapting to our personal needs.
 
 %\begin{itemize}
 %\item Conclusion: am vielversprechendsten ist vermutlich ... Wie würde man speziell dieses noch in neuer Studie untersuchen
