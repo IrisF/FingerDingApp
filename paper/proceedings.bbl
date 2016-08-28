@@ -1,53 +1,85 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
 \begin{thebibliography}{6}
-\providecommand{\natexlab}[1]{#1}
-\providecommand{\url}[1]{\texttt{#1}}
-\expandafter\ifx\csname urlstyle\endcsname\relax
-  \providecommand{\doi}[1]{doi: #1}\else
-  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Parhi et~al.(2006)Parhi, Karlson, and Bederson]{parhi2006target}
-Pekka Parhi, Amy~K Karlson, and Benjamin~B Bederson.
-\newblock Target size study for one-handed thumb use on small touchscreen
-  devices.
-\newblock In \emph{Proceedings of the 8th conference on Human-computer
-  interaction with mobile devices and services}, pages 203--210. ACM, 2006.
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
 
-\bibitem[Buschek and Alt(2015)]{buschek2015touchml}
-Daniel Buschek and Florian Alt.
-\newblock Touchml: A machine learning toolkit for modelling spatial touch
-  targeting behaviour.
-\newblock In \emph{Proceedings of the 20th International Conference on
-  Intelligent User Interfaces}, pages 110--114. ACM, 2015.
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{{\tt DOI:}\penalty0{#1}\ }
+  \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       #1{#1}          \fi
 
-\bibitem[Karlson et~al.(2006)Karlson, Bederson, and
-  Contreras-Vidal]{karlson2006studies}
-Amy~K Karlson, Benjamin~B Bederson, and Jose~L Contreras-Vidal.
-\newblock Studies in one-handed mobile design: Habit, desire and agility.
-\newblock In \emph{ERCIM Workshop on User Interfaces for All (UI4ALL)}.
-  Citeseer, 2006.
+\bibitem{balakrishnan2008study}
+{Vimala Balakrishnan} {and} {HP Paul}. 2008.
+\newblock \showarticletitle{A study of the effect of thumb sizes on mobile
+  phone texting satisfaction}.
+\newblock {\em Journal of Usability Studies\/} {3}, 3 (2008), 118--128.
+\newblock
 
-\bibitem[Balakrishnan and Paul(2008)]{balakrishnan2008study}
-Vimala Balakrishnan and HP~Paul.
-\newblock A study of the effect of thumb sizes on mobile phone texting
-  satisfaction.
-\newblock \emph{Journal of Usability Studies}, 3\penalty0 (3):\penalty0
-  118--128, 2008.
 
-\bibitem[Bergstrom-Lehtovirta and Oulasvirta(2014)]{bergstrom2014modeling}
-Joanna Bergstrom-Lehtovirta and Antti Oulasvirta.
-\newblock Modeling the functional area of the thumb on mobile touchscreen
-  surfaces.
-\newblock In \emph{Proceedings of the SIGCHI Conference on Human Factors in
-  Computing Systems}, pages 1991--2000. ACM, 2014.
+\bibitem{bergstrom2014modeling}
+{Joanna Bergstrom-Lehtovirta} {and} {Antti Oulasvirta}. 2014.
+\newblock \showarticletitle{Modeling the functional area of the thumb on mobile
+  touchscreen surfaces}. In {\em Proceedings of the SIGCHI Conference on Human
+  Factors in Computing Systems}. ACM, 1991--2000.
+\newblock
 
-\bibitem[Boring et~al.(2012)Boring, Ledo, Chen, Marquardt, Tang, and
-  Greenberg]{boring2012fat}
-Sebastian Boring, David Ledo, Xiang'Anthony' Chen, Nicolai Marquardt, Anthony
-  Tang, and Saul Greenberg.
-\newblock The fat thumb: using the thumb's contact size for single-handed
-  mobile interaction.
-\newblock In \emph{Proceedings of the 14th international conference on
-  Human-computer interaction with mobile devices and services}, pages 39--48.
-  ACM, 2012.
+
+\bibitem{boring2012fat}
+{Sebastian Boring}, {David Ledo}, {Xiang'Anthony' Chen}, {Nicolai Marquardt},
+  {Anthony Tang}, {and} {Saul Greenberg}. 2012.
+\newblock \showarticletitle{The fat thumb: using the thumb's contact size for
+  single-handed mobile interaction}. In {\em Proceedings of the 14th
+  international conference on Human-computer interaction with mobile devices
+  and services}. ACM, 39--48.
+\newblock
+
+
+\bibitem{buschek2015touchml}
+{Daniel Buschek} {and} {Florian Alt}. 2015.
+\newblock \showarticletitle{TouchML: A Machine Learning Toolkit for Modelling
+  Spatial Touch Targeting Behaviour}. In {\em Proceedings of the 20th
+  International Conference on Intelligent User Interfaces}. ACM, 110--114.
+\newblock
+
+
+\bibitem{karlson2006studies}
+{Amy~K Karlson}, {Benjamin~B Bederson}, {and} {Jose~L Contreras-Vidal}. 2006.
+\newblock \showarticletitle{Studies in one-handed mobile design: Habit, desire
+  and agility}. In {\em ERCIM Workshop on User Interfaces for All (UI4ALL)}.
+  Citeseer.
+\newblock
+
+
+\bibitem{parhi2006target}
+{Pekka Parhi}, {Amy~K Karlson}, {and} {Benjamin~B Bederson}. 2006.
+\newblock \showarticletitle{Target size study for one-handed thumb use on small
+  touchscreen devices}. In {\em Proceedings of the 8th conference on
+  Human-computer interaction with mobile devices and services}. ACM, 203--210.
+\newblock
+
 
 \end{thebibliography}
