@@ -48,6 +48,9 @@
 % page numbers for the camera ready copy
 % \pagenumbering{arabic}
 
+\let\bibsep\relax
+\usepackage[numbers,sort,square]{natbib}
+%\setcitestyle{numbers,open={[},close={]}}
 % Load basic packages
 \usepackage{balance}       % to better equalize the last page
 \usepackage{graphics}      % for EPS, load graphicx instead 
@@ -62,7 +65,6 @@
 %graphic packages
 \usepackage{subfigure}
 %\usepackage{float}
-
 % Some optional stuff you might like/need.
 \usepackage{microtype}        % Improved Tracking and Kerning
 % \usepackage[all]{hypcap}    % Fixes bug in hyperref caption linking
@@ -132,7 +134,6 @@
   breaklinks=true,
   hypertexnames=false
 }
-
 % create a shortcut to typeset table headings
 % \newcommand\tabhead[1]{\small\textbf{#1}}
 
@@ -181,12 +182,12 @@
 Interaction with your personal mobile device is an individual daily routine. Devices are increasingly smart and have plenty of functions. As today's mobile devices vary highly in their dimensions, interaction has different levels of difficulties. One or two hands might be necessary for different tasks.\\
 People have different hand sizes and tend to have different device sizes, although that might not be closely interlinked. Mobile touch interactions differ widely with hand and device size.\\
 Besides mobility, personalization is an important aspect. Our smartphone can only be smart based on our personal information, like for example our residence, contacts and browsing habits.\\ %TO DO quelle?!
-Research shows another important personalization factor: hand size. What has been investigated a lot so far is the touch behavior of different users (e.g. \cite{parhi2006target}, \cite{buschek2015touchml}). An example is touch precision in relation to the user's hand size \cite{parhi2006target}. These and others show that hand size actually has an influence on mobile touch interactions. Our hand size could be another personalization aspect and make our devices even smarter. If my device knows about my hand size, it could for instance adapt the layout to help us reaching the important interaction elements.\\
+Research shows another important personalization factor: hand size. What has been investigated a lot so far is the touch behavior of different users (e.g. \citep{parhi2006target}, \citep{buschek2015touchml}). An example is touch precision in relation to the user's hand size \citep{parhi2006target}. These and others show that hand size actually has an influence on mobile touch interactions. Our hand size could be another personalization aspect and make our devices even smarter. If my device knows about my hand size, it could for instance adapt the layout to help us reaching the important interaction elements.\\
 This highly motivates our research. In our study, we were aiming at finding the backward conclusion from the user's touch input to his hand size as this could be used for further personalization on mobile devices.
 %The paper is organized as follows. We start with an overview of related work. We present our study design and procedure before showing our results. We conclude with a discussion and an outlook to future work.
 
 \section{Related Work}
-Parhi et al. performed a study about the error rates and preferred positions of different sized targets on a screen. They found out that as the target's size increases the error rate and time to reach decreases. Users also preferred the middle of the screen in contrast to the upper left and lower right corner \cite{parhi2006target}. Another study by Karlson et al. also demonstrates that the middle of the screen is the easiest to reach for a user while reaching the corners is more time consuming \cite{karlson2006studies}. Since the target's position seems to be relevant for a user's performance, we also tested different target positions in our study. Buschek and Alt also took the hand size into consideration and discovered that users with smaller hands show a larger y-offset in the upper left corner but are more accurate in the lower area of the screen when trying to hit a target \cite{buschek2015touchml}. In this study only one hand dimension was measured. We chose to measure four different dimension in order to find the highest correlations. A different study by Balakrishnan et al. investigated users' satisfaction for different keyboards. They tried to find correlations between the satisfaction and the user's thumb length or circumference. The results show that the circumreference correlates with the satisfaction of the key size and space between the keys \cite{balakrishnan2008study}. In contrast to Balakrishnan et al. we investigated the hand size in total but not the thumb size itself. Bergstrom et al. defined a functional area which is the reachable region of a user's thumb without repositioning his hand. Smaller hands also show a lesser functional area \cite{bergstrom2014modeling}. As observed by Boring et al. users reposition their hand in order to reach certain areas of the screen \cite{boring2012fat}. These findings are interesting factors which we also took into consideration for our study by measuring the radius of the participant's thumb and including tasks with predefined and undefined hand positions.
+Parhi et al. performed a study about the error rates and preferred positions of different sized targets on a screen. They found out that as the target's size increases the error rate and time to reach decreases. Users also preferred the middle of the screen in contrast to the upper left and lower right corner \citep{parhi2006target}. Another study by Karlson et al. also demonstrates that the middle of the screen is the easiest to reach for a user while reaching the corners is more time consuming \citep{karlson2006studies}. Since the target's position seems to be relevant for a user's performance, we also tested different target positions in our study. Buschek and Alt also took the hand size into consideration and discovered that users with smaller hands show a larger y-offset in the upper left corner but are more accurate in the lower area of the screen when trying to hit a target \citep{buschek2015touchml}. In this study only one hand dimension was measured. We chose to measure four different dimension in order to find the highest correlations. A different study by Balakrishnan et al. investigated users' satisfaction for different keyboards. They tried to find correlations between the satisfaction and the user's thumb length or circumference. The results show that the circumreference correlates with the satisfaction of the key size and space between the keys \citep{balakrishnan2008study}. In contrast to Balakrishnan et al. we investigated the hand size in total but not the thumb size itself. Bergstrom et al. defined a functional area which is the reachable region of a user's thumb without repositioning his hand. Smaller hands also show a lesser functional area \citep{bergstrom2014modeling}. As observed by Boring et al. users reposition their hand in order to reach certain areas of the screen \citep{boring2012fat}. These findings are interesting factors which we also took into consideration for our study by measuring the radius of the participant's thumb and including tasks with predefined and undefined hand positions.
 
 \section{Study}
 In order to find correlations between a user's hand size and his mobile touch interactions we implemented an android application to measure data for different interactions. 
@@ -229,7 +230,7 @@ The android application implemented for this study contained a screen for enteri
 
 
 \subsection{Participants}
-The 62 participants of this study were 36 males and 26 females between 18 and 36 years old. The average age was 24. Their hand lengths differred between 152 and 224 mm.
+The 62 participants of this study were 36 males and 26 females between 18 and 36 years old. The average age was 24. Their hand lengths differed between 152 and 224 mm.
 
 \subsection{Procedure}
 % Studienaufbau, WIE
@@ -237,23 +238,30 @@ The participants have been invited to a 15 minute time slot to take part in our 
 At first, the participants hand dimensions were measured manually as described before. Their data was then entered directly into our app. The participants started with the radius task in a predetermined hand position. After that, the tasks came up in a randomized order according to a latin square. The participants were free in solving the tasks, except they were only allowed to use one hand. For the zooming tasks, participants were instructed to use the other hand as well or to leave the device on the table.
 
 \section{Results}
-To understand the results of our study we first have to look at the measured hand data. The correlation of the different hand measurements is not as high as a naive assumption would suggest. The weaker correlations out of the four measured are the total-span with the zoom-span. The tighter (?) measurements were therefore the with and the length of the hand (0.841, see Table \ref{handSizeCorrelations}). As the different measurements aren't linked tight enough we decided to compare the results with all of the four measurements separately. All results can be found in Table \ref{allCorrelations}. A calculation of significance could not be done because this study is only exploratory. The highest correlation was measured in the Radius Task. Participants with a bigger hand, a bigger Zoom Span in particular, were able to reach a smaller X value. The origin of mobile phone coordinate systems is on the top left, so this is equivalent to how far the subjects got to the left edge of the screen. Figure \ref{plotRadius} shows the according data plot with the correlation of -0.57.
-The second highest correlation (0.45) was found in the same task measuring the distance between the start and endpoint of the touch interaction. Paraticipants with a higher Zoom Span had also a higher distance between these two points. The according plot in figure \ref{plotRadiusStartEnd} looks fairly consistent with no major outliers.\\
-Another interesting result is the number of scrolls the participants needed to scroll to the end of the list in the Scrolling Task. Subjects with a wider hand needed less scrolls here. While observing the task operated by the participants we could notice that most subjects flicked the list and then waited a short moment until the list slowed down spinning. But some subjects just dragged the list and did not flick it at all, which is how the top outliers in the according figure \ref{plotScrolling} can be explained. 
-Another interesting plot is from the zooming task, where the subjects had to perform the widest zoom gesture they could. The highest correlation is with the hand width. It's important to know that most participants were able to reach to the edges of the devices screen which probably lowered the correlation. Looking at the plot (figure \ref{plotZooming}) we see that not all the recorded data is plausible because the span of the lowest point is around 5cm. We did remove some of these points to check their influence and got an even higher correlation.
+To understand the results of our study we first have to look at the measured hand data. The correlation of the different hand measurements is not as high as a naive assumption would suggest. The weaker correlations out of the four measured are the total-span with the zoom-span. The tighter measurements were therefore the with and the length of the hand (0.841, see Table \ref{handSizeCorrelations}). As the different measurements aren't linked tight enough we decided to compare the results with all of the four measurements separately. All results can be found in Table \ref{allCorrelations}. A calculation of significance could not be done because this study is only exploratory. The highest correlations happened in the Radius Task with the fixed hand position. We got the best result looking at the minimal X value reached there. Participants with a bigger hand, a bigger Zoom Span in particular, were able to reach a smaller X value. The origin of mobile phone coordinate systems is on the top left, so this is equivalent to how far the subjects got to the left edge of the screen with their thumb. Figure \ref{plotRadius} shows the according data plot with the correlation of -0.57. Measuring the distance between the start and endpoint of the touch interaction showed a correlation of 0.45 regarding the Zoom Span again. Therefore participants with a higher Zoom Span had a higher distance between these two points. The according plot in figure \ref{plotRadiusStartEnd} looks fairly consistent with no major outliers.\\
+Another interesting result is the number of scrolls the participants needed to scroll to the end of the list in the Scrolling Task. Subjects with a wider hand needed less scrolls here. While observing the task operated by the participants we could notice that most subjects flicked the list and then waited a short moment until the list slowed down spinning. But some subjects just dragged the list and did not flick it at all, which is how the top outliers in the according figure \ref{plotScrolling} can be explained.\\
+Lower in correlation but although an interesting plot is from the zooming task, where the subjects had to perform the widest zoom gesture they could. The highest correlation is with the hand width. It's important to know that most participants were able to reach to the edges of the devices screen which probably lowered the correlation. Looking at the plot (figure \ref{plotZooming}) we see that not all the recorded data is plausible because the span of the lowest point is around 5cm. We did remove some of these points to check their influence and got an even higher correlation.\\
+Other interesting but not as high correlations were also found in the Tapping Task regarding the x-orientation of the touches on the top left quarter of the screen. Compared with the with of the hand we got a result of -0.32\\
+At the Swiping Task we got the lowest results overall with the highest value at 0.3 regarding the maximal y-difference happening during the slide on the bottom slider.
 
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=0.5\textwidth]{figures/plotRadius.png}
+	\caption{Radius task: Minimal reached X value.}
+	\label{plotRadius}
+\end{figure}
 
 \begin{figure}[ht]
 	\centering
   \includegraphics[width=0.5\textwidth]{figures/plotScrolling.png}
-	\caption{Scrolling task: Number of scrolls}
+	\caption{Scrolling task: Number of scrolls.}
 	\label{plotScrolling}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
   \includegraphics[width=0.5\textwidth]{figures/plotZooming.png}
-	\caption{Zooming task: Span of maximal zooming gesture}
+	\caption{Zooming task: Span of maximal zooming gesture.}
 	\label{plotZooming}
 \end{figure}
 
@@ -282,38 +290,38 @@ Another interesting plot is from the zooming task, where the subjects had to per
 		\label{allCorrelations}
     \begin{tabular}{|lll|rrrr|}
     \hline
-    T & Notes       & Value     & T.Sp  & Z.Sp   & L. & W. \\ \hline
-    1    & 1/4 Scr.  & Time diff & -0.1  & -0.02  & 0.15   & -0.08 \\
+    T 	& Notes       & Value     & T.Sp  & Z.Sp   & L. & W. \\ \hline
+    1    & 1/4 Scr.  	& Time diff & -0.1  & -0.02  & 0.15   & -0.08 \\
     ~    & Whole S.   & "         & -0.1  & 0.04   & 0.17   & -0.06 \\
-    ~    & 1/4 Scr.  & X-der     & -0.23 & -0.09  & -0.17  & -0.2  \\
+    ~    & 1/4 Scr.  	& X-der     & -0.23 & -0.09  & -0.17  & -0.2  \\
     ~    & Whole S.   & "         & -0.21 & -0.1   & -0.2   & -0.17 \\
-    ~    & 1/4 Scr.  &  Y-der    & -0.16 & 0      & -0.11  & -0.16 \\
+    ~    & 1/4 Scr.  	&  Y-der    & -0.16 & 0      & -0.11  & -0.16 \\
     ~    & Whole S.   & "         & -0.05 & 0.04   & -0.06  & 0.07  \\
-    ~    & 1/4 S.  & Pressure  & 0.21  & 0.14   & 0.07   & 0.19  \\
+    ~    & 1/4 S.  		& Pressure  & 0.21  & 0.14   & 0.07   & 0.19  \\
     ~    & Whole S.   & "         & 0.29  & 0.2    & 0.14   & 0.22  \\
-    ~    & 1/4 Scr.  & Orient.X  & -0.5  & -0.21  & -0.13  & -0.32 \\
+    ~    & 1/4 Scr.  	& Orient.X  & -0.5  & -0.21  & -0.13  & -0.32 \\
     ~    & Whole S.   & "         & -0.2  & -0.2   & -0.11  & -0.27 \\
-    ~    & 1/4 Scr.  & Orient.Y  & -0.04 & -0.06  & 0.15   & -0.02 \\
+    ~    & 1/4 Scr.  	& Orient.Y  & -0.04 & -0.06  & 0.15   & -0.02 \\
     ~    & Whole S.   & "         & -0.06 & -0.11  & 0.09   & -0.05 \\
-    ~    & 1/4 Scr.  & Size      & 0.21  & 0.17   & 0.1    & 0.24  \\
+    ~    & 1/4 Scr.  	& Size      & 0.21  & 0.17   & 0.1    & 0.24  \\
     ~    & Whole S.   & "         & 0.24  & 0.14   & 0.13   & 0.26  \\ \hline
-    2    & ~           & Number    & -0.31 & -0.29  & -0.35  & \cellcolor[gray]{0.9}-0.43 \\
-    ~    & ~           & Avr. dist & 0.13  & 0.04   & 0.05   & 0.11  \\
-    ~    & ~           & Start X   & 0.04  & 0.08   & 0.07   & 0.09  \\
-    ~    & ~           & Start Y   & 0     & -0.05  & -0.04  & 0.01  \\ \hline
-    3    & top  & End X     & -0.13 & -0.17  & -0.1   & -0.02 \\
-    ~    & middle  & "         & 0.13  & 0.09   & 0.06   & 0.06  \\
-    ~    & bottom & "         & 0.26  & 0.16   & 0.17   & 0.22  \\
-    ~    & diagonal & "         & 0.09  & -0.04  & 0.04   & 0.1   \\
-    ~    & top  & Y Diff.   & 0.08  & -0.06 & 0.18   & 0.25  \\
-    ~    & middle  & "         & 0.03  & 0.07   & 0.08   & 0.01  \\
-    ~    & bottom & "         & 0.3   & 0.25   & 0.23   & 0.19  \\
-    ~    & diagonal & "         & 0.11  & 0.17   & 0.08   & 0.16  \\ \hline
-    4    & st.-end   & dist      & 0.26  & \cellcolor[gray]{0.9}0.45   & 0.35   & 0.25  \\
-    ~    & ~           & Min X     & -0.5  & \cellcolor[gray]{0.9}-0.57  & -0.52  & -0.48 \\
-    ~    & ~           & Min Y     & -0.1  & -0.22  & -0.16  & -0.08 \\ \hline
-    5    & span        & var.      & 0.21  & 0.12   & 0.28   & 0.2   \\
-    ~    & span        & max       & 0.29  & 0.16   & 0.18   & \cellcolor[gray]{0.9}0.36  \\ \hline
+    2    & ~          & Number    & -0.31 & -0.29  & -0.35  & \cellcolor[gray]{0.9}-0.43 \\
+    ~    & ~          & Avr. dist & 0.13  & 0.04   & 0.05   & 0.11  \\
+    ~    & ~          & Start X   & 0.04  & 0.08   & 0.07   & 0.09  \\
+    ~    & ~          & Start Y   & 0     & -0.05  & -0.04  & 0.01  \\ \hline
+    3    & top  			& End X     & -0.13 & -0.17  & -0.1   & -0.02 \\
+    ~    & middle  		& "         & 0.13  & 0.09   & 0.06   & 0.06  \\
+    ~    & bottom 		& "         & 0.26  & 0.16   & 0.17   & 0.22  \\
+    ~    & diagonal 	& "         & 0.09  & -0.04  & 0.04   & 0.1   \\
+    ~    & top  			& Y Diff.   & 0.08  & -0.06		& 0.18   & 0.25  \\
+    ~    & middle  		& "         & 0.03  & 0.07   & 0.08   & 0.01  \\
+    ~    & bottom 		& "         & 0.3   & 0.25   & 0.23   & 0.19  \\
+    ~    & diagonal 	& "         & 0.11  & 0.17   & 0.08   & 0.16  \\ \hline
+    4    & st.-end   	& dist      & 0.26  & \cellcolor[gray]{0.9}0.45   & 0.35   & 0.25  \\
+    ~    & ~          & Min X     & -0.5  & \cellcolor[gray]{0.9}-0.57  & -0.52  & -0.48 \\
+    ~    & ~          & Min Y     & -0.1  & -0.22  & -0.16  & -0.08 \\ \hline
+    5    & span       & var.      & 0.21  & 0.12   & 0.28   & 0.2   \\
+    ~    & span       & max       & 0.29  & 0.16   & 0.18   & \cellcolor[gray]{0.9}0.36  \\ \hline
     \end{tabular}
 \end{table}
 
@@ -375,7 +383,9 @@ Knowing about the user's hand size could then enhance mobile interaction. Anothe
 
 % REFERENCES FORMAT
 % References must be the same font size as other body text.
-\bibliographystyle{SIGCHI-Reference-Format}
+%\bibliographystyle{SIGCHI-Reference-Format}
+
+\bibliographystyle{unsrtnat}
 \bibliography{literature}
 
 \end{document}
