@@ -188,6 +188,16 @@ This is our motivation to further investigate hand size. In our study, we were a
 \section{Related Work}
 Parhi et al. performed a study about the error rates and preferred positions of different sized targets on a screen. They found out that as the target's size increases the error rate and time to reach decreases. Users also preferred the middle of the screen in contrast to the upper left and lower right corner \cite{parhi2006target}. Another study by Karlson et al. also demonstrates that the middle of the screen is the easiest to reach for a user while reaching the corners is more time consuming \cite{karlson2006studies}. Since the target's position seems to be relevant for a user's performance, we also tested different target positions in our study. Buschek and Alt also took the hand size into consideration and discovered that users with smaller hands show a larger y-offset in the upper left corner but are more accurate in the lower area of the screen when trying to hit a target \cite{buschek2015touchml}. In this study only one hand dimension was measured. We chose to measure four different dimension in order to find the highest correlations. A different study by Balakrishnan et al. investigated users' satisfaction for different keyboards. They tried to find correlations between the satisfaction and the user's thumb length or circumference. The results show that the circumreference correlates with the satisfaction of the key size and space between the keys \cite{balakrishnan2008study}. In contrast to Balakrishnan et al. we investigated the hand size in total but not the thumb size itself. Bergstrom et al. defined a functional area which is the reachable region of a user's thumb without repositioning his hand. Smaller hands also show a lesser functional area \cite{bergstrom2014modeling}. As observed by Boring et al. users reposition their hand in order to reach certain areas of the screen \cite{boring2012fat}. These findings are interesting factors which we also took into consideration for our study by measuring the radius of the participant's thumb and including tasks with predefined and undefined hand positions.
 
+\begin{figure*}[!ht]
+    \subfigure[Radius Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot01.png}} 
+    \subfigure[Tapping Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot02.png}}
+    \subfigure[Scrolling Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot03.png}} 
+    \subfigure[Swiping Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot04.png}} 
+    \subfigure[Maximum Zooming Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot05.png}} 
+    \subfigure[Frame Zooming Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot06.png}} 
+\caption{Interaction tasks} 
+\end{figure*}
+
 \section{Study}
 In order to find correlations between a user's hand size and his mobile touch interactions we implemented an android application to measure data for different interactions. 
 
@@ -202,16 +212,7 @@ The study design was within subjects so all participants performed the following
 	\item{Maximum Zooming Task:} The user had to zoom a blue rectangle as far as possible with one zoom gesture
 	\item{Frame Zooming Task:} The user was instructed to zoom a blue rectangle to fit into a frame. Three frame sizes were tested: small, medium and large. The user was allowed to execute multiple zoom gestures
 \end{itemize}
-
-\begin{figure*}[ht]
-    \subfigure[Radius Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot01.png}} 
-    \subfigure[Tapping Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot02.png}}
-    \subfigure[Scrolling Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot03.png}} 
-    \subfigure[Swiping Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot04.png}} 
-    \subfigure[Maximum Zooming Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot05.png}} 
-    \subfigure[Frame Zooming Task]{\includegraphics[width=0.16\textwidth]{figures/screenshot06.png}} 
-\caption{Interaction tasks} 
-\end{figure*} 
+ 
 
 %The phone we used for our study was the HTC one max with a screen size of 5.9 inches. The study design was within subjects so all participants performed all of the tasks. The first one always was the unnatural interaction followed by the rest in an randomized order. It was also neccessary to measure the participants' hands in order to compare the hand sizes to the measured data delivered by our application. We chose to measure the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger) in order to have more options for possible correlations. 
 We measured the participants' hand length, width, total span (from thumb to pinky finger) and zooming span (from thumb to index finger). Figure 2 shows these measured dimensions.
@@ -234,6 +235,19 @@ The 62 participants of this study were 36 males and 26 females between 18 and 36
 % Studienaufbau, WIE
 The participants have been invited to a 15 minute time slot to take part in our hand measurement study. They could receive credits or an amazon voucher for their participation. In order to allow the usage of their hand and touch data, they had to sign a letter of agreement.\\
 At first, the participants hand dimensions were measured manually as described before (see figure \ref{fig:hand}). Their data was then entered directly into our app. The participants started with the artificial Radius Task in a predetermined hand position. After that, the natural tasks came up in a randomized order according to a latin square. The participants were free in solving the tasks, except they were only allowed to use one hand. For the zooming tasks, participants were instructed to use the other hand as well or to leave the device on the table.
+
+\begin{table}[ht]
+\centering
+\caption{Hand size correlations}
+\label{handSizeCorrelations}
+\begin{tabular}{ll|llll}
+ &users  &total span  &zoom span  &length  &width  \\ \hline
+ &total span  &  &0.74  &0.705  &0.754 \\
+ &zoom span  &0.764  &  &0.772  &0.669 \\
+ &length  &0.702  &0.757  &  &0.818 \\
+ &width  &0.776  &0.673  &0.841  &
+\end{tabular}
+\end{table}
 
 \section{Results}
 To understand the results of our study we first have to look at the measured hand data. The correlation of the different hand measurements is not as high as a naive assumption would suggest. The weaker correlations out of the four measured are the total-span with the zoom-span. The tighter measurements were therefore the width and the length of the hand (0.841, see Table \ref{handSizeCorrelations}). As the different measurements aren't linked tight enough we decided to compare the results with all of the four measurements separately. All results can be found in Table \ref{allCorrelations}. A calculation of significance could not be done because this study is only exploratory. The highest correlations happened in the Radius Task with the fixed hand position. We got the best result looking at the minimal X value reached there. Participants with a bigger hand, a bigger Zoom Span in particular, were able to reach a smaller X value. The origin of mobile phone coordinate systems is on the top left, so this is equivalent to how far the subjects got to the left edge of the screen with their thumb. Figure \ref{plotRadius} shows the according data plot with the correlation of -0.57. Measuring the distance between the start and endpoint of the touch interaction showed a correlation of 0.45 regarding the Zoom Span again. Therefore participants with a higher Zoom Span had a higher distance between these two points. The according plot in figure \ref{plotRadiusStartEnd} looks fairly consistent with no major outliers.\\
@@ -270,18 +284,6 @@ At the Swiping Task we got the lowest results overall with the highest value at 
 	\label{plotRadiusStartEnd}
 \end{figure}
 
-\begin{table}[ht]
-\centering
-\caption{Hand size correlations}
-\label{handSizeCorrelations}
-\begin{tabular}{ll|llll}
- &users  &total span  &zoom span  &length  &width  \\ \hline
- &total span  &  &0.74  &0.705  &0.754 \\
- &zoom span  &0.764  &  &0.772  &0.669 \\
- &length  &0.702  &0.757  &  &0.818 \\
- &width  &0.776  &0.673  &0.841  &
-\end{tabular}
-\end{table}
 
 \begin{table}[ht]
 		\caption{Correlations by Task (T): 1: Tapping, 2: Scrolling, 3: Sliding, 4: Radius, 5: Zooming }
