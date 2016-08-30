@@ -18,9 +18,9 @@
 % ISBN
 \isbn{123-4567-24-567/08/06}
 %Conference
-\conferenceinfo{CHI'16,}{May 07--12, 2016, San Jose, CA, USA}
+%\conferenceinfo{CHI'16,}{May 07--12, 2016, San Jose, CA, USA}
 %Price
-\acmPrice{\$15.00}
+%\acmPrice{\$15.00}
 
 % Use this command to override the default ACM copyright statement
 % (e.g. for preprints).  Consult the conference website for the
@@ -63,6 +63,8 @@
 \usepackage{textcomp}
 %graphic packages
 \usepackage{subfigure}
+
+\usepackage{eurosym}
 
 %\usepackage{float}
 % Some optional stuff you might like/need.
@@ -228,7 +230,7 @@ The 62 participants of this study were 36 males and 26 females between 18 and 36
 
 \subsection{Procedure}
 % Studienaufbau, WIE
-The participants have been invited to a 15 minute time slot to take part in our hand measurement study. They could receive credits or a 5€ amazon voucher for their participation. In order to allow the usage of their hand and touch data, they had to sign a letter of agreement.\\
+The participants have been invited to a 15 minute time slot to take part in our hand measurement study. They could receive credits or a 5\euro\ amazon voucher for their participation. In order to allow the usage of their hand and touch data, they had to sign a letter of agreement.\\
 At first, the participants hand dimensions were measured manually as described before (see figure \ref{fig:hand}). Their data was then entered directly into our app. The participants started with the artificial Radius Task in a predetermined hand position. After that, the natural tasks came up in a randomized order according to a latin square. The participants were free in solving the tasks, except they were only allowed to use one hand. For the zooming tasks, participants were instructed to use the other hand as well or to leave the device on the table.
 
 \begin{table}[ht]
@@ -251,28 +253,28 @@ Lower in correlation but also an interesting plot is from the zooming task, wher
 Other interesting but not as high correlations were also found in the Tapping Task regarding the x-orientation of the touches on the top left quarter of the screen. Compared with the with of the hand we got a result of -0.32\\
 At the Swiping Task we got the lowest results overall with the highest value at 0.3 regarding the maximal y-difference happening during the slide on the bottom slider.
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
 	\centering
   \includegraphics[width=0.5\textwidth]{figures/plotRadius.png}
 	\caption{Radius task: Minimal reached x-value.}
 	\label{plotRadius}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
 	\centering
   \includegraphics[width=0.5\textwidth]{figures/plotScrolling.png}
 	\caption{Scrolling task: Number of scrolls.}
 	\label{plotScrolling}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
 	\centering
   \includegraphics[width=0.5\textwidth]{figures/plotZooming02.png}
 	\caption{Zooming task: Span of maximal zooming gesture.}
 	\label{plotZooming}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
 	\centering
   \includegraphics[width=0.5\textwidth]{figures/plotRadiusStartEnd.png}
 	\caption{Radius task: Distance between starting and ending point of touch.}
@@ -332,7 +334,7 @@ Investigating hand size in conjunction with mobile touch interactions is difficu
 % von jonas: hier gut eingefügt oder unterbricht der teil zu stark?
 Looking at the results some correlations are quite unexpected. The maximum zooming span (Zooming Task) p.e. had a much higher correlation with the width of the participants than the zooming span. We would have suggested that the correlation is highest with a measurement involving the thumb. This is probably because of the measurement technique we used. For the Zoom Span the Subjects had to spread and press their thumb and index finger on a table. Some participants pressed harder than others and some were physically able to spread their fingers wider. This explains the comparable low correlations between these hand measurements and also some unexpectedly low correlations at the tasks. Because of this we have to take the correlations with the Total Span and the Zooming Span with care.\\
 % einfügen ende
-Finding out the user's hand size automatically might only be possible by an unnatural, artificial task. As the most promising result we got was from the Radius Task, this might be the right way to investigate hand size. Our correlations as well as the classification via random forest showed that a predetermined hand position delivers a consistently higher score.\\
+Finding out the user's hand size automatically might only be possible by an unnatural, artificial task. As the most promising result we got was from the Radius Task, this might be the right way to investigate hand size. Our correlations as well as the classification via Random Forest showed that a predetermined hand position delivers a consistently higher score.\\
 For the user, it might not be that usable to perform some artificial task for predicting his hand size. It would have been even more comfortable to obtain the hand size inconspicuously from natural, frequent interactions like we tried to evaluate with all our other tasks. It turned out that a fixed hand position seems to be necessary for a clear result. After all, it could still be beneficial for the user to let his device know about his hand size, by any kind of interaction task or measurement. It could then be an important personalization factor and enhance mobile touch interaction.
 
 
